@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LaptopDeel.Entidades
 {
-    internal class Pantalla
+    public class Pantalla
     {
         public int IdPantalla { get; set; }
         public string Tipo { get; set; } = string.Empty;

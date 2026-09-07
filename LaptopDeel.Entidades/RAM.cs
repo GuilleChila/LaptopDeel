@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LaptopDeel.Entidades
 {
-    internal class RAM
+    public class RAM
     {
         public int IdRAM { get; set; }
         public string Capacidad { get; set; } = string.Empty;

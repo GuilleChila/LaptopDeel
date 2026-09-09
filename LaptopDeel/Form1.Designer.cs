@@ -30,6 +30,7 @@
         {
             label1 = new Label();
             kryptonWorkspace1 = new Krypton.Workspace.KryptonWorkspace();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)kryptonWorkspace1).BeginInit();
             SuspendLayout();
             // 
@@ -48,23 +49,34 @@
             kryptonWorkspace1.ActivePage = null;
             kryptonWorkspace1.CompactFlags = Krypton.Workspace.CompactFlags.RemoveEmptyCells | Krypton.Workspace.CompactFlags.RemoveEmptySequences | Krypton.Workspace.CompactFlags.PromoteLeafs | Krypton.Workspace.CompactFlags.AtLeastOneVisibleCell;
             kryptonWorkspace1.ContainerBackStyle = Krypton.Toolkit.PaletteBackStyle.PanelClient;
-            kryptonWorkspace1.Location = new Point(157, 143);
+            kryptonWorkspace1.Location = new Point(311, 234);
             kryptonWorkspace1.Name = "kryptonWorkspace1";
             // 
             // 
             // 
             kryptonWorkspace1.Root.UniqueName = "7397db378ccf47e1b4b3912207727fa8";
             kryptonWorkspace1.SeparatorStyle = Krypton.Toolkit.SeparatorStyle.LowProfile;
-            kryptonWorkspace1.Size = new Size(301, 151);
+            kryptonWorkspace1.Size = new Size(147, 60);
             kryptonWorkspace1.SplitterWidth = 5;
             kryptonWorkspace1.TabIndex = 1;
             kryptonWorkspace1.TabStop = true;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(147, 110);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 2;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(kryptonWorkspace1);
             Controls.Add(label1);
             Name = "Form1";
@@ -78,5 +90,6 @@
 
         private Label label1;
         private Krypton.Workspace.KryptonWorkspace kryptonWorkspace1;
+        private Button button1;
     }
 }

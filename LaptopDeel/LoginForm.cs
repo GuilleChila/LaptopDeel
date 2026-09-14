@@ -50,9 +50,43 @@ namespace LaptopDeel
         // Evento asociado al botón "btnIniciarSesion"
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-            // Directo sin validaciones: notifica que se presionó el botón y cierra el login
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            string email = txtEmail.Text.Trim();
+            string password = txtPassword.Text.Trim();
+
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                // Se utilizan los tipos nativos de Krypton para botones e íconos
+                KryptonMessageBox.Show(
+                    "Por favor, ingrese su correo y contraseña.",
+                    "Atención",
+                    KryptonMessageBoxButtons.OK,
+                    KryptonMessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            // Validación temporal previa a la conexión con SQL Server
+            if (email == "admin@laptopdeel.com" && password == "admin123")
+            {
+                this.Tag = "Admin";
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else if (email == "vendedor@laptopdeel.com" && password == "vendedor123")
+            {
+                this.Tag = "Vendedor";
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                KryptonMessageBox.Show(
+                    "Credenciales incorrectas. Verifique el usuario y la clave.",
+                    "Error de Autenticación",
+                    KryptonMessageBoxButtons.OK,
+                    KryptonMessageBoxIcon.Error
+                );
+            }
         }
 
         private void txtEmail_Paint(object sender, PaintEventArgs e) { }

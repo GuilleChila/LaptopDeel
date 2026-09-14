@@ -10,8 +10,8 @@ namespace LaptopDeel
 {
     public partial class ControlMenuAdmin : UserControl
     {
-        private FormPrincipal formPadre;
-        public ControlMenuAdmin(FormPrincipal padre)
+        private FormAdminPrincipal formPadre;
+        public ControlMenuAdmin(FormAdminPrincipal padre)
         {
             InitializeComponent();
             this.formPadre = padre;

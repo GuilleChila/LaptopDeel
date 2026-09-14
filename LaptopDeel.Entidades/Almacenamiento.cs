@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LaptopDeel.Entidades
 {
-    internal class Almacenamiento
+    public class Almacenamiento
     {
         public int IdAlmacenamiento { get; set; }
         public string Tipo { get; set; } = string.Empty;

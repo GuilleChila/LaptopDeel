@@ -78,6 +78,12 @@ namespace LaptopDeel
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+            else if (email == "gerente@laptopdeel.com" && password == "gerente123")
+            {
+                this.Tag = "Gerente";
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
             else
             {
                 KryptonMessageBox.Show(

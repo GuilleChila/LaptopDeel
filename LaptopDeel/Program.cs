@@ -32,6 +32,17 @@ namespace LaptopDeel
                                 }
                             }
                         }
+                        else if (rolAcceso == "Gerente")
+                        {
+                            using (FormCeoPrincipal formCeo = new FormCeoPrincipal())
+                            {
+                                DialogResult resultado = formCeo.ShowDialog();
+                                if (resultado != DialogResult.Retry)
+                                {
+                                    continuarEjecucion = false;
+                                }
+                            }
+                        }
                         else
                         {
                             using (FormAdminPrincipal formAdmin = new FormAdminPrincipal())

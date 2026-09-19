@@ -34,5 +34,22 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
+
+        private void btnNavUsuarios_Click(object sender, EventArgs e)
+        {
+            // Cambiar estado visual del menú activo
+            btnNavInicio.StateCommon.Back.Color1 = Color.FromArgb(30, 41, 59);
+            btnNavUsuarios.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235); // Destacar botón seleccionado
+
+            // Instanciar y cargar la vista dentro del contenedor canvas
+            ControlUsuarios vistaUsuarios = new ControlUsuarios
+            {
+                Dock = DockStyle.Fill
+            };
+
+            panelCanvas.Controls.Clear();
+            panelCanvas.Controls.Add(vistaUsuarios);
+            vistaUsuarios.BringToFront();
+        }
     }
 }

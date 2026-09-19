@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LaptopDeel.Entidades\LaptopDeel.Entidades.csproj" />
+    <ProjectReference Include="..\LaptopDeel.Datos\LaptopDeel.Datos.csproj" />
   </ItemGroup>
 
   <ItemGroup>

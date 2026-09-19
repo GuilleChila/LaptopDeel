@@ -1,53 +1,58 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Krypton.Toolkit;
+using LaptopDeel.Datos;
+using LaptopDeel.Entidades;
 
 namespace LaptopDeel
 {
     public partial class LoginForm : KryptonForm
     {
+        // Instancia del DAO para interactuar con la base de datos
+        private readonly UsuarioDAO _usuarioDAO;
+
+        // Propiedad pública para que Program.cs o los formularios principales tengan todos los datos del usuario logueado
+        public Usuario? UsuarioAutenticado { get; private set; }
+
         public LoginForm()
         {
             InitializeComponent();
+            _usuarioDAO = new UsuarioDAO();
             ConfigurarEstiloVentana();
         }
 
         private void ConfigurarEstiloVentana()
         {
-            // Configuración de dimensiones fijas del formulario
             this.Text = "LaptopDeel - Iniciar Sesión";
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1360, 720);
             this.MinimumSize = new Size(1360, 720);
 
-            // 1. Obtener la ruta dinámica del archivo dentro de la carpeta Assets del ejecutable
             string rutaImagen = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "fondo_login.jpg");
 
             if (File.Exists(rutaImagen))
             {
-                // Instanciar el PictureBox para que funcione como lienzo de fondo
                 PictureBox pbFondo = new PictureBox
                 {
                     Image = Image.FromFile(rutaImagen),
-                    SizeMode = PictureBoxSizeMode.StretchImage, // Fuerza a estirar la imagen exacto a 1360x720 px
+                    SizeMode = PictureBoxSizeMode.StretchImage,
                     Dock = DockStyle.Fill
                 };
 
-                // Agregar el PictureBox a los controles del formulario y enviarlo al fondo
                 this.Controls.Add(pbFondo);
                 pbFondo.SendToBack();
             }
 
-            // 2. Traer la tarjeta central al frente de la jerarquía visual
             if (panelTarjetaCentral != null)
             {
                 panelTarjetaCentral.BringToFront();
             }
         }
-           
-        // Evento asociado al botón "btnIniciarSesion"
+
+        // Evento asociado al botón "btnIniciarSesion" conectado a MariaDB
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
@@ -55,7 +60,6 @@ namespace LaptopDeel
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                // Se utilizan los tipos nativos de Krypton para botones e íconos
                 KryptonMessageBox.Show(
                     "Por favor, ingrese su correo y contraseña.",
                     "Atención",
@@ -65,30 +69,55 @@ namespace LaptopDeel
                 return;
             }
 
-            // Validación temporal previa a la conexión con SQL Server
-            if (email == "admin@laptopdeel.com" && password == "admin123")
+            try
             {
-                this.Tag = "Admin";
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                // Consulta real contra MariaDB
+                Usuario? usuario = _usuarioDAO.IniciarSesion(email, password);
+
+                if (usuario != null)
+                {
+                    this.UsuarioAutenticado = usuario;
+
+                    // Normalizamos el Tag para que coincida con lo que evalúa tu Program.cs actual
+                    string nombreRol = usuario.RolUsuario?.RolName ?? "";
+
+                    if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase) ||
+                        nombreRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.Tag = "Admin";
+                    }
+                    else if (nombreRol.Equals("Ventas", StringComparison.OrdinalIgnoreCase) ||
+                             nombreRol.Equals("Vendedor", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.Tag = "Vendedor";
+                    }
+                    else if (nombreRol.Equals("Gerente", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.Tag = "Gerente";
+                    }
+                    else
+                    {
+                        this.Tag = nombreRol;
+                    }
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    KryptonMessageBox.Show(
+                        "Credenciales incorrectas o usuario inactivo.",
+                        "Error de Autenticación",
+                        KryptonMessageBoxButtons.OK,
+                        KryptonMessageBoxIcon.Error
+                    );
+                }
             }
-            else if (email == "vendedor@laptopdeel.com" && password == "vendedor123")
-            {
-                this.Tag = "Vendedor";
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else if (email == "gerente@laptopdeel.com" && password == "gerente123")
-            {
-                this.Tag = "Gerente";
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else
+            catch (Exception ex)
             {
                 KryptonMessageBox.Show(
-                    "Credenciales incorrectas. Verifique el usuario y la clave.",
-                    "Error de Autenticación",
+                    $"Ocurrió un error al conectar con la base de datos:\n{ex.Message}",
+                    "Error de Conexión",
                     KryptonMessageBoxButtons.OK,
                     KryptonMessageBoxIcon.Error
                 );

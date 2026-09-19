@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="LaptopDeel.Datos/LaptopDeel.Datos.csproj" />
   <Project Path="LaptopDeel.Entidades/LaptopDeel.Entidades.csproj" />
   <Project Path="LaptopDeel/LaptopDeel.csproj" />
 </Solution>

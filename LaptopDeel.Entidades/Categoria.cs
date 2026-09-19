@@ -20,7 +20,7 @@ namespace LaptopDeel.Entidades
             Eliminado = eliminado;
         }
         public override string ToString()
-        {
+        {          
             return Nombre;
         }
     }

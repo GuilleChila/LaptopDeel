@@ -1,9 +1,5 @@
 <Solution>
-<<<<<<< Updated upstream
-  <Project Path="LaptopDeel.Datos/LaptopDeel.Datos.csproj" />
-=======
-  <Project Path="LaptopDeel.Datos/LaptopDeel.Datos.csproj" Id="00d513fe-aad5-4e9d-a827-b90a9415d737" />
->>>>>>> Stashed changes
-  <Project Path="LaptopDeel.Entidades/LaptopDeel.Entidades.csproj" />
   <Project Path="LaptopDeel/LaptopDeel.csproj" />
+  <Project Path="LaptopDeel.Datos/LaptopDeel.Datos.csproj" />
+  <Project Path="LaptopDeel.Entidades/LaptopDeel.Entidades.csproj" />
 </Solution>

@@ -71,14 +71,14 @@ namespace LaptopDeel
 
             try
             {
-                // Consulta real contra MariaDB
+                // Consulta real contra MariaDB pasando por UsuarioDAO
                 Usuario? usuario = _usuarioDAO.IniciarSesion(email, password);
 
                 if (usuario != null)
                 {
                     this.UsuarioAutenticado = usuario;
 
-                    // Normalizamos el Tag para que coincida con lo que evalúa tu Program.cs actual
+                    // Normalizamos el Tag según el nombre de rol obtenido de la BD (r.rol_nombre)
                     string nombreRol = usuario.RolUsuario?.RolName ?? "";
 
                     if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase) ||

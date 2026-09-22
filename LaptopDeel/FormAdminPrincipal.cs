@@ -7,17 +7,26 @@ namespace LaptopDeel
 {
     public partial class FormAdminPrincipal : KryptonForm
     {
+        // Se especifica 'System.Windows.Forms.Timer' explícitamente para resolver el error CS0104
+        private System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
+
+        // Se declara como nulable (UserControl?) para corregir la advertencia CS8618
+        private UserControl? vistaCargando;
+        private double nivelOpacidad = 0.0;
+
         public FormAdminPrincipal()
         {
             InitializeComponent();
             ConfigurarEstiloVentana();
+            ConfigurarOptimizacionesRender();
+            ConfigurarTimerTransicion();
+            VincularEventosNavegacion();
         }
 
         private void ConfigurarEstiloVentana()
         {
             this.Text = "LaptopDeel - Panel de Administración";
 
-            // Permite mostrar la barra superior con botones de control (Minimizar, Expandir y Cerrar)
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.ControlBox = true;
             this.MaximizeBox = true;
@@ -28,28 +37,129 @@ namespace LaptopDeel
             this.MinimumSize = new Size(1360, 720);
         }
 
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        private void ConfigurarOptimizacionesRender()
         {
-            // Notifica a Program.cs que se cerró sesión para retornar al Login
-            this.DialogResult = DialogResult.Retry;
-            this.Close();
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                           ControlStyles.AllPaintingInWmPaint |
+                           ControlStyles.UserPaint, true);
+            this.UpdateStyles();
+
+            typeof(Panel).InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.SetProperty |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.NonPublic,
+                null, panelCanvas, new object[] { true });
         }
 
-        private void btnNavUsuarios_Click(object sender, EventArgs e)
+        private void ConfigurarTimerTransicion()
         {
-            // Cambiar estado visual del menú activo
-            btnNavInicio.StateCommon.Back.Color1 = Color.FromArgb(30, 41, 59);
-            btnNavUsuarios.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235); // Destacar botón seleccionado
+            timerTransition.Interval = 15; // ~60 FPS para suavidad
+            timerTransition.Tick += TimerTransition_Tick;
+        }
 
-            // Instanciar y cargar la vista dentro del contenedor canvas
-            ControlUsuarios vistaUsuarios = new ControlUsuarios
+        private void VincularEventosNavegacion()
+        {
+            this.btnNavInicio.Click += new System.EventHandler(this.btnNavInicio_Click);
+            this.btnNavInventario.Click += new System.EventHandler(this.btnNavInventario_Click);
+            this.btnNavUsuarios.Click += new System.EventHandler(this.btnNavUsuarios_Click);
+            this.btnNavClientes.Click += new System.EventHandler(this.btnNavClientes_Click);
+
+            this.btnAccionNotebook.Click += new System.EventHandler(this.btnNavInventario_Click);
+            this.btnAccionUsuarios.Click += new System.EventHandler(this.btnNavUsuarios_Click);
+        }
+
+        private void ResetearEstadosSidebar(KryptonButton botonActivo)
+        {
+            btnNavInicio.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavInicio.StateCommon.Back.Color2 = Color.Transparent;
+
+            btnNavPOS.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavPOS.StateCommon.Back.Color2 = Color.Transparent;
+
+            btnNavInventario.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavInventario.StateCommon.Back.Color2 = Color.Transparent;
+
+            btnNavUsuarios.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavUsuarios.StateCommon.Back.Color2 = Color.Transparent;
+
+            btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
+
+            if (botonActivo != null)
             {
-                Dock = DockStyle.Fill
-            };
+                botonActivo.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
+                botonActivo.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+                botonActivo.StateCommon.Content.ShortText.Color1 = Color.White;
+            }
+        }
+
+        private void CargarVistaConTransicion(UserControl nuevaVista)
+        {
+            panelCanvas.SuspendLayout();
 
             panelCanvas.Controls.Clear();
-            panelCanvas.Controls.Add(vistaUsuarios);
-            vistaUsuarios.BringToFront();
+            nuevaVista.Dock = DockStyle.Fill;
+            nuevaVista.Visible = false;
+            panelCanvas.Controls.Add(nuevaVista);
+            nuevaVista.BringToFront();
+
+            panelCanvas.ResumeLayout(true);
+
+            vistaCargando = nuevaVista;
+            nivelOpacidad = 0.0;
+            vistaCargando.Visible = true;
+            timerTransition.Start();
+        }
+
+        private void TimerTransition_Tick(object? sender, EventArgs e)
+        {
+            nivelOpacidad += 0.15;
+            if (nivelOpacidad >= 1.0)
+            {
+                timerTransition.Stop();
+                if (vistaCargando != null)
+                {
+                    vistaCargando.Refresh();
+                }
+            }
+        }
+
+        // --- RUTAS Y MANEJADORES DE EVENTOS CON FIRMA NULABLE (CS8622) ---
+
+        private void btnNavInicio_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavInicio);
+
+            panelCanvas.SuspendLayout();
+            panelCanvas.Controls.Clear();
+
+            panelCanvas.Controls.Add(this.lblBienvenida);
+            panelCanvas.Controls.Add(this.tableLayoutPanelCards);
+            panelCanvas.ResumeLayout(true);
+        }
+
+        private void btnNavInventario_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavInventario);
+            CargarVistaConTransicion(new ControlInventario());
+        }
+
+        private void btnNavUsuarios_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavUsuarios);
+            CargarVistaConTransicion(new ControlUsuarios());
+        }
+
+        private void btnNavClientes_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavClientes);
+            CargarVistaConTransicion(new ControlClientes());
+        }
+
+        private void btnCerrarSesion_Click(object? sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Retry;
+            this.Close();
         }
     }
 }

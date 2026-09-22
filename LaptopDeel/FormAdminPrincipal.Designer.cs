@@ -80,7 +80,7 @@
             // lblStatusDB
             // 
             lblStatusDB.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblStatusDB.Location = new Point(1088, 20);
+            lblStatusDB.Location = new Point(904, 20);
             lblStatusDB.Name = "lblStatusDB";
             lblStatusDB.Size = new Size(140, 24);
             lblStatusDB.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129);
@@ -144,6 +144,7 @@
             btnNavInventario.TabIndex = 2;
             btnNavInventario.Values.DropDownArrowColor = Color.Empty;
             btnNavInventario.Values.Text = "💻 Inventario";
+            btnNavInventario.Click += btnNavInventario_Click;
             // 
             // btnNavUsuarios
             // 
@@ -171,11 +172,12 @@
             btnNavClientes.TabIndex = 4;
             btnNavClientes.Values.DropDownArrowColor = Color.Empty;
             btnNavClientes.Values.Text = "📋 Clientes";
+            btnNavClientes.Click += btnNavClientes_Click;
             // 
             // lblUsuario
             // 
             lblUsuario.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblUsuario.Location = new Point(15, 547);
+            lblUsuario.Location = new Point(15, 541);
             lblUsuario.Name = "lblUsuario";
             lblUsuario.Size = new Size(179, 27);
             lblUsuario.StateCommon.ShortText.Color1 = Color.White;

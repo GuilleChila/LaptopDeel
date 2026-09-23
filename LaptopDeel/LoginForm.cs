@@ -76,10 +76,12 @@ namespace LaptopDeel
 
                 if (usuario != null)
                 {
+                    // Guardamos el usuario autenticado en la propiedad pública
                     this.UsuarioAutenticado = usuario;
 
                     // Normalizamos el Tag según el nombre de rol obtenido de la BD (r.rol_nombre)
                     string nombreRol = usuario.RolUsuario?.RolName ?? "";
+
 
                     if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase) ||
                         nombreRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))

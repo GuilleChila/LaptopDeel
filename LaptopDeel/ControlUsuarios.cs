@@ -18,6 +18,8 @@ namespace LaptopDeel
         public ControlUsuarios()
         {
             InitializeComponent();
+            // Le decimos que por defecto siempre intente rellenar el espacio donde lo pongan
+            this.Dock = DockStyle.Fill;
             usuarioDAO = new UsuarioDAO();
             listaUsuariosMemoria = new List<Usuario>();
         }

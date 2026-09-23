@@ -17,350 +17,357 @@
 
         private void InitializeComponent()
         {
-            this.panelHeader = new Krypton.Toolkit.KryptonPanel();
-            this.lblTituloApp = new Krypton.Toolkit.KryptonLabel();
-            this.lblVendedorHeader = new Krypton.Toolkit.KryptonLabel();
-            this.lblStatusDB = new Krypton.Toolkit.KryptonLabel();
-            this.lblFechaHora = new Krypton.Toolkit.KryptonLabel();
-            this.panelSidebar = new Krypton.Toolkit.KryptonPanel();
-            this.btnNavNuevaVenta = new Krypton.Toolkit.KryptonButton();
-            this.btnNavClientes = new Krypton.Toolkit.KryptonButton();
-            this.btnNavBuscarNotebooks = new Krypton.Toolkit.KryptonButton();
-            this.lblUsuarioSidebar = new Krypton.Toolkit.KryptonLabel();
-            this.btnCerrarSesion = new Krypton.Toolkit.KryptonButton();
-            this.panelCanvas = new Krypton.Toolkit.KryptonPanel();
-            this.lblSubtituloModulo = new Krypton.Toolkit.KryptonLabel();
-            this.lblTituloModulo = new Krypton.Toolkit.KryptonLabel();
-            this.tableLayoutPanelPOS = new System.Windows.Forms.TableLayoutPanel();
-            this.panelCatalogo = new Krypton.Toolkit.KryptonPanel();
-            this.lblTituloCatalogo = new Krypton.Toolkit.KryptonLabel();
-            this.txtBuscarNotebook = new Krypton.Toolkit.KryptonTextBox();
-            this.dgvCatalogo = new Krypton.Toolkit.KryptonDataGridView();
-            this.panelCarrito = new Krypton.Toolkit.KryptonPanel();
-            this.lblClienteSeleccionado = new Krypton.Toolkit.KryptonLabel();
-            this.lblResumenCompra = new Krypton.Toolkit.KryptonLabel();
-            this.lblTotalPagar = new Krypton.Toolkit.KryptonLabel();
-            this.lblMontoTotal = new Krypton.Toolkit.KryptonLabel();
-            this.btnProcesarVenta = new Krypton.Toolkit.KryptonButton();
-
-            ((System.ComponentModel.ISupportInitialize)(this.panelHeader)).BeginInit();
-            this.panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelSidebar)).BeginInit();
-            this.panelSidebar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCanvas)).BeginInit();
-            this.panelCanvas.SuspendLayout();
-            this.tableLayoutPanelPOS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCatalogo)).BeginInit();
-            this.panelCatalogo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCatalogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCarrito)).BeginInit();
-            this.panelCarrito.SuspendLayout();
-            this.SuspendLayout();
-
+            panelHeader = new Krypton.Toolkit.KryptonPanel();
+            lblTituloApp = new Krypton.Toolkit.KryptonLabel();
+            lblStatusDB = new Krypton.Toolkit.KryptonLabel();
+            panelSidebar = new Krypton.Toolkit.KryptonPanel();
+            btnNavNuevaVenta = new Krypton.Toolkit.KryptonButton();
+            btnNavClientes = new Krypton.Toolkit.KryptonButton();
+            btnNavBuscarNotebooks = new Krypton.Toolkit.KryptonButton();
+            lblUsuarioSidebar = new Krypton.Toolkit.KryptonLabel();
+            btnCerrarSesion = new Krypton.Toolkit.KryptonButton();
+            panelCanvas = new Krypton.Toolkit.KryptonPanel();
+            lblSubtituloModulo = new Krypton.Toolkit.KryptonLabel();
+            lblTituloModulo = new Krypton.Toolkit.KryptonLabel();
+            tableLayoutPanelPOS = new TableLayoutPanel();
+            panelCatalogo = new Krypton.Toolkit.KryptonPanel();
+            lblTituloCatalogo = new Krypton.Toolkit.KryptonLabel();
+            txtBuscarNotebook = new Krypton.Toolkit.KryptonTextBox();
+            dgvCatalogo = new Krypton.Toolkit.KryptonDataGridView();
+            panelCarrito = new Krypton.Toolkit.KryptonPanel();
+            lblClienteSeleccionado = new Krypton.Toolkit.KryptonLabel();
+            lblResumenCompra = new Krypton.Toolkit.KryptonLabel();
+            lblTotalPagar = new Krypton.Toolkit.KryptonLabel();
+            lblMontoTotal = new Krypton.Toolkit.KryptonLabel();
+            btnProcesarVenta = new Krypton.Toolkit.KryptonButton();
+            ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
+            panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)panelSidebar).BeginInit();
+            panelSidebar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)panelCanvas).BeginInit();
+            panelCanvas.SuspendLayout();
+            tableLayoutPanelPOS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)panelCatalogo).BeginInit();
+            panelCatalogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCatalogo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCarrito).BeginInit();
+            panelCarrito.SuspendLayout();
+            SuspendLayout();
             // 
-            // panelHeader (Encabezado Superior #1E293B)
+            // panelHeader
             // 
-            this.panelHeader.Controls.Add(this.lblTituloApp);
-            this.panelHeader.Controls.Add(this.lblVendedorHeader);
-            this.panelHeader.Controls.Add(this.lblStatusDB);
-            this.panelHeader.Controls.Add(this.lblFechaHora);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1360, 60);
-            this.panelHeader.StateCommon.Color1 = System.Drawing.Color.FromArgb(30, 41, 59);
-            this.panelHeader.StateCommon.Color2 = System.Drawing.Color.FromArgb(30, 41, 59);
-            this.panelHeader.TabIndex = 0;
-
+            panelHeader.Controls.Add(lblTituloApp);
+            panelHeader.Controls.Add(lblStatusDB);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1360, 60);
+            panelHeader.StateCommon.Color1 = Color.FromArgb(30, 41, 59);
+            panelHeader.StateCommon.Color2 = Color.FromArgb(30, 41, 59);
+            panelHeader.TabIndex = 0;
+            // 
             // lblTituloApp
-            this.lblTituloApp.Location = new System.Drawing.Point(20, 15);
-            this.lblTituloApp.Name = "lblTituloApp";
-            this.lblTituloApp.Size = new System.Drawing.Size(160, 30);
-            this.lblTituloApp.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
-            this.lblTituloApp.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTituloApp.Values.Text = "LaptopDeel POS";
-
-            // lblVendedorHeader
-            this.lblVendedorHeader.Location = new System.Drawing.Point(190, 20);
-            this.lblVendedorHeader.Name = "lblVendedorHeader";
-            this.lblVendedorHeader.Size = new System.Drawing.Size(200, 20);
-            this.lblVendedorHeader.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblVendedorHeader.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.lblVendedorHeader.Values.Text = "|   Vendedor: Guillermo Guerrero";
-
-            // lblStatusDB (Anclado a la Derecha)
-            this.lblStatusDB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatusDB.Location = new System.Drawing.Point(1020, 20);
-            this.lblStatusDB.Name = "lblStatusDB";
-            this.lblStatusDB.Size = new System.Drawing.Size(150, 20);
-            this.lblStatusDB.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.lblStatusDB.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblStatusDB.Values.Text = "● Status DB: Conectado";
-
-            // lblFechaHora (Anclado a la Derecha)
-            this.lblFechaHora.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFechaHora.Location = new System.Drawing.Point(1180, 20);
-            this.lblFechaHora.Name = "lblFechaHora";
-            this.lblFechaHora.Size = new System.Drawing.Size(160, 20);
-            this.lblFechaHora.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblFechaHora.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFechaHora.Values.Text = "18 Octubre 2026 — 14:35";
-
             // 
-            // panelSidebar (Menú Lateral Izquierdo)
+            lblTituloApp.Location = new Point(20, 15);
+            lblTituloApp.Name = "lblTituloApp";
+            lblTituloApp.Size = new Size(197, 36);
+            lblTituloApp.StateCommon.ShortText.Color1 = Color.White;
+            lblTituloApp.StateCommon.ShortText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTituloApp.TabIndex = 0;
+            lblTituloApp.Values.Text = "LaptopDeel POS";
             // 
-            this.panelSidebar.Controls.Add(this.btnNavNuevaVenta);
-            this.panelSidebar.Controls.Add(this.btnNavClientes);
-            this.panelSidebar.Controls.Add(this.btnNavBuscarNotebooks);
-            this.panelSidebar.Controls.Add(this.lblUsuarioSidebar);
-            this.panelSidebar.Controls.Add(this.btnCerrarSesion);
-            this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSidebar.Location = new System.Drawing.Point(0, 60);
-            this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(240, 660);
-            this.panelSidebar.StateCommon.Color1 = System.Drawing.Color.FromArgb(30, 41, 59);
-            this.panelSidebar.StateCommon.Color2 = System.Drawing.Color.FromArgb(30, 41, 59);
-            this.panelSidebar.TabIndex = 1;
-
-            // btnNavNuevaVenta (Sólido sin degradados)
-            this.btnNavNuevaVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNavNuevaVenta.Location = new System.Drawing.Point(15, 30);
-            this.btnNavNuevaVenta.Name = "btnNavNuevaVenta";
-            this.btnNavNuevaVenta.Size = new System.Drawing.Size(210, 45);
-            this.btnNavNuevaVenta.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.btnNavNuevaVenta.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.btnNavNuevaVenta.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnNavNuevaVenta.StateCommon.Content.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnNavNuevaVenta.Values.Text = "🛒 Nueva Venta";
-
+            // lblStatusDB
+            // 
+            lblStatusDB.Dock = DockStyle.Right;
+            lblStatusDB.Location = new Point(1232, 0);
+            lblStatusDB.Name = "lblStatusDB";
+            lblStatusDB.Size = new Size(128, 60);
+            lblStatusDB.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129);
+            lblStatusDB.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblStatusDB.TabIndex = 2;
+            lblStatusDB.Values.Text = "●DB: Conectado";
+            // 
+            // panelSidebar
+            // 
+            panelSidebar.Controls.Add(btnNavNuevaVenta);
+            panelSidebar.Controls.Add(btnNavClientes);
+            panelSidebar.Controls.Add(btnNavBuscarNotebooks);
+            panelSidebar.Controls.Add(lblUsuarioSidebar);
+            panelSidebar.Controls.Add(btnCerrarSesion);
+            panelSidebar.Dock = DockStyle.Left;
+            panelSidebar.Location = new Point(0, 60);
+            panelSidebar.Name = "panelSidebar";
+            panelSidebar.Size = new Size(240, 660);
+            panelSidebar.StateCommon.Color1 = Color.FromArgb(30, 41, 59);
+            panelSidebar.StateCommon.Color2 = Color.FromArgb(30, 41, 59);
+            panelSidebar.TabIndex = 1;
+            // 
+            // btnNavNuevaVenta
+            // 
+            btnNavNuevaVenta.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnNavNuevaVenta.Location = new Point(15, 30);
+            btnNavNuevaVenta.Name = "btnNavNuevaVenta";
+            btnNavNuevaVenta.Size = new Size(210, 45);
+            btnNavNuevaVenta.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
+            btnNavNuevaVenta.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+            btnNavNuevaVenta.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnNavNuevaVenta.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnNavNuevaVenta.TabIndex = 0;
+            btnNavNuevaVenta.Values.DropDownArrowColor = Color.Empty;
+            btnNavNuevaVenta.Values.Text = "\U0001f6d2 Nueva Venta";
+            // 
             // btnNavClientes
-            this.btnNavClientes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNavClientes.Location = new System.Drawing.Point(15, 85);
-            this.btnNavClientes.Name = "btnNavClientes";
-            this.btnNavClientes.Size = new System.Drawing.Size(210, 45);
-            this.btnNavClientes.StateCommon.Back.Color1 = System.Drawing.Color.Transparent;
-            this.btnNavClientes.StateCommon.Back.Color2 = System.Drawing.Color.Transparent;
-            this.btnNavClientes.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.btnNavClientes.Values.Text = "👥 Clientes";
-
+            // 
+            btnNavClientes.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnNavClientes.Location = new Point(15, 85);
+            btnNavClientes.Name = "btnNavClientes";
+            btnNavClientes.Size = new Size(210, 45);
+            btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
+            btnNavClientes.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
+            btnNavClientes.TabIndex = 1;
+            btnNavClientes.Values.DropDownArrowColor = Color.Empty;
+            btnNavClientes.Values.Text = "👥 Clientes";
+            // 
             // btnNavBuscarNotebooks
-            this.btnNavBuscarNotebooks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNavBuscarNotebooks.Location = new System.Drawing.Point(15, 140);
-            this.btnNavBuscarNotebooks.Name = "btnNavBuscarNotebooks";
-            this.btnNavBuscarNotebooks.Size = new System.Drawing.Size(210, 45);
-            this.btnNavBuscarNotebooks.StateCommon.Back.Color1 = System.Drawing.Color.Transparent;
-            this.btnNavBuscarNotebooks.StateCommon.Back.Color2 = System.Drawing.Color.Transparent;
-            this.btnNavBuscarNotebooks.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.btnNavBuscarNotebooks.Values.Text = "🔍 Buscar Notebooks";
-
-            // lblUsuarioSidebar (Pie del Menú Lateral)
-            this.lblUsuarioSidebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblUsuarioSidebar.Location = new System.Drawing.Point(15, 550);
-            this.lblUsuarioSidebar.Name = "lblUsuarioSidebar";
-            this.lblUsuarioSidebar.Size = new System.Drawing.Size(210, 25);
-            this.lblUsuarioSidebar.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
-            this.lblUsuarioSidebar.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblUsuarioSidebar.Values.Text = "👤 Guillermo (POS)";
-
+            // 
+            btnNavBuscarNotebooks.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnNavBuscarNotebooks.Location = new Point(15, 140);
+            btnNavBuscarNotebooks.Name = "btnNavBuscarNotebooks";
+            btnNavBuscarNotebooks.Size = new Size(210, 45);
+            btnNavBuscarNotebooks.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavBuscarNotebooks.StateCommon.Back.Color2 = Color.Transparent;
+            btnNavBuscarNotebooks.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
+            btnNavBuscarNotebooks.TabIndex = 2;
+            btnNavBuscarNotebooks.Values.DropDownArrowColor = Color.Empty;
+            btnNavBuscarNotebooks.Values.Text = "🔍 Buscar Notebooks";
+            // 
+            // lblUsuarioSidebar
+            // 
+            lblUsuarioSidebar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblUsuarioSidebar.Location = new Point(15, 547);
+            lblUsuarioSidebar.Name = "lblUsuarioSidebar";
+            lblUsuarioSidebar.Size = new Size(158, 27);
+            lblUsuarioSidebar.StateCommon.ShortText.Color1 = Color.White;
+            lblUsuarioSidebar.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblUsuarioSidebar.TabIndex = 3;
+            lblUsuarioSidebar.Values.Text = "👤 Guillermo (POS)";
+            // 
             // btnCerrarSesion
-            this.btnCerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCerrarSesion.Location = new System.Drawing.Point(15, 585);
-            this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(210, 45);
-            this.btnCerrarSesion.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.btnCerrarSesion.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.btnCerrarSesion.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnCerrarSesion.StateCommon.Content.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCerrarSesion.Values.Text = "🔴 Cerrar Sesión";
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
-
             // 
-            // panelCanvas (Lienzo Central #F8FAFC)
+            btnCerrarSesion.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnCerrarSesion.Location = new Point(15, 585);
+            btnCerrarSesion.Name = "btnCerrarSesion";
+            btnCerrarSesion.Size = new Size(210, 45);
+            btnCerrarSesion.StateCommon.Back.Color1 = Color.FromArgb(239, 68, 68);
+            btnCerrarSesion.StateCommon.Back.Color2 = Color.FromArgb(239, 68, 68);
+            btnCerrarSesion.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnCerrarSesion.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnCerrarSesion.TabIndex = 4;
+            btnCerrarSesion.Values.DropDownArrowColor = Color.Empty;
+            btnCerrarSesion.Values.Text = "🔴 Cerrar Sesión";
+            btnCerrarSesion.Click += btnCerrarSesion_Click;
             // 
-            this.panelCanvas.Controls.Add(this.lblSubtituloModulo);
-            this.panelCanvas.Controls.Add(this.lblTituloModulo);
-            this.panelCanvas.Controls.Add(this.tableLayoutPanelPOS);
-            this.panelCanvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCanvas.Location = new System.Drawing.Point(240, 60);
-            this.panelCanvas.Name = "panelCanvas";
-            this.panelCanvas.Size = new System.Drawing.Size(1120, 660);
-            this.panelCanvas.StateCommon.Color1 = System.Drawing.Color.FromArgb(248, 250, 252);
-            this.panelCanvas.StateCommon.Color2 = System.Drawing.Color.FromArgb(248, 250, 252);
-            this.panelCanvas.TabIndex = 2;
-
+            // panelCanvas
+            // 
+            panelCanvas.Controls.Add(lblSubtituloModulo);
+            panelCanvas.Controls.Add(lblTituloModulo);
+            panelCanvas.Controls.Add(tableLayoutPanelPOS);
+            panelCanvas.Dock = DockStyle.Fill;
+            panelCanvas.Location = new Point(240, 60);
+            panelCanvas.Name = "panelCanvas";
+            panelCanvas.Size = new Size(1120, 660);
+            panelCanvas.StateCommon.Color1 = Color.FromArgb(248, 250, 252);
+            panelCanvas.StateCommon.Color2 = Color.FromArgb(248, 250, 252);
+            panelCanvas.TabIndex = 2;
+            // 
             // lblSubtituloModulo
-            this.lblSubtituloModulo.Location = new System.Drawing.Point(30, 20);
-            this.lblSubtituloModulo.Name = "lblSubtituloModulo";
-            this.lblSubtituloModulo.Size = new System.Drawing.Size(180, 20);
-            this.lblSubtituloModulo.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.lblSubtituloModulo.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblSubtituloModulo.Values.Text = "PROCESO DE VENTA ACTIVO";
-
+            // 
+            lblSubtituloModulo.Location = new Point(30, 20);
+            lblSubtituloModulo.Name = "lblSubtituloModulo";
+            lblSubtituloModulo.Size = new Size(221, 24);
+            lblSubtituloModulo.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);
+            lblSubtituloModulo.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSubtituloModulo.TabIndex = 0;
+            lblSubtituloModulo.Values.Text = "PROCESO DE VENTA ACTIVO";
+            // 
             // lblTituloModulo
-            this.lblTituloModulo.Location = new System.Drawing.Point(30, 40);
-            this.lblTituloModulo.Name = "lblTituloModulo";
-            this.lblTituloModulo.Size = new System.Drawing.Size(420, 35);
-            this.lblTituloModulo.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(15, 23, 42);
-            this.lblTituloModulo.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTituloModulo.Values.Text = "Módulo de Punto de Venta (POS)";
-
             // 
-            // tableLayoutPanelPOS (65% Catálogo - 35% Resumen Elección)
+            lblTituloModulo.Location = new Point(30, 40);
+            lblTituloModulo.Name = "lblTituloModulo";
+            lblTituloModulo.Size = new Size(499, 46);
+            lblTituloModulo.StateCommon.ShortText.Color1 = Color.FromArgb(15, 23, 42);
+            lblTituloModulo.StateCommon.ShortText.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTituloModulo.TabIndex = 1;
+            lblTituloModulo.Values.Text = "Módulo de Punto de Venta (POS)";
             // 
-            this.tableLayoutPanelPOS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanelPOS.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanelPOS.ColumnCount = 2;
-            this.tableLayoutPanelPOS.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanelPOS.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanelPOS.Controls.Add(this.panelCatalogo, 0, 0);
-            this.tableLayoutPanelPOS.Controls.Add(this.panelCarrito, 1, 0);
-            this.tableLayoutPanelPOS.Location = new System.Drawing.Point(25, 85);
-            this.tableLayoutPanelPOS.Name = "tableLayoutPanelPOS";
-            this.tableLayoutPanelPOS.RowCount = 1;
-            this.tableLayoutPanelPOS.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelPOS.Size = new System.Drawing.Size(1070, 550);
-            this.tableLayoutPanelPOS.TabIndex = 1;
-
+            // tableLayoutPanelPOS
             // 
-            // panelCatalogo (Consulta de Computadoras)
+            tableLayoutPanelPOS.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanelPOS.BackColor = Color.Transparent;
+            tableLayoutPanelPOS.ColumnCount = 2;
+            tableLayoutPanelPOS.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
+            tableLayoutPanelPOS.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            tableLayoutPanelPOS.Controls.Add(panelCatalogo, 0, 0);
+            tableLayoutPanelPOS.Controls.Add(panelCarrito, 1, 0);
+            tableLayoutPanelPOS.Location = new Point(25, 85);
+            tableLayoutPanelPOS.Name = "tableLayoutPanelPOS";
+            tableLayoutPanelPOS.RowCount = 1;
+            tableLayoutPanelPOS.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelPOS.Size = new Size(1070, 550);
+            tableLayoutPanelPOS.TabIndex = 1;
             // 
-            this.panelCatalogo.Controls.Add(this.lblTituloCatalogo);
-            this.panelCatalogo.Controls.Add(this.txtBuscarNotebook);
-            this.panelCatalogo.Controls.Add(this.dgvCatalogo);
-            this.panelCatalogo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCatalogo.Location = new System.Drawing.Point(5, 5);
-            this.panelCatalogo.Margin = new System.Windows.Forms.Padding(5);
-            this.panelCatalogo.Name = "panelCatalogo";
-            this.panelCatalogo.Size = new System.Drawing.Size(685, 540);
-            this.panelCatalogo.StateCommon.Color1 = System.Drawing.Color.White;
-            this.panelCatalogo.StateCommon.Color2 = System.Drawing.Color.White;
-
+            // panelCatalogo
+            // 
+            panelCatalogo.Controls.Add(lblTituloCatalogo);
+            panelCatalogo.Controls.Add(txtBuscarNotebook);
+            panelCatalogo.Controls.Add(dgvCatalogo);
+            panelCatalogo.Dock = DockStyle.Fill;
+            panelCatalogo.Location = new Point(5, 5);
+            panelCatalogo.Margin = new Padding(5);
+            panelCatalogo.Name = "panelCatalogo";
+            panelCatalogo.Size = new Size(685, 540);
+            panelCatalogo.StateCommon.Color1 = Color.White;
+            panelCatalogo.StateCommon.Color2 = Color.White;
+            panelCatalogo.TabIndex = 0;
+            // 
             // lblTituloCatalogo
-            this.lblTituloCatalogo.Location = new System.Drawing.Point(20, 15);
-            this.lblTituloCatalogo.Name = "lblTituloCatalogo";
-            this.lblTituloCatalogo.Size = new System.Drawing.Size(240, 20);
-            this.lblTituloCatalogo.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(100, 116, 139);
-            this.lblTituloCatalogo.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblTituloCatalogo.Values.Text = "CATÁLOGO RÁPIDO DE NOTEBOOKS";
-
+            // 
+            lblTituloCatalogo.Location = new Point(20, 15);
+            lblTituloCatalogo.Name = "lblTituloCatalogo";
+            lblTituloCatalogo.Size = new Size(278, 24);
+            lblTituloCatalogo.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
+            lblTituloCatalogo.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTituloCatalogo.TabIndex = 0;
+            lblTituloCatalogo.Values.Text = "CATÁLOGO RÁPIDO DE NOTEBOOKS";
+            // 
             // txtBuscarNotebook
-            this.txtBuscarNotebook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBuscarNotebook.Location = new System.Drawing.Point(20, 42);
-            this.txtBuscarNotebook.Name = "txtBuscarNotebook";
-            this.txtBuscarNotebook.Size = new System.Drawing.Size(645, 35);
-            this.txtBuscarNotebook.StateCommon.Border.DrawBorders = ((Krypton.Toolkit.PaletteDrawBorders)((((Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom)
-            | Krypton.Toolkit.PaletteDrawBorders.Left)
-            | Krypton.Toolkit.PaletteDrawBorders.Right)));
-            this.txtBuscarNotebook.StateCommon.Border.Rounding = 8F;
-            this.txtBuscarNotebook.Text = "🔍 Buscar por marca, modelo o especificaciones...";
-
+            // 
+            txtBuscarNotebook.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscarNotebook.Location = new Point(20, 42);
+            txtBuscarNotebook.Name = "txtBuscarNotebook";
+            txtBuscarNotebook.Size = new Size(645, 33);
+            txtBuscarNotebook.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            txtBuscarNotebook.StateCommon.Border.Rounding = 8F;
+            txtBuscarNotebook.TabIndex = 1;
+            txtBuscarNotebook.Text = "🔍 Buscar por marca, modelo o especificaciones...";
+            // 
             // dgvCatalogo
-            this.dgvCatalogo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCatalogo.Location = new System.Drawing.Point(20, 90);
-            this.dgvCatalogo.Name = "dgvCatalogo";
-            this.dgvCatalogo.Size = new System.Drawing.Size(645, 430);
-            this.dgvCatalogo.StateCommon.Background.Color1 = System.Drawing.Color.White;
-            this.dgvCatalogo.StateCommon.Background.Color2 = System.Drawing.Color.White;
-
             // 
-            // panelCarrito (Resumen de Computadoras Confirmadas por el Cliente)
+            dgvCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvCatalogo.BorderStyle = BorderStyle.None;
+            dgvCatalogo.ColumnHeadersHeight = 36;
+            dgvCatalogo.Location = new Point(20, 90);
+            dgvCatalogo.Name = "dgvCatalogo";
+            dgvCatalogo.RowHeadersWidth = 51;
+            dgvCatalogo.Size = new Size(645, 430);
+            dgvCatalogo.StateCommon.Background.Color1 = Color.White;
+            dgvCatalogo.StateCommon.Background.Color2 = Color.White;
+            dgvCatalogo.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundList;
+            dgvCatalogo.TabIndex = 2;
             // 
-            this.panelCarrito.Controls.Add(this.lblClienteSeleccionado);
-            this.panelCarrito.Controls.Add(this.lblResumenCompra);
-            this.panelCarrito.Controls.Add(this.lblTotalPagar);
-            this.panelCarrito.Controls.Add(this.lblMontoTotal);
-            this.panelCarrito.Controls.Add(this.btnProcesarVenta);
-            this.panelCarrito.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCarrito.Location = new System.Drawing.Point(700, 5);
-            this.panelCarrito.Margin = new System.Windows.Forms.Padding(5);
-            this.panelCarrito.Name = "panelCarrito";
-            this.panelCarrito.Size = new System.Drawing.Size(365, 540);
-            this.panelCarrito.StateCommon.Color1 = System.Drawing.Color.White;
-            this.panelCarrito.StateCommon.Color2 = System.Drawing.Color.White;
-
+            // panelCarrito
+            // 
+            panelCarrito.Controls.Add(lblClienteSeleccionado);
+            panelCarrito.Controls.Add(lblResumenCompra);
+            panelCarrito.Controls.Add(lblTotalPagar);
+            panelCarrito.Controls.Add(lblMontoTotal);
+            panelCarrito.Controls.Add(btnProcesarVenta);
+            panelCarrito.Dock = DockStyle.Fill;
+            panelCarrito.Location = new Point(700, 5);
+            panelCarrito.Margin = new Padding(5);
+            panelCarrito.Name = "panelCarrito";
+            panelCarrito.Size = new Size(365, 540);
+            panelCarrito.StateCommon.Color1 = Color.White;
+            panelCarrito.StateCommon.Color2 = Color.White;
+            panelCarrito.TabIndex = 1;
+            // 
             // lblClienteSeleccionado
-            this.lblClienteSeleccionado.Location = new System.Drawing.Point(20, 15);
-            this.lblClienteSeleccionado.Name = "lblClienteSeleccionado";
-            this.lblClienteSeleccionado.Size = new System.Drawing.Size(320, 25);
-            this.lblClienteSeleccionado.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(30, 41, 59);
-            this.lblClienteSeleccionado.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblClienteSeleccionado.Values.Text = "👤 Juan Pérez - DNI 19.345.821-K";
-
-            // lblResumenCompra (Aclaración: Resumen de Selección)
-            this.lblResumenCompra.Location = new System.Drawing.Point(20, 55);
-            this.lblResumenCompra.Name = "lblResumenCompra";
-            this.lblResumenCompra.Size = new System.Drawing.Size(260, 20);
-            this.lblResumenCompra.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(100, 116, 139);
-            this.lblResumenCompra.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblResumenCompra.Values.Text = "COMPUTADORAS SELECCIONADAS";
-
+            // 
+            lblClienteSeleccionado.Location = new Point(20, 15);
+            lblClienteSeleccionado.Name = "lblClienteSeleccionado";
+            lblClienteSeleccionado.Size = new Size(273, 27);
+            lblClienteSeleccionado.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
+            lblClienteSeleccionado.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblClienteSeleccionado.TabIndex = 0;
+            lblClienteSeleccionado.Values.Text = "👤 Juan Pérez - DNI 19.345.821-K";
+            // 
+            // lblResumenCompra
+            // 
+            lblResumenCompra.Location = new Point(20, 55);
+            lblResumenCompra.Name = "lblResumenCompra";
+            lblResumenCompra.Size = new Size(268, 24);
+            lblResumenCompra.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
+            lblResumenCompra.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblResumenCompra.TabIndex = 1;
+            lblResumenCompra.Values.Text = "COMPUTADORAS SELECCIONADAS";
+            // 
             // lblTotalPagar
-            this.lblTotalPagar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTotalPagar.Location = new System.Drawing.Point(20, 420);
-            this.lblTotalPagar.Name = "lblTotalPagar";
-            this.lblTotalPagar.Size = new System.Drawing.Size(120, 25);
-            this.lblTotalPagar.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(100, 116, 139);
-            this.lblTotalPagar.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPagar.Values.Text = "SUBTOTAL ESTIMADO:";
-
+            // 
+            lblTotalPagar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblTotalPagar.Location = new Point(20, 417);
+            lblTotalPagar.Name = "lblTotalPagar";
+            lblTotalPagar.Size = new Size(197, 27);
+            lblTotalPagar.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
+            lblTotalPagar.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblTotalPagar.TabIndex = 2;
+            lblTotalPagar.Values.Text = "SUBTOTAL ESTIMADO:";
+            // 
             // lblMontoTotal
-            this.lblMontoTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMontoTotal.Location = new System.Drawing.Point(180, 412);
-            this.lblMontoTotal.Name = "lblMontoTotal";
-            this.lblMontoTotal.Size = new System.Drawing.Size(160, 40);
-            this.lblMontoTotal.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.lblMontoTotal.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblMontoTotal.Values.Text = "$1.849.800";
-
-            // btnProcesarVenta (Puente hacia Facturación)
-            this.btnProcesarVenta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProcesarVenta.Location = new System.Drawing.Point(20, 465);
-            this.btnProcesarVenta.Name = "btnProcesarVenta";
-            this.btnProcesarVenta.Size = new System.Drawing.Size(325, 50);
-            this.btnProcesarVenta.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.btnProcesarVenta.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.btnProcesarVenta.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnProcesarVenta.StateCommon.Content.ShortText.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnProcesarVenta.Values.Text = "📄 Pasar a Facturación";
-            this.btnProcesarVenta.Click += new System.EventHandler(this.btnProcesarVenta_Click);
-
+            // 
+            lblMontoTotal.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblMontoTotal.Location = new Point(33, 360);
+            lblMontoTotal.Name = "lblMontoTotal";
+            lblMontoTotal.Size = new Size(194, 51);
+            lblMontoTotal.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);
+            lblMontoTotal.StateCommon.ShortText.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblMontoTotal.TabIndex = 3;
+            lblMontoTotal.Values.Text = "$1.849.800";
+            // 
+            // btnProcesarVenta
+            // 
+            btnProcesarVenta.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnProcesarVenta.Location = new Point(20, 465);
+            btnProcesarVenta.Name = "btnProcesarVenta";
+            btnProcesarVenta.Size = new Size(325, 50);
+            btnProcesarVenta.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
+            btnProcesarVenta.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+            btnProcesarVenta.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnProcesarVenta.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnProcesarVenta.TabIndex = 4;
+            btnProcesarVenta.Values.DropDownArrowColor = Color.Empty;
+            btnProcesarVenta.Values.Text = "📄 Pasar a Facturación";
+            btnProcesarVenta.Click += btnProcesarVenta_Click;
             // 
             // FormVendedorPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1360, 720);
-            this.Controls.Add(this.panelCanvas);
-            this.Controls.Add(this.panelSidebar);
-            this.Controls.Add(this.panelHeader);
-            this.Name = "FormVendedorPrincipal";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LaptopDeel - Selección y Punto de Venta (POS)";
-
-            ((System.ComponentModel.ISupportInitialize)(this.panelHeader)).EndInit();
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelSidebar)).EndInit();
-            this.panelSidebar.ResumeLayout(false);
-            this.panelSidebar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCanvas)).EndInit();
-            this.panelCanvas.ResumeLayout(false);
-            this.panelCanvas.PerformLayout();
-            this.tableLayoutPanelPOS.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.panelCatalogo)).EndInit();
-            this.panelCatalogo.ResumeLayout(false);
-            this.panelCatalogo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCatalogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCarrito)).EndInit();
-            this.panelCarrito.ResumeLayout(false);
-            this.panelCarrito.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1360, 720);
+            Controls.Add(panelCanvas);
+            Controls.Add(panelSidebar);
+            Controls.Add(panelHeader);
+            Name = "FormVendedorPrincipal";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "LaptopDeel - Selección y Punto de Venta (POS)";
+            ((System.ComponentModel.ISupportInitialize)panelHeader).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)panelSidebar).EndInit();
+            panelSidebar.ResumeLayout(false);
+            panelSidebar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)panelCanvas).EndInit();
+            panelCanvas.ResumeLayout(false);
+            panelCanvas.PerformLayout();
+            tableLayoutPanelPOS.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)panelCatalogo).EndInit();
+            panelCatalogo.ResumeLayout(false);
+            panelCatalogo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCatalogo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCarrito).EndInit();
+            panelCarrito.ResumeLayout(false);
+            panelCarrito.PerformLayout();
+            ResumeLayout(false);
 
         }
 
@@ -368,9 +375,7 @@
 
         private Krypton.Toolkit.KryptonPanel panelHeader;
         private Krypton.Toolkit.KryptonLabel lblTituloApp;
-        private Krypton.Toolkit.KryptonLabel lblVendedorHeader;
         private Krypton.Toolkit.KryptonLabel lblStatusDB;
-        private Krypton.Toolkit.KryptonLabel lblFechaHora;
         private Krypton.Toolkit.KryptonPanel panelSidebar;
         private Krypton.Toolkit.KryptonButton btnNavNuevaVenta;
         private Krypton.Toolkit.KryptonButton btnNavClientes;

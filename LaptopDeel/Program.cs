@@ -8,10 +8,20 @@ namespace LaptopDeel
         [STAThread]
         static void Main()
         {
+
             ApplicationConfiguration.Initialize();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            LoginForm login = new LoginForm();
+
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                // Le mandamos el usuario que se acaba de loguear
+                Application.Run(new FormAdminPrincipal(login.UsuarioAutenticado));
+            }
 
             bool continuarEjecucion = true;
-
             while (continuarEjecucion)
             {
                 using (LoginForm loginForm = new LoginForm())
@@ -61,6 +71,8 @@ namespace LaptopDeel
                     }
                 }
             }
+
+
         }
     }
 }

@@ -17,211 +17,304 @@
 
         private void InitializeComponent()
         {
-            this.lblTituloModulo = new Krypton.Toolkit.KryptonLabel();
-            this.panelFormulario = new Krypton.Toolkit.KryptonPanel();
-            this.lblDNI = new Krypton.Toolkit.KryptonLabel();
-            this.txtDni = new Krypton.Toolkit.KryptonTextBox();
-            this.lblNombre = new Krypton.Toolkit.KryptonLabel();
-            this.txtNombre = new Krypton.Toolkit.KryptonTextBox();
-            this.lblApellido = new Krypton.Toolkit.KryptonLabel();
-            this.txtApellido = new Krypton.Toolkit.KryptonTextBox();
-            this.lblFechaNac = new Krypton.Toolkit.KryptonLabel();
-            this.dtpFechaNacimiento = new Krypton.Toolkit.KryptonDateTimePicker();
-            this.lblCorreo = new Krypton.Toolkit.KryptonLabel();
-            this.txtCorreo = new Krypton.Toolkit.KryptonTextBox();
-            this.lblContrasena = new Krypton.Toolkit.KryptonLabel();
-            this.txtContrasena = new Krypton.Toolkit.KryptonTextBox();
-            this.lblRol = new Krypton.Toolkit.KryptonLabel();
-            this.cmbRol = new Krypton.Toolkit.KryptonComboBox();
-            this.btnGuardarNuevo = new Krypton.Toolkit.KryptonButton();
-            this.btnActualizar = new Krypton.Toolkit.KryptonButton();
-            this.btnLimpiar = new Krypton.Toolkit.KryptonButton();
-
-            this.panelTabla = new Krypton.Toolkit.KryptonPanel();
-            this.txtBuscar = new Krypton.Toolkit.KryptonTextBox();
-            this.cmbFiltroEstado = new Krypton.Toolkit.KryptonComboBox();
-            this.dgvUsuarios = new Krypton.Toolkit.KryptonDataGridView();
-            this.btnDesactivarUsuario = new Krypton.Toolkit.KryptonButton();
-
-            ((System.ComponentModel.ISupportInitialize)(this.panelFormulario)).BeginInit();
-            this.panelFormulario.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelTabla)).BeginInit();
-            this.panelTabla.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbRol)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbFiltroEstado)).BeginInit();
-            this.SuspendLayout();
-
-            // 
-            // ControlUsuarios Base
-            // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.Controls.Add(this.panelTabla);
-            this.Controls.Add(this.panelFormulario);
-            this.Controls.Add(this.lblTituloModulo);
-            this.Name = "ControlUsuarios";
-            this.Size = new System.Drawing.Size(1080, 620);
-            this.Load += new System.EventHandler(this.ControlUsuarios_Load);
-
+            lblTituloModulo = new Krypton.Toolkit.KryptonLabel();
+            panelFormulario = new Krypton.Toolkit.KryptonPanel();
+            lblDNI = new Krypton.Toolkit.KryptonLabel();
+            txtDni = new Krypton.Toolkit.KryptonTextBox();
+            lblNombre = new Krypton.Toolkit.KryptonLabel();
+            txtNombre = new Krypton.Toolkit.KryptonTextBox();
+            lblApellido = new Krypton.Toolkit.KryptonLabel();
+            txtApellido = new Krypton.Toolkit.KryptonTextBox();
+            lblFechaNac = new Krypton.Toolkit.KryptonLabel();
+            dtpFechaNacimiento = new Krypton.Toolkit.KryptonDateTimePicker();
+            lblCorreo = new Krypton.Toolkit.KryptonLabel();
+            txtCorreo = new Krypton.Toolkit.KryptonTextBox();
+            lblContrasena = new Krypton.Toolkit.KryptonLabel();
+            txtContrasena = new Krypton.Toolkit.KryptonTextBox();
+            lblRol = new Krypton.Toolkit.KryptonLabel();
+            cmbRol = new Krypton.Toolkit.KryptonComboBox();
+            btnGuardarNuevo = new Krypton.Toolkit.KryptonButton();
+            btnActualizar = new Krypton.Toolkit.KryptonButton();
+            btnLimpiar = new Krypton.Toolkit.KryptonButton();
+            txtBuscar = new Krypton.Toolkit.KryptonTextBox();
+            cmbFiltroEstado = new Krypton.Toolkit.KryptonComboBox();
+            btnDesactivarUsuario = new Krypton.Toolkit.KryptonButton();
+            dgvUsuarios = new Krypton.Toolkit.KryptonDataGridView();
+            panelTabla = new Krypton.Toolkit.KryptonPanel();
+            ((System.ComponentModel.ISupportInitialize)panelFormulario).BeginInit();
+            panelFormulario.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)cmbRol).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cmbFiltroEstado).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelTabla).BeginInit();
+            panelTabla.SuspendLayout();
+            SuspendLayout();
             // 
             // lblTituloModulo
             // 
-            this.lblTituloModulo.Location = new System.Drawing.Point(20, 15);
-            this.lblTituloModulo.Name = "lblTituloModulo";
-            this.lblTituloModulo.Size = new System.Drawing.Size(390, 32);
-            this.lblTituloModulo.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblTituloModulo.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTituloModulo.TabIndex = 0;
-            this.lblTituloModulo.Values.Text = "Gestión y Control de Cuentas de Usuarios";
-
+            lblTituloModulo.Location = new Point(0, 0);
+            lblTituloModulo.Name = "lblTituloModulo";
+            lblTituloModulo.Size = new Size(548, 41);
+            lblTituloModulo.StateCommon.ShortText.Color1 = Color.FromArgb(15, 23, 42);
+            lblTituloModulo.StateCommon.ShortText.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblTituloModulo.TabIndex = 0;
+            lblTituloModulo.Values.Text = "Gestión y Control de Cuentas de Usuarios";
             // 
-            // panelFormulario (Tarjeta Izquierda)
+            // panelFormulario
             // 
-            this.panelFormulario.Controls.Add(this.lblDNI);
-            this.panelFormulario.Controls.Add(this.txtDni);
-            this.panelFormulario.Controls.Add(this.lblNombre);
-            this.panelFormulario.Controls.Add(this.txtNombre);
-            this.panelFormulario.Controls.Add(this.lblApellido);
-            this.panelFormulario.Controls.Add(this.txtApellido);
-            this.panelFormulario.Controls.Add(this.lblFechaNac);
-            this.panelFormulario.Controls.Add(this.dtpFechaNacimiento);
-            this.panelFormulario.Controls.Add(this.lblCorreo);
-            this.panelFormulario.Controls.Add(this.txtCorreo);
-            this.panelFormulario.Controls.Add(this.lblContrasena);
-            this.panelFormulario.Controls.Add(this.txtContrasena);
-            this.panelFormulario.Controls.Add(this.lblRol);
-            this.panelFormulario.Controls.Add(this.cmbRol);
-            this.panelFormulario.Controls.Add(this.btnGuardarNuevo);
-            this.panelFormulario.Controls.Add(this.btnActualizar);
-            this.panelFormulario.Controls.Add(this.btnLimpiar);
-            this.panelFormulario.Location = new System.Drawing.Point(20, 60);
-            this.panelFormulario.Name = "panelFormulario";
-            this.panelFormulario.Size = new System.Drawing.Size(380, 540);
-            this.panelFormulario.StateCommon.Color1 = System.Drawing.Color.White;
-            this.panelFormulario.StateCommon.Color2 = System.Drawing.Color.White;
-
-            // DNI
-            this.lblDNI.Location = new System.Drawing.Point(15, 15);
-            this.lblDNI.Values.Text = "DNI / Documento:";
-            this.txtDni.Location = new System.Drawing.Point(15, 38);
-            this.txtDni.Size = new System.Drawing.Size(345, 30);
-
-            // Nombre
-            this.lblNombre.Location = new System.Drawing.Point(15, 75);
-            this.lblNombre.Values.Text = "Nombre:";
-            this.txtNombre.Location = new System.Drawing.Point(15, 98);
-            this.txtNombre.Size = new System.Drawing.Size(345, 30);
-
-            // Apellido
-            this.lblApellido.Location = new System.Drawing.Point(15, 135);
-            this.lblApellido.Values.Text = "Apellido:";
-            this.txtApellido.Location = new System.Drawing.Point(15, 158);
-            this.txtApellido.Size = new System.Drawing.Size(345, 30);
-
-            // Fecha Nacimiento
-            this.lblFechaNac.Location = new System.Drawing.Point(15, 195);
-            this.lblFechaNac.Values.Text = "Fecha de Nacimiento:";
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(15, 218);
-            this.dtpFechaNacimiento.Size = new System.Drawing.Size(345, 30);
-            this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-
-            // Correo
-            this.lblCorreo.Location = new System.Drawing.Point(15, 255);
-            this.lblCorreo.Values.Text = "Correo Electrónico:";
-            this.txtCorreo.Location = new System.Drawing.Point(15, 278);
-            this.txtCorreo.Size = new System.Drawing.Size(345, 30);
-
-            // Contraseña
-            this.lblContrasena.Location = new System.Drawing.Point(15, 315);
-            this.lblContrasena.Values.Text = "Contraseña:";
-            this.txtContrasena.Location = new System.Drawing.Point(15, 338);
-            this.txtContrasena.Size = new System.Drawing.Size(345, 30);
-            this.txtContrasena.UseSystemPasswordChar = true;
-
-            // Rol
-            this.lblRol.Location = new System.Drawing.Point(15, 375);
-            this.lblRol.Values.Text = "Rol de Usuario:";
-            this.cmbRol.Location = new System.Drawing.Point(15, 398);
-            this.cmbRol.Size = new System.Drawing.Size(345, 30);
-
-            // Botón Guardar
-            this.btnGuardarNuevo.Location = new System.Drawing.Point(15, 445);
-            this.btnGuardarNuevo.Size = new System.Drawing.Size(165, 38);
-            this.btnGuardarNuevo.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.btnGuardarNuevo.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.btnGuardarNuevo.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnGuardarNuevo.Values.Text = "💾 Guardar";
-            this.btnGuardarNuevo.Click += new System.EventHandler(this.btnGuardarNuevo_Click);
-
-            // Botón Actualizar
-            this.btnActualizar.Location = new System.Drawing.Point(195, 445);
-            this.btnActualizar.Size = new System.Drawing.Size(165, 38);
-            this.btnActualizar.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.btnActualizar.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.btnActualizar.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnActualizar.Values.Text = "✏️ Actualizar";
-            this.btnActualizar.Enabled = false;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
-
-            // Botón Limpiar
-            this.btnLimpiar.Location = new System.Drawing.Point(15, 490);
-            this.btnLimpiar.Size = new System.Drawing.Size(345, 32);
-            this.btnLimpiar.Values.Text = "🧹 Limpiar Campos";
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
-
+            panelFormulario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelFormulario.Controls.Add(lblDNI);
+            panelFormulario.Controls.Add(txtDni);
+            panelFormulario.Controls.Add(lblNombre);
+            panelFormulario.Controls.Add(txtNombre);
+            panelFormulario.Controls.Add(lblApellido);
+            panelFormulario.Controls.Add(txtApellido);
+            panelFormulario.Controls.Add(lblFechaNac);
+            panelFormulario.Controls.Add(dtpFechaNacimiento);
+            panelFormulario.Controls.Add(lblCorreo);
+            panelFormulario.Controls.Add(txtCorreo);
+            panelFormulario.Controls.Add(lblContrasena);
+            panelFormulario.Controls.Add(txtContrasena);
+            panelFormulario.Controls.Add(lblRol);
+            panelFormulario.Controls.Add(cmbRol);
+            panelFormulario.Controls.Add(btnGuardarNuevo);
+            panelFormulario.Controls.Add(btnActualizar);
+            panelFormulario.Controls.Add(btnLimpiar);
+            panelFormulario.Location = new Point(0, 41);
+            panelFormulario.Name = "panelFormulario";
+            panelFormulario.Size = new Size(380, 579);
+            panelFormulario.StateCommon.Color1 = Color.White;
+            panelFormulario.StateCommon.Color2 = Color.White;
+            panelFormulario.TabIndex = 1;
             // 
-            // panelTabla (Tarjeta Derecha)
+            // lblDNI
             // 
-            this.panelTabla.Controls.Add(this.txtBuscar);
-            this.panelTabla.Controls.Add(this.cmbFiltroEstado);
-            this.panelTabla.Controls.Add(this.dgvUsuarios);
-            this.panelTabla.Controls.Add(this.btnDesactivarUsuario);
-            this.panelTabla.Location = new System.Drawing.Point(420, 60);
-            this.panelTabla.Name = "panelTabla";
-            this.panelTabla.Size = new System.Drawing.Size(640, 540);
-            this.panelTabla.StateCommon.Color1 = System.Drawing.Color.White;
-            this.panelTabla.StateCommon.Color2 = System.Drawing.Color.White;
-
-            // Buscador
-            this.txtBuscar.Location = new System.Drawing.Point(15, 15);
-            this.txtBuscar.Size = new System.Drawing.Size(430, 30);
-            this.txtBuscar.CueHint.CueHintText = "🔍 Buscar por Nombre, Apellido, DNI o Email...";
-            this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
-
-            // Filtro Estado
-            this.cmbFiltroEstado.Location = new System.Drawing.Point(455, 15);
-            this.cmbFiltroEstado.Size = new System.Drawing.Size(170, 30);
-            this.cmbFiltroEstado.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroEstado_SelectedIndexChanged);
-
-            // Grilla
-            this.dgvUsuarios.Location = new System.Drawing.Point(15, 55);
-            this.dgvUsuarios.Size = new System.Drawing.Size(610, 425);
-            this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsuarios.MultiSelect = false;
-            this.dgvUsuarios.ReadOnly = true;
-            this.dgvUsuarios.AllowUserToAddRows = false;
-            this.dgvUsuarios.SelectionChanged += new System.EventHandler(this.dgvUsuarios_SelectionChanged);
-
-            // Botón Desactivar
-            this.btnDesactivarUsuario.Location = new System.Drawing.Point(380, 490);
-            this.btnDesactivarUsuario.Size = new System.Drawing.Size(245, 38);
-            this.btnDesactivarUsuario.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnDesactivarUsuario.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnDesactivarUsuario.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnDesactivarUsuario.Values.Text = "🗑️ Desactivar Usuario Seleccionado";
-            this.btnDesactivarUsuario.Click += new System.EventHandler(this.btnDesactivarUsuario_Click);
-
-            ((System.ComponentModel.ISupportInitialize)(this.panelFormulario)).EndInit();
-            this.panelFormulario.ResumeLayout(false);
-            this.panelFormulario.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelTabla)).EndInit();
-            this.panelTabla.ResumeLayout(false);
-            this.panelTabla.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbRol)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbFiltroEstado)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            lblDNI.Location = new Point(15, 15);
+            lblDNI.Name = "lblDNI";
+            lblDNI.Size = new Size(136, 24);
+            lblDNI.TabIndex = 0;
+            lblDNI.Values.Text = "DNI / Documento:";
+            // 
+            // txtDni
+            // 
+            txtDni.Location = new Point(15, 38);
+            txtDni.Name = "txtDni";
+            txtDni.Size = new Size(345, 27);
+            txtDni.TabIndex = 1;
+            // 
+            // lblNombre
+            // 
+            lblNombre.Location = new Point(15, 75);
+            lblNombre.Name = "lblNombre";
+            lblNombre.Size = new Size(71, 24);
+            lblNombre.TabIndex = 2;
+            lblNombre.Values.Text = "Nombre:";
+            // 
+            // txtNombre
+            // 
+            txtNombre.Location = new Point(15, 98);
+            txtNombre.Name = "txtNombre";
+            txtNombre.Size = new Size(345, 27);
+            txtNombre.TabIndex = 3;
+            // 
+            // lblApellido
+            // 
+            lblApellido.Location = new Point(15, 135);
+            lblApellido.Name = "lblApellido";
+            lblApellido.Size = new Size(71, 24);
+            lblApellido.TabIndex = 4;
+            lblApellido.Values.Text = "Apellido:";
+            // 
+            // txtApellido
+            // 
+            txtApellido.Location = new Point(15, 158);
+            txtApellido.Name = "txtApellido";
+            txtApellido.Size = new Size(345, 27);
+            txtApellido.TabIndex = 5;
+            // 
+            // lblFechaNac
+            // 
+            lblFechaNac.Location = new Point(15, 195);
+            lblFechaNac.Name = "lblFechaNac";
+            lblFechaNac.Size = new Size(158, 24);
+            lblFechaNac.TabIndex = 6;
+            lblFechaNac.Values.Text = "Fecha de Nacimiento:";
+            // 
+            // dtpFechaNacimiento
+            // 
+            dtpFechaNacimiento.Format = DateTimePickerFormat.Short;
+            dtpFechaNacimiento.Location = new Point(15, 218);
+            dtpFechaNacimiento.Name = "dtpFechaNacimiento";
+            dtpFechaNacimiento.Size = new Size(345, 25);
+            dtpFechaNacimiento.TabIndex = 7;
+            // 
+            // lblCorreo
+            // 
+            lblCorreo.Location = new Point(15, 255);
+            lblCorreo.Name = "lblCorreo";
+            lblCorreo.Size = new Size(141, 24);
+            lblCorreo.TabIndex = 8;
+            lblCorreo.Values.Text = "Correo Electrónico:";
+            // 
+            // txtCorreo
+            // 
+            txtCorreo.Location = new Point(15, 278);
+            txtCorreo.Name = "txtCorreo";
+            txtCorreo.Size = new Size(345, 27);
+            txtCorreo.TabIndex = 9;
+            // 
+            // lblContrasena
+            // 
+            lblContrasena.Location = new Point(15, 315);
+            lblContrasena.Name = "lblContrasena";
+            lblContrasena.Size = new Size(92, 24);
+            lblContrasena.TabIndex = 10;
+            lblContrasena.Values.Text = "Contraseña:";
+            // 
+            // txtContrasena
+            // 
+            txtContrasena.Location = new Point(15, 338);
+            txtContrasena.Name = "txtContrasena";
+            txtContrasena.PasswordChar = '●';
+            txtContrasena.Size = new Size(345, 27);
+            txtContrasena.TabIndex = 11;
+            txtContrasena.UseSystemPasswordChar = true;
+            // 
+            // lblRol
+            // 
+            lblRol.Location = new Point(15, 375);
+            lblRol.Name = "lblRol";
+            lblRol.Size = new Size(114, 24);
+            lblRol.TabIndex = 12;
+            lblRol.Values.Text = "Rol de Usuario:";
+            // 
+            // cmbRol
+            // 
+            cmbRol.Location = new Point(15, 398);
+            cmbRol.Name = "cmbRol";
+            cmbRol.Size = new Size(345, 26);
+            cmbRol.TabIndex = 13;
+            // 
+            // btnGuardarNuevo
+            // 
+            btnGuardarNuevo.Location = new Point(15, 445);
+            btnGuardarNuevo.Name = "btnGuardarNuevo";
+            btnGuardarNuevo.Size = new Size(165, 38);
+            btnGuardarNuevo.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
+            btnGuardarNuevo.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+            btnGuardarNuevo.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnGuardarNuevo.TabIndex = 14;
+            btnGuardarNuevo.Values.DropDownArrowColor = Color.Empty;
+            btnGuardarNuevo.Values.Text = "💾 Guardar";
+            btnGuardarNuevo.Click += btnGuardarNuevo_Click;
+            // 
+            // btnActualizar
+            // 
+            btnActualizar.Enabled = false;
+            btnActualizar.Location = new Point(195, 445);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(165, 38);
+            btnActualizar.StateCommon.Back.Color1 = Color.FromArgb(30, 41, 59);
+            btnActualizar.StateCommon.Back.Color2 = Color.FromArgb(30, 41, 59);
+            btnActualizar.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnActualizar.TabIndex = 15;
+            btnActualizar.Values.DropDownArrowColor = Color.Empty;
+            btnActualizar.Values.Text = "✏️ Actualizar";
+            btnActualizar.Click += btnActualizar_Click;
+            // 
+            // btnLimpiar
+            // 
+            btnLimpiar.Location = new Point(15, 490);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.Size = new Size(345, 32);
+            btnLimpiar.TabIndex = 16;
+            btnLimpiar.Values.DropDownArrowColor = Color.Empty;
+            btnLimpiar.Values.Text = "\U0001f9f9 Limpiar Campos";
+            btnLimpiar.Click += btnLimpiar_Click;
+            // 
+            // txtBuscar
+            // 
+            txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscar.CueHint.CueHintText = "🔍 Buscar por Nombre, Apellido, DNI o Email...";
+            txtBuscar.Location = new Point(3, 9);
+            txtBuscar.Name = "txtBuscar";
+            txtBuscar.Size = new Size(316, 27);
+            txtBuscar.TabIndex = 0;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
+            // 
+            // cmbFiltroEstado
+            // 
+            cmbFiltroEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbFiltroEstado.Location = new Point(363, 10);
+            cmbFiltroEstado.Name = "cmbFiltroEstado";
+            cmbFiltroEstado.Size = new Size(215, 26);
+            cmbFiltroEstado.TabIndex = 1;
+            cmbFiltroEstado.SelectedIndexChanged += cmbFiltroEstado_SelectedIndexChanged;
+            // 
+            // btnDesactivarUsuario
+            // 
+            btnDesactivarUsuario.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnDesactivarUsuario.Location = new Point(408, 510);
+            btnDesactivarUsuario.Name = "btnDesactivarUsuario";
+            btnDesactivarUsuario.Size = new Size(271, 38);
+            btnDesactivarUsuario.StateCommon.Back.Color1 = Color.FromArgb(239, 68, 68);
+            btnDesactivarUsuario.StateCommon.Back.Color2 = Color.FromArgb(239, 68, 68);
+            btnDesactivarUsuario.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnDesactivarUsuario.TabIndex = 3;
+            btnDesactivarUsuario.Values.DropDownArrowColor = Color.Empty;
+            btnDesactivarUsuario.Values.Text = "🗑️ Desactivar Usuario Seleccionado";
+            btnDesactivarUsuario.Click += btnDesactivarUsuario_Click;
+            // 
+            // dgvUsuarios
+            // 
+            dgvUsuarios.AllowUserToAddRows = false;
+            dgvUsuarios.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvUsuarios.BorderStyle = BorderStyle.None;
+            dgvUsuarios.ColumnHeadersHeight = 36;
+            dgvUsuarios.Location = new Point(3, 59);
+            dgvUsuarios.MultiSelect = false;
+            dgvUsuarios.Name = "dgvUsuarios";
+            dgvUsuarios.ReadOnly = true;
+            dgvUsuarios.RowHeadersWidth = 51;
+            dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvUsuarios.Size = new Size(676, 445);
+            dgvUsuarios.TabIndex = 2;
+            dgvUsuarios.SelectionChanged += dgvUsuarios_SelectionChanged;
+            // 
+            // panelTabla
+            // 
+            panelTabla.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelTabla.Controls.Add(txtBuscar);
+            panelTabla.Controls.Add(dgvUsuarios);
+            panelTabla.Controls.Add(cmbFiltroEstado);
+            panelTabla.Controls.Add(btnDesactivarUsuario);
+            panelTabla.Location = new Point(392, 41);
+            panelTabla.Name = "panelTabla";
+            panelTabla.Size = new Size(688, 579);
+            panelTabla.StateCommon.Color1 = Color.White;
+            panelTabla.StateCommon.Color2 = Color.White;
+            panelTabla.TabIndex = 0;
+            // 
+            // ControlUsuarios
+            // 
+            BackColor = Color.FromArgb(248, 250, 252);
+            Controls.Add(panelTabla);
+            Controls.Add(panelFormulario);
+            Controls.Add(lblTituloModulo);
+            Name = "ControlUsuarios";
+            Size = new Size(1080, 620);
+            Load += ControlUsuarios_Load;
+            ((System.ComponentModel.ISupportInitialize)panelFormulario).EndInit();
+            panelFormulario.ResumeLayout(false);
+            panelFormulario.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)cmbRol).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cmbFiltroEstado).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelTabla).EndInit();
+            panelTabla.ResumeLayout(false);
+            panelTabla.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -245,10 +338,10 @@
         private Krypton.Toolkit.KryptonButton btnGuardarNuevo;
         private Krypton.Toolkit.KryptonButton btnActualizar;
         private Krypton.Toolkit.KryptonButton btnLimpiar;
-        private Krypton.Toolkit.KryptonPanel panelTabla;
         private Krypton.Toolkit.KryptonTextBox txtBuscar;
         private Krypton.Toolkit.KryptonComboBox cmbFiltroEstado;
-        private Krypton.Toolkit.KryptonDataGridView dgvUsuarios;
         private Krypton.Toolkit.KryptonButton btnDesactivarUsuario;
+        private Krypton.Toolkit.KryptonDataGridView dgvUsuarios;
+        private Krypton.Toolkit.KryptonPanel panelTabla;
     }
 }

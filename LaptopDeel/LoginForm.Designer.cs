@@ -91,6 +91,7 @@
             txtPassword.StateCommon.Back.Color1 = Color.FromArgb(24, 30, 42);
             txtPassword.StateCommon.Border.Color1 = Color.FromArgb(45, 53, 72);
             txtPassword.StateCommon.Border.Rounding = 8F;
+            txtPassword.StateCommon.Content.Color1 = Color.White;
             txtPassword.TabIndex = 5;
             txtPassword.Text = "hola1234";
             txtPassword.TextAlign = HorizontalAlignment.Center;
@@ -114,6 +115,7 @@
             txtEmail.StateCommon.Back.Color1 = Color.FromArgb(24, 30, 42);
             txtEmail.StateCommon.Border.Color1 = Color.FromArgb(45, 53, 72);
             txtEmail.StateCommon.Border.Rounding = 8F;
+            txtEmail.StateCommon.Content.Color1 = Color.White;
             txtEmail.TabIndex = 3;
             txtEmail.Text = "ejemplo@laptopdeel.com";
             txtEmail.TextAlign = HorizontalAlignment.Center;

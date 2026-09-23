@@ -32,5 +32,10 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
+
+        private void btnNavClientes_Click(object sender, EventArgs e)
+        {
+            //referenciar a ControlCliente.cs//
+        }
     }
 }

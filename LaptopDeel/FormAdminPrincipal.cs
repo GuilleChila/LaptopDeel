@@ -1,7 +1,8 @@
+using Krypton.Toolkit;
+using LaptopDeel.Entidades;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Krypton.Toolkit;
 
 namespace LaptopDeel
 {
@@ -16,11 +17,24 @@ namespace LaptopDeel
 
         public FormAdminPrincipal()
         {
+
             InitializeComponent();
             ConfigurarEstiloVentana();
             ConfigurarOptimizacionesRender();
             ConfigurarTimerTransicion();
             VincularEventosNavegacion();
+        }
+
+        // Este es el que recibe los datos desde Program.cs
+        // El ": this()" hace que primero se ejecute el constructor de arriba para cargar el diseño
+        public FormAdminPrincipal(Usuario usuarioLogueado) : this()
+        {
+            // Verificamos por seguridad que los datos no vengan nulos
+            if (usuarioLogueado != null && usuarioLogueado.RolUsuario != null)
+            {
+                // Actualizamos la etiqueta del menú lateral
+                lblUsuario.Values.Text = $"  👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()}) ) ";
+            }
         }
 
         private void ConfigurarEstiloVentana()
@@ -72,9 +86,6 @@ namespace LaptopDeel
         {
             btnNavInicio.StateCommon.Back.Color1 = Color.Transparent;
             btnNavInicio.StateCommon.Back.Color2 = Color.Transparent;
-
-            btnNavPOS.StateCommon.Back.Color1 = Color.Transparent;
-            btnNavPOS.StateCommon.Back.Color2 = Color.Transparent;
 
             btnNavInventario.StateCommon.Back.Color1 = Color.Transparent;
             btnNavInventario.StateCommon.Back.Color2 = Color.Transparent;
@@ -140,6 +151,7 @@ namespace LaptopDeel
 
         private void btnNavInventario_Click(object? sender, EventArgs e)
         {
+
             ResetearEstadosSidebar(btnNavInventario);
             CargarVistaConTransicion(new ControlInventario());
         }
@@ -149,6 +161,7 @@ namespace LaptopDeel
             ResetearEstadosSidebar(btnNavUsuarios);
             CargarVistaConTransicion(new ControlUsuarios());
         }
+
 
         private void btnNavClientes_Click(object? sender, EventArgs e)
         {
@@ -161,5 +174,7 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
+
+       
     }
 }

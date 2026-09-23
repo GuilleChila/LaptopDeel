@@ -22,7 +22,6 @@
             lblStatusDB = new Krypton.Toolkit.KryptonLabel();
             panelSidebar = new Krypton.Toolkit.KryptonPanel();
             btnNavInicio = new Krypton.Toolkit.KryptonButton();
-            btnNavPOS = new Krypton.Toolkit.KryptonButton();
             btnNavInventario = new Krypton.Toolkit.KryptonButton();
             btnNavUsuarios = new Krypton.Toolkit.KryptonButton();
             btnNavClientes = new Krypton.Toolkit.KryptonButton();
@@ -31,15 +30,14 @@
             panelCanvas = new Krypton.Toolkit.KryptonPanel();
             lblBienvenida = new Krypton.Toolkit.KryptonLabel();
             tableLayoutPanelCards = new TableLayoutPanel();
-            panelCardPOS = new Krypton.Toolkit.KryptonPanel();
-            lblTituloPOS = new Krypton.Toolkit.KryptonLabel();
-            btnAccionPOS = new Krypton.Toolkit.KryptonButton();
             panelCardNotebook = new Krypton.Toolkit.KryptonPanel();
             lblTituloNotebook = new Krypton.Toolkit.KryptonLabel();
             btnAccionNotebook = new Krypton.Toolkit.KryptonButton();
             panelCardUsuarios = new Krypton.Toolkit.KryptonPanel();
             lblTituloUsuarios = new Krypton.Toolkit.KryptonLabel();
             btnAccionUsuarios = new Krypton.Toolkit.KryptonButton();
+            lblTituloPOS = new Krypton.Toolkit.KryptonLabel();
+            btnAccionPOS = new Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelSidebar).BeginInit();
@@ -47,8 +45,6 @@
             ((System.ComponentModel.ISupportInitialize)panelCanvas).BeginInit();
             panelCanvas.SuspendLayout();
             tableLayoutPanelCards.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)panelCardPOS).BeginInit();
-            panelCardPOS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelCardNotebook).BeginInit();
             panelCardNotebook.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelCardUsuarios).BeginInit();
@@ -79,10 +75,10 @@
             // 
             // lblStatusDB
             // 
-            lblStatusDB.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblStatusDB.Location = new Point(904, 20);
+            lblStatusDB.Dock = DockStyle.Right;
+            lblStatusDB.Location = new Point(1220, 0);
             lblStatusDB.Name = "lblStatusDB";
-            lblStatusDB.Size = new Size(140, 24);
+            lblStatusDB.Size = new Size(140, 60);
             lblStatusDB.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129);
             lblStatusDB.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblStatusDB.TabIndex = 1;
@@ -91,7 +87,6 @@
             // panelSidebar
             // 
             panelSidebar.Controls.Add(btnNavInicio);
-            panelSidebar.Controls.Add(btnNavPOS);
             panelSidebar.Controls.Add(btnNavInventario);
             panelSidebar.Controls.Add(btnNavUsuarios);
             panelSidebar.Controls.Add(btnNavClientes);
@@ -115,27 +110,15 @@
             btnNavInicio.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
             btnNavInicio.StateCommon.Content.ShortText.Color1 = Color.White;
             btnNavInicio.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnNavInicio.StateTracking.Back.ColorAlign = Krypton.Toolkit.PaletteRectangleAlign.Local;
             btnNavInicio.TabIndex = 0;
             btnNavInicio.Values.DropDownArrowColor = Color.Empty;
             btnNavInicio.Values.Text = "🏠 Inicio / Dashboard";
             // 
-            // btnNavPOS
-            // 
-            btnNavPOS.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnNavPOS.Location = new Point(15, 85);
-            btnNavPOS.Name = "btnNavPOS";
-            btnNavPOS.Size = new Size(210, 45);
-            btnNavPOS.StateCommon.Back.Color1 = Color.Transparent;
-            btnNavPOS.StateCommon.Back.Color2 = Color.Transparent;
-            btnNavPOS.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavPOS.TabIndex = 1;
-            btnNavPOS.Values.DropDownArrowColor = Color.Empty;
-            btnNavPOS.Values.Text = "\U0001f6d2 Punto de Venta (POS)";
-            // 
             // btnNavInventario
             // 
             btnNavInventario.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnNavInventario.Location = new Point(15, 140);
+            btnNavInventario.Location = new Point(15, 85);
             btnNavInventario.Name = "btnNavInventario";
             btnNavInventario.Size = new Size(210, 45);
             btnNavInventario.StateCommon.Back.Color1 = Color.Transparent;
@@ -149,7 +132,7 @@
             // btnNavUsuarios
             // 
             btnNavUsuarios.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnNavUsuarios.Location = new Point(15, 195);
+            btnNavUsuarios.Location = new Point(15, 140);
             btnNavUsuarios.Name = "btnNavUsuarios";
             btnNavUsuarios.Size = new Size(210, 45);
             btnNavUsuarios.StateCommon.Back.Color1 = Color.Transparent;
@@ -163,7 +146,7 @@
             // btnNavClientes
             // 
             btnNavClientes.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnNavClientes.Location = new Point(15, 250);
+            btnNavClientes.Location = new Point(15, 195);
             btnNavClientes.Name = "btnNavClientes";
             btnNavClientes.Size = new Size(210, 45);
             btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
@@ -176,19 +159,19 @@
             // 
             // lblUsuario
             // 
-            lblUsuario.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblUsuario.Location = new Point(15, 541);
+            lblUsuario.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblUsuario.Location = new Point(0, 531);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(179, 27);
+            lblUsuario.Size = new Size(180, 27);
             lblUsuario.StateCommon.ShortText.Color1 = Color.White;
             lblUsuario.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblUsuario.TabIndex = 5;
-            lblUsuario.Values.Text = "👤 Guillermo (Admin)";
+            lblUsuario.Values.Text = "👤 Guillermo(Admin))";
             // 
             // btnCerrarSesion
             // 
             btnCerrarSesion.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnCerrarSesion.Location = new Point(15, 585);
+            btnCerrarSesion.Location = new Point(12, 585);
             btnCerrarSesion.Name = "btnCerrarSesion";
             btnCerrarSesion.Size = new Size(210, 45);
             btnCerrarSesion.StateCommon.Back.Color1 = Color.FromArgb(239, 68, 68);
@@ -226,13 +209,11 @@
             // 
             tableLayoutPanelCards.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanelCards.BackColor = Color.Transparent;
-            tableLayoutPanelCards.ColumnCount = 3;
-            tableLayoutPanelCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanelCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanelCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanelCards.Controls.Add(panelCardPOS, 0, 0);
-            tableLayoutPanelCards.Controls.Add(panelCardNotebook, 1, 0);
-            tableLayoutPanelCards.Controls.Add(panelCardUsuarios, 2, 0);
+            tableLayoutPanelCards.ColumnCount = 2;
+            tableLayoutPanelCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelCards.Controls.Add(panelCardNotebook, 0, 0);
+            tableLayoutPanelCards.Controls.Add(panelCardUsuarios, 1, 0);
             tableLayoutPanelCards.Location = new Point(25, 80);
             tableLayoutPanelCards.Name = "tableLayoutPanelCards";
             tableLayoutPanelCards.RowCount = 1;
@@ -240,50 +221,15 @@
             tableLayoutPanelCards.Size = new Size(1065, 160);
             tableLayoutPanelCards.TabIndex = 1;
             // 
-            // panelCardPOS
-            // 
-            panelCardPOS.Controls.Add(lblTituloPOS);
-            panelCardPOS.Controls.Add(btnAccionPOS);
-            panelCardPOS.Dock = DockStyle.Fill;
-            panelCardPOS.Location = new Point(5, 5);
-            panelCardPOS.Margin = new Padding(5);
-            panelCardPOS.Name = "panelCardPOS";
-            panelCardPOS.Size = new Size(345, 150);
-            panelCardPOS.StateCommon.Color1 = Color.White;
-            panelCardPOS.StateCommon.Color2 = Color.White;
-            panelCardPOS.TabIndex = 0;
-            // 
-            // lblTituloPOS
-            // 
-            lblTituloPOS.Location = new Point(20, 20);
-            lblTituloPOS.Name = "lblTituloPOS";
-            lblTituloPOS.Size = new Size(137, 32);
-            lblTituloPOS.StateCommon.ShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblTituloPOS.TabIndex = 0;
-            lblTituloPOS.Values.Text = "Nueva Venta";
-            // 
-            // btnAccionPOS
-            // 
-            btnAccionPOS.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnAccionPOS.Location = new Point(20, 80);
-            btnAccionPOS.Name = "btnAccionPOS";
-            btnAccionPOS.Size = new Size(305, 45);
-            btnAccionPOS.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
-            btnAccionPOS.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
-            btnAccionPOS.StateCommon.Content.ShortText.Color1 = Color.White;
-            btnAccionPOS.TabIndex = 1;
-            btnAccionPOS.Values.DropDownArrowColor = Color.Empty;
-            btnAccionPOS.Values.Text = "Abrir Punto de Venta (POS)";
-            // 
             // panelCardNotebook
             // 
             panelCardNotebook.Controls.Add(lblTituloNotebook);
             panelCardNotebook.Controls.Add(btnAccionNotebook);
             panelCardNotebook.Dock = DockStyle.Fill;
-            panelCardNotebook.Location = new Point(360, 5);
+            panelCardNotebook.Location = new Point(5, 5);
             panelCardNotebook.Margin = new Padding(5);
             panelCardNotebook.Name = "panelCardNotebook";
-            panelCardNotebook.Size = new Size(345, 150);
+            panelCardNotebook.Size = new Size(522, 150);
             panelCardNotebook.StateCommon.Color1 = Color.White;
             panelCardNotebook.StateCommon.Color2 = Color.White;
             panelCardNotebook.TabIndex = 1;
@@ -302,7 +248,7 @@
             btnAccionNotebook.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnAccionNotebook.Location = new Point(20, 80);
             btnAccionNotebook.Name = "btnAccionNotebook";
-            btnAccionNotebook.Size = new Size(305, 45);
+            btnAccionNotebook.Size = new Size(482, 45);
             btnAccionNotebook.StateCommon.Back.Color1 = Color.FromArgb(30, 41, 59);
             btnAccionNotebook.StateCommon.Back.Color2 = Color.FromArgb(30, 41, 59);
             btnAccionNotebook.StateCommon.Content.ShortText.Color1 = Color.White;
@@ -315,10 +261,10 @@
             panelCardUsuarios.Controls.Add(lblTituloUsuarios);
             panelCardUsuarios.Controls.Add(btnAccionUsuarios);
             panelCardUsuarios.Dock = DockStyle.Fill;
-            panelCardUsuarios.Location = new Point(715, 5);
+            panelCardUsuarios.Location = new Point(537, 5);
             panelCardUsuarios.Margin = new Padding(5);
             panelCardUsuarios.Name = "panelCardUsuarios";
-            panelCardUsuarios.Size = new Size(345, 150);
+            panelCardUsuarios.Size = new Size(523, 150);
             panelCardUsuarios.StateCommon.Color1 = Color.White;
             panelCardUsuarios.StateCommon.Color2 = Color.White;
             panelCardUsuarios.TabIndex = 2;
@@ -337,13 +283,35 @@
             btnAccionUsuarios.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnAccionUsuarios.Location = new Point(20, 80);
             btnAccionUsuarios.Name = "btnAccionUsuarios";
-            btnAccionUsuarios.Size = new Size(305, 45);
+            btnAccionUsuarios.Size = new Size(483, 45);
             btnAccionUsuarios.StateCommon.Back.Color1 = Color.FromArgb(30, 41, 59);
             btnAccionUsuarios.StateCommon.Back.Color2 = Color.FromArgb(30, 41, 59);
             btnAccionUsuarios.StateCommon.Content.ShortText.Color1 = Color.White;
             btnAccionUsuarios.TabIndex = 1;
             btnAccionUsuarios.Values.DropDownArrowColor = Color.Empty;
             btnAccionUsuarios.Values.Text = "Agregar nuevo usuario";
+            // 
+            // lblTituloPOS
+            // 
+            lblTituloPOS.Location = new Point(20, 20);
+            lblTituloPOS.Name = "lblTituloPOS";
+            lblTituloPOS.Size = new Size(48, 24);
+            lblTituloPOS.StateCommon.ShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblTituloPOS.TabIndex = 0;
+            lblTituloPOS.Values.Text = "Nueva Venta";
+            // 
+            // btnAccionPOS
+            // 
+            btnAccionPOS.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnAccionPOS.Location = new Point(20, 80);
+            btnAccionPOS.Name = "btnAccionPOS";
+            btnAccionPOS.Size = new Size(305, 45);
+            btnAccionPOS.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
+            btnAccionPOS.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+            btnAccionPOS.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnAccionPOS.TabIndex = 1;
+            btnAccionPOS.Values.DropDownArrowColor = Color.Empty;
+            btnAccionPOS.Values.Text = "Abrir Punto de Venta (POS)";
             // 
             // FormAdminPrincipal
             // 
@@ -366,9 +334,6 @@
             panelCanvas.ResumeLayout(false);
             panelCanvas.PerformLayout();
             tableLayoutPanelCards.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)panelCardPOS).EndInit();
-            panelCardPOS.ResumeLayout(false);
-            panelCardPOS.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)panelCardNotebook).EndInit();
             panelCardNotebook.ResumeLayout(false);
             panelCardNotebook.PerformLayout();
@@ -386,7 +351,6 @@
         private Krypton.Toolkit.KryptonLabel lblStatusDB;
         private Krypton.Toolkit.KryptonPanel panelSidebar;
         private Krypton.Toolkit.KryptonButton btnNavInicio;
-        private Krypton.Toolkit.KryptonButton btnNavPOS;
         private Krypton.Toolkit.KryptonButton btnNavInventario;
         private Krypton.Toolkit.KryptonButton btnNavUsuarios;
         private Krypton.Toolkit.KryptonButton btnNavClientes;
@@ -395,7 +359,6 @@
         private Krypton.Toolkit.KryptonPanel panelCanvas;
         private Krypton.Toolkit.KryptonLabel lblBienvenida;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCards;
-        private Krypton.Toolkit.KryptonPanel panelCardPOS;
         private Krypton.Toolkit.KryptonLabel lblTituloPOS;
         private Krypton.Toolkit.KryptonButton btnAccionPOS;
         private Krypton.Toolkit.KryptonPanel panelCardNotebook;

@@ -137,5 +137,10 @@ namespace LaptopDeel
                 txtDniCuit.Enabled = false; // Se bloquea la PK
             }
         }
+
+        private void lblIva_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

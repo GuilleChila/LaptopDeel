@@ -145,13 +145,14 @@
             // lblUsuarioSidebar
             // 
             lblUsuarioSidebar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblUsuarioSidebar.Location = new Point(15, 547);
+            lblUsuarioSidebar.Location = new Point(15, 544);
             lblUsuarioSidebar.Name = "lblUsuarioSidebar";
             lblUsuarioSidebar.Size = new Size(158, 27);
             lblUsuarioSidebar.StateCommon.ShortText.Color1 = Color.White;
             lblUsuarioSidebar.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblUsuarioSidebar.TabIndex = 3;
             lblUsuarioSidebar.Values.Text = "👤 Guillermo (POS)";
+          
             // 
             // btnCerrarSesion
             // 
@@ -305,7 +306,7 @@
             // lblTotalPagar
             // 
             lblTotalPagar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            lblTotalPagar.Location = new Point(20, 417);
+            lblTotalPagar.Location = new Point(20, 414);
             lblTotalPagar.Name = "lblTotalPagar";
             lblTotalPagar.Size = new Size(197, 27);
             lblTotalPagar.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
@@ -316,7 +317,7 @@
             // lblMontoTotal
             // 
             lblMontoTotal.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblMontoTotal.Location = new Point(33, 360);
+            lblMontoTotal.Location = new Point(-113, 333);
             lblMontoTotal.Name = "lblMontoTotal";
             lblMontoTotal.Size = new Size(194, 51);
             lblMontoTotal.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);

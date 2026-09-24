@@ -192,5 +192,35 @@ namespace LaptopDeel.Datos
                 }
             }
         }
+
+        public bool ExisteDniOCorreo(string dni, string correo)
+        {
+            bool existe = false;
+            string query = "SELECT COUNT(*) FROM usuarios WHERE Dni = @dni OR Correo = @correo";
+
+            // ACÁ ESTÁ LA SOLUCIÓN: Usamos tu propia clase para obtener la conexión
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (MySqlCommand comando = new MySqlCommand(query, conexion))
+                {
+                    comando.CommandType = System.Data.CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@dni", dni);
+                    comando.Parameters.AddWithValue("@correo", correo);
+
+                    try
+                    {
+                        conexion.Open();
+                        int cantidad = Convert.ToInt32(comando.ExecuteScalar());
+                        if (cantidad > 0) existe = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Error al verificar duplicados: " + ex.Message);
+                    }
+                }
+            }
+            return existe;
+        }
     }
 }

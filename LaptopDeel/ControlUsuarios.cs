@@ -154,6 +154,7 @@ namespace LaptopDeel
             if (!ValidarCampos()) return;
 
             int idRolSeleccionado = 2; // Rol Vendedor por defecto
+
             if (cmbRol.SelectedItem is KeyValuePair<int, string> itemRol)
             {
                 idRolSeleccionado = itemRol.Key;
@@ -172,18 +173,20 @@ namespace LaptopDeel
             );
 
             bool exito = usuarioDAO.Insertar(nuevo);
-            if (exito)
+
+            if (usuarioDAO.ExisteDniOCorreo(txtDni.Text.Trim(), txtCorreo.Text.Trim()))
             {
-                KryptonMessageBox.Show("Usuario registrado con éxito.", "Operación Exitosa",
-                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
-                CargarGrilla();
-                LimpiarFormulario();
+                KryptonMessageBox.Show("El DNI o el Correo ingresado ya se encuentran registrados para otro usuario.",
+                    "Datos Duplicados", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return; // ¡CORTAMOS ACÁ! No dejamos que avance a guardar.
             }
+
             else
             {
                 KryptonMessageBox.Show("No se pudo registrar el usuario. Verifique si el DNI o correo ya existen.", "Error",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
             }
+
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
@@ -277,16 +280,55 @@ namespace LaptopDeel
 
         private bool ValidarCampos()
         {
-            if (string.IsNullOrWhiteSpace(txtDni.Text) ||
-                string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                string.IsNullOrWhiteSpace(txtCorreo.Text) ||
-                string.IsNullOrWhiteSpace(txtContrasena.Text))
+            // Limpiamos los espacios en blanco a los costados para evitar errores
+            string dni = txtDni.Text.Trim();
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string correo = txtCorreo.Text.Trim();
+            string contrasena = txtContrasena.Text.Trim();
+
+            // 1. Validar campos vacíos (La que ya tenías)
+            if (string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(nombre) ||
+                string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(correo) ||
+                string.IsNullOrWhiteSpace(contrasena))
             {
                 KryptonMessageBox.Show("Por favor complete todos los campos obligatorios.", "Campos Incompletos",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
+
+            // 2. Validar DNI: Solo números y longitud máxima de 8
+            if (!dni.All(char.IsDigit))
+            {
+                KryptonMessageBox.Show("El DNI solo puede contener números, sin puntos ni letras.", "DNI Inválido",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+            if (dni.Length > 8 || dni.Length < 7) // En Argentina suelen ser 7 u 8 números
+            {
+                KryptonMessageBox.Show("El DNI debe tener entre 7 y 8 dígitos.", "DNI Inválido",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            // 3. Validar Nombre y Apellido: Solo letras y espacios
+            if (!nombre.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)) ||
+                !apellido.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            {
+                KryptonMessageBox.Show("El nombre y el apellido no pueden contener números ni símbolos.", "Formato Inválido",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            // 4. Validar Correo: Formato básico con arroba y punto
+            if (!correo.Contains("@") || !correo.Contains("."))
+            {
+                KryptonMessageBox.Show("Por favor, ingrese una dirección de correo válida (ejemplo@correo.com).", "Correo Inválido",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Si pasó todas las barreras, la validación es exitosa
             return true;
         }
 

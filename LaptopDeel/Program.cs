@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using LaptopDeel.Entidades; // Necesario para que reconozca al "Usuario"
 
 namespace LaptopDeel
 {
@@ -8,9 +9,10 @@ namespace LaptopDeel
         [STAThread]
         static void Main()
         {
-
             ApplicationConfiguration.Initialize();
            
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             bool continuarEjecucion = true;
             while (continuarEjecucion)
@@ -19,41 +21,41 @@ namespace LaptopDeel
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        string rolAcceso = loginForm.Tag?.ToString() ?? "Admin";
+                        // 1. Rescatamos el usuario real
+                        var usuario = loginForm.UsuarioAutenticado;
 
-                        // Redirección condicional según el rol verificado
-                        if (rolAcceso == "Vendedor")
+                        // 2. Leemos el rol
+                        string rolAcceso = usuario.RolUsuario.RolName.Trim().ToLower();
+
+                        DialogResult resultado;
+
+                        // 3. Redirigimos pasándole el paquete (usuario)
+                        if (rolAcceso == "vendedor")
                         {
-                            using (FormVendedorPrincipal formVendedor = new FormVendedorPrincipal())
+                            using (FormVendedorPrincipal formVendedor = new FormVendedorPrincipal(usuario))
                             {
-                                DialogResult resultado = formVendedor.ShowDialog();
-                                if (resultado != DialogResult.Retry)
-                                {
-                                    continuarEjecucion = false;
-                                }
+                                resultado = formVendedor.ShowDialog();
                             }
                         }
-                        else if (rolAcceso == "Gerente")
+                        else if (rolAcceso == "gerente")
                         {
-                            using (FormCeoPrincipal formCeo = new FormCeoPrincipal())
+                            using (FormCeoPrincipal formCeo = new FormCeoPrincipal(usuario))
                             {
-                                DialogResult resultado = formCeo.ShowDialog();
-                                if (resultado != DialogResult.Retry)
-                                {
-                                    continuarEjecucion = false;
-                                }
+                                resultado = formCeo.ShowDialog();
                             }
                         }
                         else
                         {
-                            using (FormAdminPrincipal formAdmin = new FormAdminPrincipal())
+                            using (FormAdminPrincipal formAdmin = new FormAdminPrincipal(usuario))
                             {
-                                DialogResult resultado = formAdmin.ShowDialog();
-                                if (resultado != DialogResult.Retry)
-                                {
-                                    continuarEjecucion = false;
-                                }
+                                resultado = formAdmin.ShowDialog();
                             }
+                        }
+
+                        // Cortamos el ciclo si no apretaron "Cerrar sesión"
+                        if (resultado != DialogResult.Retry)
+                        {
+                            continuarEjecucion = false;
                         }
                     }
                     else
@@ -62,8 +64,6 @@ namespace LaptopDeel
                     }
                 }
             }
-
-
         }
     }
 }

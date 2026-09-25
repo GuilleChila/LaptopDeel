@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Krypton.Toolkit;
+using LaptopDeel.Entidades;
 
 namespace LaptopDeel
 {
@@ -14,6 +15,11 @@ namespace LaptopDeel
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
+        // 1. Variable para guardar el usuario en esta pantalla
+        private Usuario usuarioActual;
+
+        // 3. EL CONSTRUCTOR NUEVO: La "puerta" para Program.cs
+        // El constructor original (el vacío) ya se encarga de dibujar la ventana
         public FormVendedorPrincipal()
         {
             InitializeComponent();
@@ -21,6 +27,19 @@ namespace LaptopDeel
             ConfigurarOptimizacionesRender();
             ConfigurarTimerTransicion();
             VincularEventosNavegacion();
+        }
+
+        // Este constructor nuevo usa ": this()" para ejecutar primero el de arriba, 
+        // y después se ocupa exclusivamente de los datos del usuario.
+        public FormVendedorPrincipal(Usuario usuarioLogueado) : this()
+        {
+            usuarioActual = usuarioLogueado;
+
+            // Actualizamos el nombre visualmente
+            if (usuarioLogueado != null && usuarioLogueado.RolUsuario != null)
+            {
+                lblUsuarioSidebar.Values.Text = $"👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()})";
+            }
         }
 
         private void ConfigurarEstiloVentana()
@@ -164,5 +183,7 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
+
+     
     }
 }

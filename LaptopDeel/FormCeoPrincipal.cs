@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Krypton.Toolkit;
+using LaptopDeel.Entidades; 
 
 namespace LaptopDeel
 {
@@ -14,6 +15,11 @@ namespace LaptopDeel
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
+        // 1. Variable para guardar el usuario en esta pantalla
+        private Usuario usuarioActual;
+
+        // 2. Tu constructor original
+
         public FormCeoPrincipal()
         {
             InitializeComponent();
@@ -21,6 +27,12 @@ namespace LaptopDeel
             ConfigurarOptimizacionesRender();
             ConfigurarTimerTransicion();
             VincularEventosNavegacion();
+        }
+
+        // 3. EL CONSTRUCTOR NUEVO: Esta es la "puerta" que Program.cs está buscando
+        public FormCeoPrincipal(Usuario usuarioLogueado) : this()
+        {
+            usuarioActual = usuarioLogueado;
         }
 
         private void ConfigurarEstiloVentana()

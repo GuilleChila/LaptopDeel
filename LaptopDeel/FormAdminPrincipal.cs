@@ -15,6 +15,7 @@ namespace LaptopDeel
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
+
         public FormAdminPrincipal()
         {
 

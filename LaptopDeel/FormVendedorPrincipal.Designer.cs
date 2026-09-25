@@ -153,6 +153,7 @@
             lblUsuarioSidebar.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblUsuarioSidebar.TabIndex = 3;
             lblUsuarioSidebar.Values.Text = "👤 Guillermo (POS)";
+          
             // 
             // btnCerrarSesion
             // 

@@ -14,10 +14,11 @@ namespace LaptopDeel
         private readonly UsuarioDAO usuarioDAO;
         private List<Usuario> listaUsuariosMemoria;
         private int? idUsuarioSeleccionado = null;
-
+        private bool estaCargando = false;
         public ControlUsuarios()
         {
             InitializeComponent();
+            LimpiarFormulario();
             // Le decimos que por defecto siempre intente rellenar el espacio donde lo pongan
             this.Dock = DockStyle.Fill;
             usuarioDAO = new UsuarioDAO();
@@ -32,8 +33,7 @@ namespace LaptopDeel
         }
 
         private void CargarDesplegables()
-        {
-            // Roles disponibles según la base de datos (1: Admin, 2: Vendedor, 3: Gerente)
+        {           
             cmbRol.Items.Clear();
             cmbRol.Items.Add(new KeyValuePair<int, string>(1, "Administrador"));
             cmbRol.Items.Add(new KeyValuePair<int, string>(2, "Vendedor"));
@@ -41,32 +41,35 @@ namespace LaptopDeel
             cmbRol.DisplayMember = "Value";
             cmbRol.ValueMember = "Key";
             cmbRol.SelectedIndex = 0;
-
-            // Filtro de estados
+           
             cmbFiltroEstado.Items.Clear();
             cmbFiltroEstado.Items.Add("Activos");
             cmbFiltroEstado.Items.Add("Inactivos (Eliminados)");
             cmbFiltroEstado.Items.Add("Todos");
             cmbFiltroEstado.SelectedIndex = 0;
         }
-
         private void CargarGrilla()
         {
             try
             {
                 listaUsuariosMemoria = usuarioDAO.ObtenerTodos();
                 AplicarFiltros();
+                dgvUsuarios.ClearSelection();
+                LimpiarFormulario();
             }
             catch (Exception ex)
             {
                 KryptonMessageBox.Show($"Error al cargar la lista de usuarios: {ex.Message}", "Error de Conexión",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
             }
+
         }
 
         private void AplicarFiltros()
         {
             if (listaUsuariosMemoria == null) return;
+
+            estaCargando = true;
 
             string busqueda = txtBuscar.Text.Trim().ToLower();
             int filtroEstado = cmbFiltroEstado.SelectedIndex;
@@ -101,6 +104,11 @@ namespace LaptopDeel
 
             dgvUsuarios.DataSource = resultado;
             FormatearGrilla();
+
+            // Soltamos la selección mientras el semáforo sigue en rojo
+            dgvUsuarios.ClearSelection();
+
+            estaCargando = false; // 🟢 VOLVEMOS EL SEMÁFORO A VERDE
         }
 
         private void FormatearGrilla()
@@ -117,47 +125,16 @@ namespace LaptopDeel
             dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void dgvUsuarios_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvUsuarios.SelectedRows.Count > 0 && dgvUsuarios.SelectedRows[0].Cells["IdUsuario"].Value != null)
-            {
-                int id = Convert.ToInt32(dgvUsuarios.SelectedRows[0].Cells["IdUsuario"].Value);
-                Usuario? u = listaUsuariosMemoria.FirstOrDefault(x => x.IdUsuario == id);
-
-                if (u != null)
-                {
-                    idUsuarioSeleccionado = u.IdUsuario;
-                    txtDni.Text = u.DNI ?? string.Empty;
-                    txtNombre.Text = u.Nombre ?? string.Empty;
-                    txtApellido.Text = u.Apellido ?? string.Empty;
-                    dtpFechaNacimiento.Value = u.FechaNacimiento;
-                    txtCorreo.Text = u.Correo ?? string.Empty;
-                    txtContrasena.Text = u.Contrasena ?? string.Empty;
-
-                    for (int i = 0; i < cmbRol.Items.Count; i++)
-                    {
-                        if (cmbRol.Items[i] is KeyValuePair<int, string> item && item.Key == u.IdRol)
-                        {
-                            cmbRol.SelectedIndex = i;
-                            break;
-                        }
-                    }
-
-                    btnGuardarNuevo.Enabled = false;
-                    btnActualizar.Enabled = true;
-                }
-            }
-        }
+       
 
         private void btnGuardarNuevo_Click(object sender, EventArgs e)
         {
             if (!ValidarCampos()) return;
-
-            int idRolSeleccionado = 2; // Rol Vendedor por defecto
-
-            if (cmbRol.SelectedItem is KeyValuePair<int, string> itemRol)
+            if (usuarioDAO.ExisteDniOCorreo(txtDni.Text.Trim(), txtCorreo.Text.Trim()))
             {
-                idRolSeleccionado = itemRol.Key;
+                KryptonMessageBox.Show("El DNI o el Correo ingresado ya se encuentran registrados para otro usuario.",
+                    "Datos Duplicados", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return; // ¡CORTAMOS ACÁ! No dejamos que avance a guardar.
             }
 
             Usuario nuevo = new Usuario(
@@ -174,21 +151,19 @@ namespace LaptopDeel
 
             bool exito = usuarioDAO.Insertar(nuevo);
 
-            if (usuarioDAO.ExisteDniOCorreo(txtDni.Text.Trim(), txtCorreo.Text.Trim()))
+            if (exito)
             {
-                KryptonMessageBox.Show("El DNI o el Correo ingresado ya se encuentran registrados para otro usuario.",
-                    "Datos Duplicados", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
-                return; // ¡CORTAMOS ACÁ! No dejamos que avance a guardar.
+                KryptonMessageBox.Show("Usuario registrado con éxito.", "Operación Exitosa",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+                   CargarGrilla();
+                   LimpiarFormulario();
             }
-
             else
             {
-                KryptonMessageBox.Show("No se pudo registrar el usuario. Verifique si el DNI o correo ya existen.", "Error",
+                KryptonMessageBox.Show("Ocurrió un error inesperado al intentar guardar en la base de datos.", "Error",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
             }
-
         }
-
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             if (idUsuarioSeleccionado == null) return;
@@ -231,31 +206,45 @@ namespace LaptopDeel
         {
             if (idUsuarioSeleccionado == null)
             {
-                KryptonMessageBox.Show("Seleccione un usuario de la lista para desactivar.", "Atención",
+                KryptonMessageBox.Show("Seleccione un usuario de la lista.", "Atención",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return;
             }
+            // Averiguamos si el botón está en modo "Activar" o "Desactivar" leyendo su texto
+            bool modoActivar = btnDesactivarUsuario.Values.Text.Contains("Activar");
+
+            string mensajePregunta = modoActivar
+                ? "¿Está seguro de REACTIVAR este usuario para que vuelva a tener acceso al sistema?"
+                : "¿Está seguro de dar de baja lógicamente al usuario seleccionado?";
 
             DialogResult confirmacion = KryptonMessageBox.Show(
-                "¿Está seguro de dar de baja lógicamente al usuario seleccionado?",
-                "Confirmación de Baja",
-                KryptonMessageBoxButtons.YesNo,
-                KryptonMessageBoxIcon.Question
+                mensajePregunta, "Confirmación",
+                KryptonMessageBoxButtons.YesNo, KryptonMessageBoxIcon.Question
             );
 
             if (confirmacion == DialogResult.Yes)
             {
-                bool exito = usuarioDAO.EliminarLogico(idUsuarioSeleccionado.Value);
+                // Ejecutamos el método correspondiente según el modo del botón
+                bool exito = modoActivar
+                    ? usuarioDAO.ActivarLogico(idUsuarioSeleccionado.Value)
+                    : usuarioDAO.EliminarLogico(idUsuarioSeleccionado.Value);
+
                 if (exito)
                 {
-                    KryptonMessageBox.Show("Usuario desactivado del sistema.", "Baja Exitosa",
+                    string mensajeExito = modoActivar ? "Usuario reactivado con éxito." : "Usuario desactivado del sistema.";
+                    KryptonMessageBox.Show(mensajeExito, "Operación Exitosa",
                         KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+
                     CargarGrilla();
                     LimpiarFormulario();
+
+                    // Devolvemos el botón a su color rojo original por defecto
+                    btnDesactivarUsuario.Values.Text = "🗑️ Desactivar Usuario Seleccionado";
+                    btnDesactivarUsuario.StateCommon.Back.Color1 = Color.FromArgb(239, 68, 68);
+                    btnDesactivarUsuario.StateCommon.Back.Color2 = Color.FromArgb(239, 68, 68);
                 }
             }
         }
-
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
@@ -263,19 +252,31 @@ namespace LaptopDeel
 
         private void LimpiarFormulario()
         {
-            idUsuarioSeleccionado = null;
-            txtDni.Text = string.Empty;
-            txtNombre.Text = string.Empty;
-            txtApellido.Text = string.Empty;
-            dtpFechaNacimiento.Value = DateTime.Now.AddYears(-18);
-            txtCorreo.Text = string.Empty;
-            txtContrasena.Text = string.Empty;
+            // Vaciamos todas las cajas de texto
+            txtNombre.Clear();
+            txtApellido.Clear();
+            txtDni.Clear();
+            txtCorreo.Clear();
+            txtContrasena.Clear();
 
-            if (cmbRol.Items.Count > 0) cmbRol.SelectedIndex = 0;
+            // Reseteamos el ComboBox y la Fecha
+            if (cmbRol.Items.Count > 0)
+            {
+                cmbRol.SelectedIndex = 0;
+            }
+            dtpFechaNacimiento.Value = DateTime.Now;
+ 
+            btnGuardarNuevo.Enabled = true;  // Volvemos a encender el botón Guardar
+            btnActualizar.Enabled = false; // Apagamos el botón Actualizar
+            idUsuarioSeleccionado = null;  // Le decimos al sistema que ya no hay nadie seleccionado
 
-            dgvUsuarios.ClearSelection();
-            btnGuardarNuevo.Enabled = true;
-            btnActualizar.Enabled = false;
+            // Devolvemos el botón Desactivar a su color rojo original
+            btnDesactivarUsuario.Values.Text = "🗑️ Desactivar Usuario Seleccionado";
+            btnDesactivarUsuario.StateCommon.Back.Color1 = Color.FromArgb(239, 68, 68);
+            btnDesactivarUsuario.StateCommon.Back.Color2 = Color.FromArgb(239, 68, 68);
+
+            // Ponemos el cursor parpadeando en el primer recuadro
+            txtNombre.Focus();
         }
 
         private bool ValidarCampos()
@@ -287,7 +288,7 @@ namespace LaptopDeel
             string correo = txtCorreo.Text.Trim();
             string contrasena = txtContrasena.Text.Trim();
 
-            // 1. Validar campos vacíos (La que ya tenías)
+            // Validar campos vacíos (La que ya tenías)
             if (string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(nombre) ||
                 string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(correo) ||
                 string.IsNullOrWhiteSpace(contrasena))
@@ -297,21 +298,21 @@ namespace LaptopDeel
                 return false;
             }
 
-            // 2. Validar DNI: Solo números y longitud máxima de 8
+            //Validar DNI: Solo números y longitud máxima de 8
             if (!dni.All(char.IsDigit))
             {
                 KryptonMessageBox.Show("El DNI solo puede contener números, sin puntos ni letras.", "DNI Inválido",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
-            if (dni.Length > 8 || dni.Length < 7) // En Argentina suelen ser 7 u 8 números
+            if (dni.Length > 8 || dni.Length < 7) 
             {
                 KryptonMessageBox.Show("El DNI debe tener entre 7 y 8 dígitos.", "DNI Inválido",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
 
-            // 3. Validar Nombre y Apellido: Solo letras y espacios
+            // Validar Nombre y Apellido: Solo letras y espacios
             if (!nombre.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)) ||
                 !apellido.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
             {
@@ -327,12 +328,60 @@ namespace LaptopDeel
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
-
-            // Si pasó todas las barreras, la validación es exitosa
+         
             return true;
         }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e) => AplicarFiltros();
         private void cmbFiltroEstado_SelectedIndexChanged(object sender, EventArgs e) => AplicarFiltros();
+
+        private void dgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
+        {            
+            if (e.RowIndex < 0) return;
+
+            // Agarramos el ID de la fila exacta donde el usuario hizo clic
+            if (dgvUsuarios.Rows[e.RowIndex].Cells["IdUsuario"].Value != null)
+            {
+                int id = Convert.ToInt32(dgvUsuarios.Rows[e.RowIndex].Cells["IdUsuario"].Value);
+                Usuario? u = listaUsuariosMemoria.FirstOrDefault(x => x.IdUsuario == id);
+
+                if (u != null)
+                {
+                    idUsuarioSeleccionado = u.IdUsuario;
+                    txtDni.Text = u.DNI ?? string.Empty;
+                    txtNombre.Text = u.Nombre ?? string.Empty;
+                    txtApellido.Text = u.Apellido ?? string.Empty;
+                    dtpFechaNacimiento.Value = u.FechaNacimiento;
+                    txtCorreo.Text = u.Correo ?? string.Empty;
+                    txtContrasena.Text = u.Contrasena ?? string.Empty;
+
+                    for (int i = 0; i < cmbRol.Items.Count; i++)
+                    {
+                        if (cmbRol.Items[i] is KeyValuePair<int, string> item && item.Key == u.IdRol)
+                        {
+                            cmbRol.SelectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    btnGuardarNuevo.Enabled = false;
+                    btnActualizar.Enabled = true;
+
+                    if (u.Eliminado)
+                    {
+                        btnDesactivarUsuario.Values.Text = "♻️ Activar Usuario Seleccionado";
+                        btnDesactivarUsuario.StateCommon.Back.Color1 = Color.FromArgb(34, 197, 94); // Verde
+                        btnDesactivarUsuario.StateCommon.Back.Color2 = Color.FromArgb(34, 197, 94);
+                    }
+                    else // Si está activo, el botón se pone rojo y dice "Desactivar"
+                    {
+                        btnDesactivarUsuario.Values.Text = "🗑️ Desactivar Usuario Seleccionado";
+                        btnDesactivarUsuario.StateCommon.Back.Color1 = Color.FromArgb(239, 68, 68); // Rojo 
+                        btnDesactivarUsuario.StateCommon.Back.Color2 = Color.FromArgb(239, 68, 68);
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -279,7 +279,7 @@
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuarios.Size = new Size(676, 445);
             dgvUsuarios.TabIndex = 2;
-            dgvUsuarios.SelectionChanged += dgvUsuarios_SelectionChanged;
+            dgvUsuarios.CellClick += dgvUsuarios_CellClick;
             // 
             // panelTabla
             // 

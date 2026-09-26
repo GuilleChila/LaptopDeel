@@ -193,12 +193,37 @@ namespace LaptopDeel.Datos
             }
         }
 
+        public bool ActivarLogico(int idUsuario)
+        {
+            bool exito = false;
+            
+            string query = "UPDATE usuarios SET Eliminado = 0 WHERE id_usuario = @p_id_usuario";
+
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (MySqlCommand comando = new MySqlCommand(query, conexion))
+                {
+                    comando.Parameters.AddWithValue("@p_id_usuario", idUsuario);
+                    try
+                    {
+                        conexion.Open();
+                        int filasAfectadas = comando.ExecuteNonQuery();
+                        if (filasAfectadas > 0) exito = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Error al activar usuario: " + ex.Message);
+                    }
+                }
+            }
+            return exito;
+        }
+
         public bool ExisteDniOCorreo(string dni, string correo)
         {
             bool existe = false;
             string query = "SELECT COUNT(*) FROM usuarios WHERE Dni = @dni OR Correo = @correo";
 
-            // ACÁ ESTÁ LA SOLUCIÓN: Usamos tu propia clase para obtener la conexión
             using (var conexion = ConexionBD.ObtenerConexion())
             {
                 using (MySqlCommand comando = new MySqlCommand(query, conexion))

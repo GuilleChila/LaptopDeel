@@ -10,6 +10,7 @@ namespace LaptopDeel
         static void Main()
         {
             ApplicationConfiguration.Initialize();
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

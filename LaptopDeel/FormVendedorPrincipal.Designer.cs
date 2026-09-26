@@ -128,6 +128,7 @@
             btnNavClientes.TabIndex = 1;
             btnNavClientes.Values.DropDownArrowColor = Color.Empty;
             btnNavClientes.Values.Text = "👥 Clientes";
+            btnNavClientes.Click += btnNavClientes_Click;
             // 
             // btnNavBuscarNotebooks
             // 

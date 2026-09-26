@@ -124,13 +124,14 @@
             // lblIva
             // 
             lblIva.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblIva.Location = new Point(709, 12);
+            lblIva.Location = new Point(795, 6);
             lblIva.Name = "lblIva";
             lblIva.Size = new Size(119, 24);
             lblIva.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
             lblIva.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblIva.TabIndex = 4;
             lblIva.Values.Text = "Condición IVA:";
+            lblIva.Click += lblIva_Click;
             // 
             // cmbIva
             // 
@@ -278,7 +279,7 @@
             // lblFiltroEstado
             // 
             lblFiltroEstado.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblFiltroEstado.Location = new Point(687, 12);
+            lblFiltroEstado.Location = new Point(594, 12);
             lblFiltroEstado.Name = "lblFiltroEstado";
             lblFiltroEstado.Size = new Size(141, 24);
             lblFiltroEstado.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);

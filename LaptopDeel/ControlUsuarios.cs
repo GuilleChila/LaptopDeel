@@ -34,20 +34,23 @@ namespace LaptopDeel
         }
 
         private void CargarDesplegables()
-        {           
+        {
             cmbRol.Items.Clear();
             cmbRol.Items.Add(new KeyValuePair<int, string>(1, "Administrador"));
             cmbRol.Items.Add(new KeyValuePair<int, string>(2, "Vendedor"));
             cmbRol.Items.Add(new KeyValuePair<int, string>(3, "Gerente"));
             cmbRol.DisplayMember = "Value";
             cmbRol.ValueMember = "Key";
-            cmbRol.SelectedIndex = 0;
-           
+
+            cmbRol.SelectedIndex = -1;
+
             cmbFiltroEstado.Items.Clear();
             cmbFiltroEstado.Items.Add("Activos");
             cmbFiltroEstado.Items.Add("Inactivos (Eliminados)");
             cmbFiltroEstado.Items.Add("Todos");
-            cmbFiltroEstado.SelectedIndex = 0;
+
+            
+            cmbFiltroEstado.SelectedIndex = -1;
         }
         private void CargarGrilla()
         {
@@ -126,7 +129,7 @@ namespace LaptopDeel
             dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-       
+
 
         private void btnGuardarNuevo_Click(object sender, EventArgs e)
         {
@@ -136,7 +139,7 @@ namespace LaptopDeel
             {
                 KryptonMessageBox.Show("El DNI o el Correo ingresado ya se encuentran registrados para otro usuario.",
                     "Datos Duplicados", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
-                return; 
+                return;
             }
 
             int idRolSeleccionado = 2;
@@ -159,8 +162,8 @@ namespace LaptopDeel
             {
                 KryptonMessageBox.Show("Usuario registrado con éxito.", "Operación Exitosa",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
-                   CargarGrilla();
-                   LimpiarFormulario();
+                CargarGrilla();
+                LimpiarFormulario();
             }
             else
             {
@@ -270,7 +273,7 @@ namespace LaptopDeel
                 cmbRol.SelectedIndex = 0;
             }
             dtpFechaNacimiento.Value = DateTime.Now;
- 
+
             btnGuardarNuevo.Enabled = true;  // Volvemos a encender el botón Guardar
             btnActualizar.Enabled = false; // Apagamos el botón Actualizar
             idUsuarioSeleccionado = null;  // Le decimos al sistema que ya no hay nadie seleccionado
@@ -310,7 +313,7 @@ namespace LaptopDeel
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
-            if (dni.Length > 8 || dni.Length < 7) 
+            if (dni.Length > 8 || dni.Length < 7)
             {
                 KryptonMessageBox.Show("El DNI debe tener entre 7 y 8 dígitos.", "DNI Inválido",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
@@ -333,7 +336,7 @@ namespace LaptopDeel
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
-         
+
             return true;
         }
 
@@ -341,7 +344,7 @@ namespace LaptopDeel
         private void cmbFiltroEstado_SelectedIndexChanged(object sender, EventArgs e) => AplicarFiltros();
 
         private void dgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
-        {            
+        {
             if (e.RowIndex < 0) return;
 
             // Agarramos el ID de la fila exacta donde el usuario hizo clic
@@ -388,5 +391,6 @@ namespace LaptopDeel
             }
         }
 
+       
     }
 }

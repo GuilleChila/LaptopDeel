@@ -197,12 +197,16 @@
             // 
             // btnGuardarNuevo
             // 
+            btnGuardarNuevo.Enabled = false;
             btnGuardarNuevo.Location = new Point(15, 445);
             btnGuardarNuevo.Name = "btnGuardarNuevo";
             btnGuardarNuevo.Size = new Size(165, 38);
             btnGuardarNuevo.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
             btnGuardarNuevo.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
             btnGuardarNuevo.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnGuardarNuevo.StateDisabled.Back.Color1 = Color.DarkGray;
+            btnGuardarNuevo.StateDisabled.Back.Color2 = Color.DarkGray;
+            btnGuardarNuevo.StateDisabled.Content.ShortText.Color1 = Color.Gray;
             btnGuardarNuevo.TabIndex = 14;
             btnGuardarNuevo.Values.DropDownArrowColor = Color.Empty;
             btnGuardarNuevo.Values.Text = "💾 Guardar";
@@ -217,6 +221,9 @@
             btnActualizar.StateCommon.Back.Color1 = Color.FromArgb(30, 41, 59);
             btnActualizar.StateCommon.Back.Color2 = Color.FromArgb(30, 41, 59);
             btnActualizar.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnActualizar.StateDisabled.Back.Color1 = Color.DarkGray;
+            btnActualizar.StateDisabled.Back.Color2 = Color.DarkGray;
+            btnActualizar.StateDisabled.Content.ShortText.Color1 = Color.Gray;
             btnActualizar.TabIndex = 15;
             btnActualizar.Values.DropDownArrowColor = Color.Empty;
             btnActualizar.Values.Text = "✏️ Actualizar";
@@ -236,19 +243,20 @@
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.CueHint.CueHintText = "🔍 Buscar por Nombre, Apellido, DNI o Email...";
-            txtBuscar.Location = new Point(3, 9);
+            txtBuscar.Location = new Point(3, 12);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(316, 27);
+            txtBuscar.Size = new Size(308, 27);
             txtBuscar.TabIndex = 0;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // cmbFiltroEstado
             // 
             cmbFiltroEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cmbFiltroEstado.Location = new Point(363, 10);
+            cmbFiltroEstado.Location = new Point(455, 10);
             cmbFiltroEstado.Name = "cmbFiltroEstado";
             cmbFiltroEstado.Size = new Size(215, 26);
             cmbFiltroEstado.TabIndex = 1;
+            cmbFiltroEstado.Text = "Estado";
             cmbFiltroEstado.SelectedIndexChanged += cmbFiltroEstado_SelectedIndexChanged;
             // 
             // btnDesactivarUsuario

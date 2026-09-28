@@ -49,7 +49,7 @@ namespace LaptopDeel
             cmbFiltroEstado.Items.Add("Inactivos (Eliminados)");
             cmbFiltroEstado.Items.Add("Todos");
 
-            
+
             cmbFiltroEstado.SelectedIndex = -1;
         }
         private void CargarGrilla()
@@ -319,12 +319,18 @@ namespace LaptopDeel
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
-
-            // Validar Nombre y Apellido: Solo letras y espacios
-            if (!nombre.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)) ||
-                !apellido.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            // Validar Nombre: Solo letras (SIN ESPACIOS)
+            if (!nombre.All(char.IsLetter))
             {
-                KryptonMessageBox.Show("El nombre y el apellido no pueden contener números ni símbolos.", "Formato Inválido",
+                KryptonMessageBox.Show("El nombre debe ser uno solo, sin espacios ni números.", "Formato Inválido",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Validar Apellido: Solo letras y espacios (Asumo que el apellido sí permite espacios, como "De la Cruz")
+            if (!apellido.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            {
+                KryptonMessageBox.Show("El apellido no puede contener números ni símbolos.", "Formato Inválido",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
@@ -391,6 +397,6 @@ namespace LaptopDeel
             }
         }
 
-       
+        
     }
 }

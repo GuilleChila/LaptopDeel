@@ -85,7 +85,7 @@
             panelFormulario.Size = new Size(380, 579);
             panelFormulario.StateCommon.Color1 = Color.White;
             panelFormulario.StateCommon.Color2 = Color.White;
-            panelFormulario.TabIndex = 1;
+            panelFormulario.TabIndex = 1;            
             // 
             // lblDNI
             // 

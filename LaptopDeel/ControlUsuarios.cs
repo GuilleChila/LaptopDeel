@@ -15,6 +15,7 @@ namespace LaptopDeel
         private List<Usuario> listaUsuariosMemoria;
         private int? idUsuarioSeleccionado = null;
         private bool estaCargando = false;
+
         public ControlUsuarios()
         {
             InitializeComponent();
@@ -130,12 +131,15 @@ namespace LaptopDeel
         private void btnGuardarNuevo_Click(object sender, EventArgs e)
         {
             if (!ValidarCampos()) return;
+
             if (usuarioDAO.ExisteDniOCorreo(txtDni.Text.Trim(), txtCorreo.Text.Trim()))
             {
                 KryptonMessageBox.Show("El DNI o el Correo ingresado ya se encuentran registrados para otro usuario.",
                     "Datos Duplicados", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
-                return; // ¡CORTAMOS ACÁ! No dejamos que avance a guardar.
+                return; 
             }
+
+            int idRolSeleccionado = 2;
 
             Usuario nuevo = new Usuario(
                 idUsuario: 0,
@@ -170,6 +174,7 @@ namespace LaptopDeel
             if (!ValidarCampos()) return;
 
             int idRolSeleccionado = 2;
+
             if (cmbRol.SelectedItem is KeyValuePair<int, string> itemRol)
             {
                 idRolSeleccionado = itemRol.Key;
@@ -298,7 +303,7 @@ namespace LaptopDeel
                 return false;
             }
 
-            //Validar DNI: Solo números y longitud máxima de 8
+            //Validar DNI: Solo números y longitud máxima 
             if (!dni.All(char.IsDigit))
             {
                 KryptonMessageBox.Show("El DNI solo puede contener números, sin puntos ni letras.", "DNI Inválido",

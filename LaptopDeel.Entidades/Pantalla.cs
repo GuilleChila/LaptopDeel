@@ -10,23 +10,22 @@ namespace LaptopDeel.Entidades
         public string Tipo { get; set; } = string.Empty;
         public string Tamano { get; set; } = string.Empty;
         public string TasaRefresco { get; set; } = string.Empty;
-        public bool Tactil { get; set; } = false;
+        public string Resolucion { get; set; } = string.Empty;
         public bool Eliminado { get; set; } = false;
 
         public Pantalla() { }
-        public Pantalla(int idPantalla, string tipo, string tamano, string tasaRefresco, bool tactil, bool eliminado = false)
+        public Pantalla(int idPantalla, string tipo, string tamano, string tasaRefresco, string resolucion, bool eliminado = false)
         {
             IdPantalla = idPantalla;
             Tipo = tipo;
             Tamano = tamano;
             TasaRefresco = tasaRefresco;
-            Tactil = tactil;
+            Resolucion = resolucion;
             Eliminado = eliminado;
         }
         public override string ToString()
         {
-            string esTactil = Tactil ? "Táctil" : "No Táctil";
-            return $"{Tamano}\" {Tipo} {TasaRefresco} ({esTactil})";
+            return $"{Tamano}\" {Tipo} {TasaRefresco} ({Resolucion})";
         }
 
     }

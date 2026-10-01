@@ -112,9 +112,9 @@ namespace LaptopDeel.Datos
             {
                 try
                 {
-                    using (var cmd = new MySqlCommand("sp_InsertarUsuario", conexion))
+                    using (var cmd = new MySqlCommand("sp_InsertarUsuario", conexion)) //"sp_InsertarUsuario" procedimiento almacenado que valida duplicados y realiza la inserción
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandType = CommandType.StoredProcedure;//Agarra lo que hay en los campos de la pantalla y lo empareja con las variables de MariaDB.
 
                         cmd.Parameters.AddWithValue("@p_id_rol", usuario.IdRol);
                         cmd.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
@@ -125,6 +125,7 @@ namespace LaptopDeel.Datos
                         cmd.Parameters.AddWithValue("@p_dni", usuario.DNI);
 
                         conexion.Open();
+
                         return cmd.ExecuteNonQuery() > 0;
                     }
                 }
@@ -227,7 +228,7 @@ namespace LaptopDeel.Datos
             using (var conexion = ConexionBD.ObtenerConexion())
             {
                 using (MySqlCommand comando = new MySqlCommand(query, conexion))
-                {
+                {   
                     comando.CommandType = System.Data.CommandType.Text;
 
                     comando.Parameters.AddWithValue("@dni", dni);

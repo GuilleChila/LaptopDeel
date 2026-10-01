@@ -15,19 +15,13 @@ namespace LaptopDeel.Entidades
         public int IdRAM { get; set; }
         public int IdAlmacenamiento { get; set; }
         public int IdPantalla { get; set; }
+        public int IdTarjetaGrafica { get; set; }
 
         public decimal Precio { get; set; }
         public int Stock { get; set; }
         public bool Eliminado { get; set; } = false;
 
-        // Propiedades de navegación de Hardware
-        public Procesador? Procesador { get; set; }
-        public RAM? RAM { get; set; }
-        public Almacenamiento? Almacenamiento { get; set; }
-        public Pantalla? Pantalla { get; set; }
-
-        public Notebook() { }
-        public Notebook(int idNotebook, string marca, string modelo, int idProcesador,int idRAM, int idAlmacenamiento, int idPantalla, decimal precio,int stock, bool eliminado = false)
+        public Notebook(int idNotebook, string marca, string modelo, int idProcesador,int idRAM, int idAlmacenamiento, int idPantalla, int idTarjetaGrafica, decimal precio,int stock, bool eliminado = false)
         {
             IdNotebook = idNotebook;
             Marca = marca;
@@ -36,6 +30,7 @@ namespace LaptopDeel.Entidades
             IdRAM = idRAM;
             IdAlmacenamiento = idAlmacenamiento;
             IdPantalla = idPantalla;
+            IdTarjetaGrafica = idTarjetaGrafica;
             Precio = precio;
             Stock = stock;
             Eliminado = eliminado;

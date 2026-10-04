@@ -131,7 +131,6 @@
             lblIva.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblIva.TabIndex = 4;
             lblIva.Values.Text = "Condición IVA:";
-            lblIva.Click += lblIva_Click;
             // 
             // cmbIva
             // 

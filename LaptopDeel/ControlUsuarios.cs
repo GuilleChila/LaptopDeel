@@ -326,6 +326,12 @@ namespace LaptopDeel
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
             }
+            if (!apellido.All(char.IsLetter))
+            {
+                KryptonMessageBox.Show("El apellido debe ser uno solo, sin espacios ni números.", "Formato Inválido",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            } 
 
             // Validar Apellido: Solo letras y espacios (Asumo que el apellido sí permite espacios, como "De la Cruz")
             if (!apellido.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))

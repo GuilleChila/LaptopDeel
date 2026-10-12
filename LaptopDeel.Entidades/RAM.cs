@@ -4,17 +4,17 @@ using System.Text;
 
 namespace LaptopDeel.Entidades
 {
-    public class RAM
+    public class Ram
     {
-        public int IdRAM { get; set; }
+        public int IdRam { get; set; }
         public string Capacidad { get; set; } = string.Empty;
         public string Generacion { get; set; } = string.Empty;
         public bool Eliminado { get; set; } = false;
 
-        public RAM() { }
-        public RAM(int idRAM, string capacidad, string generacion, bool eliminado = false)
+        public Ram() { }
+        public Ram(int idRam, string capacidad, string generacion, bool eliminado = false)
         {
-            IdRAM = idRAM;
+            IdRam = idRam;
             Capacidad = capacidad;
             Generacion = generacion;
             Eliminado = eliminado;

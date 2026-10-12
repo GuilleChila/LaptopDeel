@@ -42,78 +42,130 @@ namespace LaptopDeel.Datos
         }
 
         // 2. INSERTAR
-        public bool Insertar(Pantalla pantalla)
+        public bool Insertar(Pantalla pantalla, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
-                using (var cmd = new MySqlCommand("SP_Pantallas_Insertar", conexion))
+                try
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("p_tipo", pantalla.Tipo);
-                    cmd.Parameters.AddWithValue("p_tamano", pantalla.Tamano);
-                    cmd.Parameters.AddWithValue("p_tasa_refresco", pantalla.TasaRefresco);
-                    cmd.Parameters.AddWithValue("p_resolucion", pantalla.Resolucion);
+                    using (var cmd = new MySqlCommand("SP_Pantallas_Insertar", conexion))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@p_tipo", pantalla.Tipo);
+                        cmd.Parameters.AddWithValue("@p_tamano", pantalla.Tamano);
+                        cmd.Parameters.AddWithValue("@p_tasa_refresco", pantalla.TasaRefresco);
+                        cmd.Parameters.AddWithValue("@p_resolucion", pantalla.Resolucion);
 
-                    conexion.Open();
-                    int filasAfectadas = cmd.ExecuteNonQuery();
-                    return filasAfectadas > 0;
+                        conexion.Open();
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    mensajeError = ex.Message;
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    mensajeError = "Error: " + ex.Message;
+                    return false;
                 }
             }
         }
 
         // 3. ACTUALIZAR
-        public bool Actualizar(Pantalla pantalla)
+        public bool Actualizar(Pantalla pantalla, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
-                using (var cmd = new MySqlCommand("SP_Pantallas_Actualizar", conexion))
+                try
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("p_id_pantalla", pantalla.IdPantalla);
-                    cmd.Parameters.AddWithValue("p_tipo", pantalla.Tipo);
-                    cmd.Parameters.AddWithValue("p_tamano", pantalla.Tamano);
-                    cmd.Parameters.AddWithValue("p_tasa_refresco", pantalla.TasaRefresco);
-                    cmd.Parameters.AddWithValue("p_resolucion", pantalla.Resolucion);
+                    using (var cmd = new MySqlCommand("SP_Pantallas_Actualizar", conexion))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        // Agregamos el @ a los parámetros
+                        cmd.Parameters.AddWithValue("@p_id_pantalla", pantalla.IdPantalla);
+                        cmd.Parameters.AddWithValue("@p_tipo", pantalla.Tipo);
+                        cmd.Parameters.AddWithValue("@p_tamano", pantalla.Tamano);
+                        cmd.Parameters.AddWithValue("@p_tasa_refresco", pantalla.TasaRefresco);
+                        cmd.Parameters.AddWithValue("@p_resolucion", pantalla.Resolucion);
 
-                    conexion.Open();
-                    int filasAfectadas = cmd.ExecuteNonQuery();
-                    return filasAfectadas > 0;
+                        conexion.Open();
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    mensajeError = ex.Message;
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    mensajeError = "Error: " + ex.Message;
+                    return false;
                 }
             }
         }
-
         // 4. DESACTIVAR (Borrado lógico)
-        public bool Desactivar(int idPantalla)
+        public bool Desactivar(int idPantalla, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
-                using (var cmd = new MySqlCommand("SP_Pantallas_Desactivar", conexion))
+                try
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("p_id_pantalla", idPantalla);
+                    using (var cmd = new MySqlCommand("SP_Pantallas_Desactivar", conexion))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@p_id_pantalla", idPantalla);
 
-                    conexion.Open();
-                    int filasAfectadas = cmd.ExecuteNonQuery();
-                    return filasAfectadas > 0;
+                        conexion.Open();
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    mensajeError = ex.Message;
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    mensajeError = "Error: " + ex.Message;
+                    return false;
                 }
             }
         }
 
-        // 5. REACTIVAR
-        public bool Reactivar(int idPantalla)
+        public bool Reactivar(int idPantalla, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
-                using (var cmd = new MySqlCommand("SP_Pantallas_Reactivar", conexion))
+                try
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("p_id_pantalla", idPantalla);
+                    using (var cmd = new MySqlCommand("SP_Pantallas_Reactivar", conexion))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@p_id_pantalla", idPantalla);
 
-                    conexion.Open();
-                    int filasAfectadas = cmd.ExecuteNonQuery();
-                    return filasAfectadas > 0;
+                        conexion.Open();
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    mensajeError = ex.Message;
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    mensajeError = "Error: " + ex.Message;
+                    return false;
                 }
             }
         }
+
     }
 }

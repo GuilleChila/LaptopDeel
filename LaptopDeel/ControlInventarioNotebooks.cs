@@ -1,65 +1,112 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using Krypton.Toolkit;
+using LaptopDeel.Datos;
+using LaptopDeel.Entidades;
 
 namespace LaptopDeel
 {
     public partial class ControlInventarioNotebooks : UserControl
     {
+        // Guardamos la lista en memoria para que el buscador y los filtros sean instantáneos
+        private List<Notebook> listaNotebooksCompleta = new List<Notebook>();
+
         public ControlInventarioNotebooks()
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+
+            // Al ponerlo acá, se ejecuta sí o sí apenas se crea el control
+            ConfigurarColumnasGrilla();
+            CargarCombosHardware();
+            CargarDatosDesdeBD();
+            LimpiarFormulario();
         }
 
         private void ControlInventarioNotebooks_Load(object sender, EventArgs e)
         {
-            CargarCombosHardware();
             ConfigurarColumnasGrilla();
+            CargarCombosHardware();
+            CargarDatosDesdeBD();
             LimpiarFormulario();
         }
 
-        private void CargarCombosHardware()
+        protected override void OnVisibleChanged(EventArgs e)
         {
-            // Marcas
-            cmbMarca.Items.Clear();
-            cmbMarca.Items.AddRange(new string[] { "Lenovo", "ASUS", "HP", "Dell", "Acer", "Apple", "MSI" });
-            cmbMarca.SelectedIndex = 0;
+            base.OnVisibleChanged(e);
+            if (this.Visible && !this.DesignMode)
+            {
+                CargarCombosHardware();
+            }
+        }
 
-            // Procesadores
-            cmbProcesador.Items.Clear();
-            cmbProcesador.Items.AddRange(new string[] { "Intel Core i5-13400H", "Intel Core i7-13700H", "AMD Ryzen 5 5500U", "AMD Ryzen 7 7735HS", "Apple M2" });
-            cmbProcesador.SelectedIndex = 0;
+        public void CargarCombosHardware()
+        {
+            try
+            {
+                // 1. Marcas (Lista fija o podés agregar más)
+                cmbMarca.Items.Clear();
+                cmbMarca.Items.AddRange(new string[] { "Lenovo", "ASUS", "HP", "Dell", "Acer", "Apple", "MSI", "Gigabyte", "Samsung" });
 
-            // RAM
-            cmbRam.Items.Clear();
-            cmbRam.Items.AddRange(new string[] { "8 GB DDR4", "16 GB DDR4", "16 GB DDR5", "32 GB DDR5" });
-            cmbRam.SelectedIndex = 0;
+                // 2. Procesadores desde la BD (filtramos con .Where para traer solo los activos)
+                var daoProc = new ProcesadorDAO();
+                cmbProcesador.DataSource = null;
+                cmbProcesador.DataSource = daoProc.ObtenerTodos().Where(x => !x.Eliminado).ToList();
+                cmbProcesador.ValueMember = "IdProcesador"; // Guarda el ID por detrás
 
-            // Almacenamiento
-            cmbAlmacenamiento.Items.Clear();
-            cmbAlmacenamiento.Items.AddRange(new string[] { "256 GB SSD NVMe", "512 GB SSD NVMe", "1 TB SSD NVMe", "2 TB SSD NVMe" });
-            cmbAlmacenamiento.SelectedIndex = 0;
+                // 3. Memorias RAM desde la BD
+                var daoRam = new RamDAO();
+                cmbRam.DataSource = null;
+                cmbRam.DataSource = daoRam.ObtenerTodos().Where(x => !x.Eliminado).ToList();
+                cmbRam.ValueMember = "IdRam";
 
-            // Pantalla
-            cmbPantalla.Items.Clear();
-            cmbPantalla.Items.AddRange(new string[] { "14.0\" FHD (1920x1080)", "15.6\" FHD 144Hz", "16.0\" QHD 165Hz", "13.3\" Retina" });
-            cmbPantalla.SelectedIndex = 0;
+                // 4. Almacenamientos desde la BD
+                var daoAlm = new AlmacenamientoDAO();
+                cmbAlmacenamiento.DataSource = null;
+                cmbAlmacenamiento.DataSource = daoAlm.ObtenerTodos().Where(x => !x.Eliminado).ToList();
+                cmbAlmacenamiento.ValueMember = "IdAlmacenamiento";
 
-            // Filtros de tabla
-            cmbFiltroCategoria.Items.Clear();
-            cmbFiltroCategoria.Items.AddRange(new string[] { "Todas las Categorías", "Gaming", "Diseño/Edición", "Ofimática", "Estudio" });
-            cmbFiltroCategoria.SelectedIndex = 0;
+                // 5. Pantallas desde la BD
+                var daoPan = new PantallaDAO();
+                cmbPantalla.DataSource = null;
+                cmbPantalla.DataSource = daoPan.ObtenerTodos().Where(x => !x.Eliminado).ToList();
+                cmbPantalla.ValueMember = "IdPantalla";
 
-            cmbFiltroEstado.Items.Clear();
-            cmbFiltroEstado.Items.AddRange(new string[] { "Activas", "Inactivas / Eliminadas" });
-            cmbFiltroEstado.SelectedIndex = 0;
+                // 6. Tarjetas Gráficas desde la BD 
+                // (Nota: Si en tu diseño todavía tenés txtGpu, cambialo por un KryptonComboBox llamado cmbTarjetaGrafica)
+                var daoGpu = new TarjetaGraficaDAO();
+                cmbTarjetaGrafica.DataSource = null;
+                cmbTarjetaGrafica.DataSource = daoGpu.ObtenerTodos().Where(x => !x.Eliminado).ToList();
+                cmbTarjetaGrafica.ValueMember = "IdTarjetaGrafica";
+
+                // 7. Filtro de Categorías desde la BD
+                var daoCat = new CategoriaDAO();
+                var categoriasActivas = daoCat.ObtenerTodos().Where(x => !x.Eliminado).Select(c => c.Nombre).ToArray();
+                cmbFiltroCategoria.Items.Clear();
+                cmbFiltroCategoria.Items.Add("Todas las Categorías");
+                cmbFiltroCategoria.Items.AddRange(categoriasActivas);
+                cmbFiltroCategoria.SelectedIndex = 0;
+
+                // 8. Filtro de Estado
+                cmbFiltroEstado.Items.Clear();
+                cmbFiltroEstado.Items.AddRange(new string[] { "Activas", "Inactivas / Eliminadas" });
+                cmbFiltroEstado.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                KryptonMessageBox.Show("Error al cargar los componentes desde la base de datos: " + ex.Message,
+                                       "Error de Carga", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+            }
         }
 
         private void ConfigurarColumnasGrilla()
         {
             dgvInventario.Columns.Clear();
+            dgvInventario.AutoGenerateColumns = false;
+
             dgvInventario.Columns.Add("IdNotebook", "ID");
             dgvInventario.Columns.Add("Marca", "Marca");
             dgvInventario.Columns.Add("Modelo", "Modelo");
@@ -68,7 +115,77 @@ namespace LaptopDeel
             dgvInventario.Columns.Add("Stock", "Stock (Uds)");
             dgvInventario.Columns.Add("Estado", "Estado");
 
+            dgvInventario.Columns["IdNotebook"].Width = 50;
+            dgvInventario.Columns["Especificaciones"].FillWeight = 220; // Más ancha para que entre todo el hardware
             dgvInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void CargarDatosDesdeBD()
+        {
+            try
+            {
+                var dao = new NotebookDAO();
+                listaNotebooksCompleta = dao.ObtenerTodos();
+                AplicarFiltrosGrilla();
+            }
+            catch (Exception ex)
+            {
+                KryptonMessageBox.Show("Error al cargar inventario de notebooks: " + ex.Message, "Error BD", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+            }
+        }
+
+        private void AplicarFiltrosGrilla()
+        {
+            if (dgvInventario.Columns.Count == 0) return;
+
+            dgvInventario.Rows.Clear();
+
+            // 1. Filtro por Estado (Índice 1 = "Inactivas / Eliminadas", cualquier otro = "Activas")
+            bool mostrarEliminados = (cmbFiltroEstado.SelectedIndex == 1);
+            var filtradas = listaNotebooksCompleta.Where(n => n.Eliminado == mostrarEliminados);
+
+            // 2. Filtro por Categoría (Si no está en "Todas las Categorías")
+            if (cmbFiltroCategoria.SelectedIndex > 0 && cmbFiltroCategoria.SelectedItem != null)
+            {
+                string categoriaElegida = cmbFiltroCategoria.SelectedItem.ToString().ToLower();
+                filtradas = filtradas.Where(n =>
+                    !string.IsNullOrEmpty(n.Categorias) &&
+                    n.Categorias.ToLower().Contains(categoriaElegida));
+            }
+
+            // 3. Filtro por Caja de Búsqueda (Marca, Modelo, Hardware o Categoría)
+            string textoBusqueda = txtBuscar.Text.Trim().ToLower();
+            if (!string.IsNullOrEmpty(textoBusqueda))
+            {
+                filtradas = filtradas.Where(n =>
+                    n.Marca.ToLower().Contains(textoBusqueda) ||
+                    n.Modelo.ToLower().Contains(textoBusqueda) ||
+                    n.Procesador.ToLower().Contains(textoBusqueda) ||
+                    n.Ram.ToLower().Contains(textoBusqueda) ||
+                    n.TarjetaGrafica.ToLower().Contains(textoBusqueda) ||
+                    n.Categorias.ToLower().Contains(textoBusqueda));
+            }
+
+            // Llenamos la grilla con los resultados filtrados
+            foreach (var n in filtradas)
+            {
+                string specs = $"[{n.Categorias}] {n.Procesador} | RAM: {n.Ram} | Disco: {n.Almacenamiento} | GPU: {n.TarjetaGrafica}";
+                string estadoTexto = n.Eliminado ? "Inactiva" : "Activa";
+
+                int rowIndex = dgvInventario.Rows.Add(
+                    n.IdNotebook,
+                    n.Marca,
+                    n.Modelo,
+                    specs,
+                    n.Precio.ToString("N2"),
+                    n.Stock,
+                    estadoTexto
+                );
+
+                dgvInventario.Rows[rowIndex].Tag = n;
+            }
+
+            dgvInventario.ClearSelection();
         }
 
         private void LimpiarFormulario()
@@ -77,18 +194,18 @@ namespace LaptopDeel
             txtModelo.Text = string.Empty;
             txtPrecio.Text = string.Empty;
             numStock.Value = 1;
-            txtGpu.Text = string.Empty;
 
             chkGaming.Checked = false;
             chkDiseno.Checked = false;
             chkOfimatica.Checked = false;
             chkEstudio.Checked = false;
 
-            if (cmbMarca.Items.Count > 0) cmbMarca.SelectedIndex = 0;
-            if (cmbProcesador.Items.Count > 0) cmbProcesador.SelectedIndex = 0;
-            if (cmbRam.Items.Count > 0) cmbRam.SelectedIndex = 0;
-            if (cmbAlmacenamiento.Items.Count > 0) cmbAlmacenamiento.SelectedIndex = 0;
-            if (cmbPantalla.Items.Count > 0) cmbPantalla.SelectedIndex = 0;
+            cmbMarca.SelectedIndex = -1;
+            cmbProcesador.SelectedIndex = -1;
+            cmbRam.SelectedIndex = -1;
+            cmbAlmacenamiento.SelectedIndex = -1;
+            cmbPantalla.SelectedIndex = -1;
+            cmbTarjetaGrafica.SelectedIndex = -1;
 
             btnGuardarNuevo.Enabled = true;
             btnActualizar.Enabled = false;
@@ -98,48 +215,195 @@ namespace LaptopDeel
 
         private void btnLimpiar_Click(object sender, EventArgs e) => LimpiarFormulario();
 
+        // Método auxiliar para validar y armar el objeto Notebook tanto al Insertar como al Actualizar
+        private bool ConstruirNotebookDesdeFormulario(out Notebook notebook)
+        {
+            notebook = null;
+
+            if (string.IsNullOrWhiteSpace(cmbMarca.Text) || string.IsNullOrWhiteSpace(txtModelo.Text) || string.IsNullOrWhiteSpace(txtPrecio.Text))
+            {
+                KryptonMessageBox.Show("Por favor, complete Marca, Modelo y Precio.", "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (cmbProcesador.SelectedValue == null || cmbRam.SelectedValue == null ||
+                cmbAlmacenamiento.SelectedValue == null || cmbPantalla.SelectedValue == null ||
+                cmbTarjetaGrafica.SelectedValue == null)
+            {
+                KryptonMessageBox.Show("Seleccione todos los componentes de hardware en los desplegables.", "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!decimal.TryParse(txtPrecio.Text.Trim(), out decimal precio) || precio < 0)
+            {
+                KryptonMessageBox.Show("Ingrese un Precio numérico válido.", "Formato Incorrecto", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return false;
+            }
+
+            notebook = new Notebook
+            {
+                Marca = cmbMarca.Text.Trim(),
+                Modelo = txtModelo.Text.Trim(),
+                Precio = precio,
+                Stock = (int)numStock.Value,
+                IdProcesador = Convert.ToInt32(cmbProcesador.SelectedValue),
+                IdRam = Convert.ToInt32(cmbRam.SelectedValue),
+                IdAlmacenamiento = Convert.ToInt32(cmbAlmacenamiento.SelectedValue),
+                IdPantalla = Convert.ToInt32(cmbPantalla.SelectedValue),
+                IdTarjetaGrafica = Convert.ToInt32(cmbTarjetaGrafica.SelectedValue)
+            };
+
+            return true;
+        }
+        private List<string> ObtenerCategoriasTildadas()
+        {
+            var lista = new List<string>();
+            if (chkGaming.Checked) lista.Add("Gaming");
+            if (chkDiseno.Checked) lista.Add("Diseño");
+            if (chkOfimatica.Checked) lista.Add("Ofimática");
+            if (chkEstudio.Checked) lista.Add("Estudio");
+            return lista;
+        }
+
         private void btnGuardarNuevo_Click(object sender, EventArgs e)
         {
-            KryptonMessageBox.Show("Modo Maqueta: Se validarán los componentes y se registrará el equipo en el catálogo.",
-                                   "Información", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+            if (!ConstruirNotebookDesdeFormulario(out Notebook nuevaNotebook)) return;
+
+            var dao = new NotebookDAO();
+            dao.GuardarCategoriasDeNotebook(nuevaNotebook.IdNotebook, ObtenerCategoriasTildadas());
+
+            if (dao.Insertar(nuevaNotebook, out string mensajeError))
+            {
+                KryptonMessageBox.Show("Notebook registrada exitosamente en el catálogo.", "Éxito", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+
+                CargarDatosDesdeBD();
+                LimpiarFormulario();
+            }
+            else
+            {
+                KryptonMessageBox.Show("Error al guardar la Notebook: " + mensajeError, "Error BD", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+            }
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            KryptonMessageBox.Show("Modo Maqueta: Se actualizarán las especificaciones técnicas y precio del equipo.",
-                                   "Información", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+            if (string.IsNullOrEmpty(txtId.Text)) return;
+            if (!ConstruirNotebookDesdeFormulario(out Notebook notebookEditada)) return;
+
+            notebookEditada.IdNotebook = Convert.ToInt32(txtId.Text);
+
+            var dao = new NotebookDAO();
+            if (dao.Actualizar(notebookEditada, out string mensajeError))
+            {
+                // 1° Guardamos los cambios de los CheckBoxes en la tabla intermedia
+                dao.GuardarCategoriasDeNotebook(notebookEditada.IdNotebook, ObtenerCategoriasTildadas());
+
+                // 2° Recién cuando todo se guardó en la BD, mostramos el cartel de éxito
+                KryptonMessageBox.Show("Especificaciones, precio y categorías actualizados correctamente.", "Éxito", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+
+                CargarDatosDesdeBD();
+                LimpiarFormulario();
+            }
+            else
+            {
+                KryptonMessageBox.Show("Error al actualizar la Notebook: " + mensajeError, "Error BD", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+            }
         }
 
         private void btnDesactivarNotebook_Click(object sender, EventArgs e)
         {
-            KryptonMessageBox.Show("Modo Maqueta: Se desactivará el equipo del catálogo público (baja lógica).",
-                                   "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+            if (string.IsNullOrEmpty(txtId.Text))
+            {
+                KryptonMessageBox.Show("Seleccione un equipo de la grilla primero.", "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return;
+            }
+
+            int id = Convert.ToInt32(txtId.Text);
+            var dao = new NotebookDAO();
+
+            if (dao.Desactivar(id, out string mensajeError))
+            {
+                KryptonMessageBox.Show("Equipo desactivado del catálogo público.", "Baja Lógica", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+                CargarDatosDesdeBD();
+                LimpiarFormulario();
+            }
+            else
+            {
+                KryptonMessageBox.Show("Error al desactivar: " + mensajeError, "Error BD", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+            }
         }
 
         private void btnReactivarNotebook_Click(object sender, EventArgs e)
         {
-            KryptonMessageBox.Show("Modo Maqueta: Se restaurará el equipo como disponible en el catálogo.",
-                                   "Éxito", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
-        }
+            if (string.IsNullOrEmpty(txtId.Text))
+            {
+                KryptonMessageBox.Show("Seleccione un equipo inactivo de la grilla primero.", "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return;
+            }
 
-        private void txtBuscar_TextChanged(object sender, EventArgs e) { }
+            int id = Convert.ToInt32(txtId.Text);
+            var dao = new NotebookDAO();
 
-        private void cmbFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e) { }
-
-        private void cmbFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            bool mostrandoInactivos = cmbFiltroEstado.SelectedIndex == 1;
-            btnReactivarNotebook.Enabled = mostrandoInactivos;
-            btnDesactivarNotebook.Enabled = !mostrandoInactivos;
+            if (dao.Reactivar(id, out string mensajeError))
+            {
+                KryptonMessageBox.Show("Equipo restaurado como disponible en el catálogo.", "Éxito", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+                CargarDatosDesdeBD();
+                LimpiarFormulario();
+            }
+            else
+            {
+                KryptonMessageBox.Show("Error al reactivar: " + mensajeError, "Error BD", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+            }
         }
 
         private void dgvInventario_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvInventario.SelectedRows.Count > 0)
+            if (dgvInventario.SelectedRows.Count > 0 && dgvInventario.CurrentRow?.Tag is Notebook nb)
             {
+
+                string cats = nb.Categorias.ToLower();
+                chkGaming.Checked = cats.Contains("gaming");
+                chkDiseno.Checked = cats.Contains("diseño") || cats.Contains("diseno");
+                chkOfimatica.Checked = cats.Contains("ofimática") || cats.Contains("ofimatica");
+                chkEstudio.Checked = cats.Contains("estudio");
+
+                txtId.Text = nb.IdNotebook.ToString();
+                cmbMarca.Text = nb.Marca;
+                txtModelo.Text = nb.Modelo;
+                txtPrecio.Text = nb.Precio.ToString("0.##");
+                numStock.Value = nb.Stock >= numStock.Minimum && nb.Stock <= numStock.Maximum ? nb.Stock : 0;
+
+                cmbProcesador.SelectedValue = nb.IdProcesador;
+                cmbRam.SelectedValue = nb.IdRam;
+                cmbAlmacenamiento.SelectedValue = nb.IdAlmacenamiento;
+                cmbPantalla.SelectedValue = nb.IdPantalla;
+                cmbTarjetaGrafica.SelectedValue = nb.IdTarjetaGrafica;
+
                 btnGuardarNuevo.Enabled = false;
                 btnActualizar.Enabled = true;
             }
         }
+
+        private void cmbFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AplicarFiltrosGrilla();
+        }
+
+        private void cmbFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            bool mostrandoInactivos = cmbFiltroEstado.SelectedIndex == 1;
+            btnReactivarNotebook.Enabled = mostrandoInactivos;
+            btnDesactivarNotebook.Enabled = !mostrandoInactivos;
+
+            AplicarFiltrosGrilla();
+            LimpiarFormulario();
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            AplicarFiltrosGrilla();
+        }
+       
     }
 }

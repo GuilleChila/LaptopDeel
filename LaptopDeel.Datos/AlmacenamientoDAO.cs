@@ -38,8 +38,9 @@ namespace LaptopDeel.Datos
             return lista;
         }
 
-        public bool Insertar(Almacenamiento almacenamiento)
+        public bool Insertar(Almacenamiento almacenamiento, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
                 try
@@ -56,17 +57,20 @@ namespace LaptopDeel.Datos
                 }
                 catch (MySqlException ex)
                 {
+                    mensajeError = ex.Message; // ¡Atrapamos el error real de la BD!
                     return false;
                 }
                 catch (Exception ex)
                 {
+                    mensajeError = "Error: " + ex.Message;
                     return false;
                 }
             }
         }
 
-        public bool Actualizar(Almacenamiento almacenamiento)
+        public bool Actualizar(Almacenamiento almacenamiento, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
                 try
@@ -84,17 +88,20 @@ namespace LaptopDeel.Datos
                 }
                 catch (MySqlException ex)
                 {
+                    mensajeError = ex.Message; // ¡Ahora el error viaja a la interfaz!
                     return false;
                 }
                 catch (Exception ex)
-                {                   
+                {
+                    mensajeError = "Error: " + ex.Message;
                     return false;
                 }
             }
         }
 
-        public bool Desactivar(int idAlmacenamiento)
-        {            
+        public bool Desactivar(int idAlmacenamiento, out string mensajeError)
+        {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
                 try
@@ -108,15 +115,22 @@ namespace LaptopDeel.Datos
                         return cmd.ExecuteNonQuery() > 0;
                     }
                 }
+                catch (MySqlException ex)
+                {
+                    mensajeError = ex.Message; // Pasamos el error de MariaDB
+                    return false;
+                }
                 catch (Exception ex)
                 {
+                    mensajeError = "Error: " + ex.Message; // Pasamos cualquier otro error
                     return false;
                 }
             }
         }
 
-        public bool Reactivar(int idAlmacenamiento)
+        public bool Reactivar(int idAlmacenamiento, out string mensajeError)
         {
+            mensajeError = string.Empty;
             using (var conexion = ConexionBD.ObtenerConexion())
             {
                 try
@@ -130,8 +144,14 @@ namespace LaptopDeel.Datos
                         return cmd.ExecuteNonQuery() > 0;
                     }
                 }
+                catch (MySqlException ex)
+                {
+                    mensajeError = ex.Message; // Pasamos el error de MariaDB
+                    return false;
+                }
                 catch (Exception ex)
                 {
+                    mensajeError = "Error: " + ex.Message; // Pasamos cualquier otro error
                     return false;
                 }
             }

@@ -232,7 +232,7 @@
             dgvComponentes.RowHeadersWidth = 51;
             dgvComponentes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvComponentes.Size = new Size(1010, 275);
-            dgvComponentes.TabIndex = 1;           
+            dgvComponentes.TabIndex = 1;
             // 
             // ControlInventarioComponentes
             // 

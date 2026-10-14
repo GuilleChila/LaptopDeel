@@ -8,6 +8,51 @@ namespace LaptopDeel.Datos
 {
     public class NotebookDAO
     {
+        public List<Notebook> ObtenerCatalogo(string filtro = "")
+        {
+            var lista = new List<Notebook>();
+
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("SP_Notebooks_ObtenerCatalogo", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_filtro", filtro);
+                    conexion.Open();
+                        
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var notebook = new Notebook
+                            {
+                                IdNotebook = reader.GetInt32("id_notebook"),
+                                Marca = reader.IsDBNull(reader.GetOrdinal("marca")) ? string.Empty : reader.GetString("marca"),
+                                Modelo = reader.IsDBNull(reader.GetOrdinal("modelo")) ? string.Empty : reader.GetString("modelo"),
+                                Precio = reader.IsDBNull(reader.GetOrdinal("precio")) ? 0 : Convert.ToDecimal(reader["precio"]),
+                                Stock = reader.IsDBNull(reader.GetOrdinal("stock")) ? 0 : reader.GetInt32("stock"),
+                                Eliminado = reader.GetBoolean("eliminado"),
+
+                                IdProcesador = reader.IsDBNull(reader.GetOrdinal("id_procesador")) ? 0 : reader.GetInt32("id_procesador"),
+                                IdRam = reader.IsDBNull(reader.GetOrdinal("id_ram")) ? 0 : reader.GetInt32("id_ram"),
+                                IdAlmacenamiento = reader.IsDBNull(reader.GetOrdinal("id_almacenamiento")) ? 0 : reader.GetInt32("id_almacenamiento"),
+                                IdPantalla = reader.IsDBNull(reader.GetOrdinal("id_pantalla")) ? 0 : reader.GetInt32("id_pantalla"),
+                                IdTarjetaGrafica = reader.IsDBNull(reader.GetOrdinal("id_tarjetaGrafica")) ? 0 : reader.GetInt32("id_tarjetaGrafica"),
+
+                                Procesador = reader.IsDBNull(reader.GetOrdinal("desc_procesador")) ? string.Empty : reader.GetString("desc_procesador"),
+                                Ram = reader.IsDBNull(reader.GetOrdinal("desc_ram")) ? string.Empty : reader.GetString("desc_ram"),
+                                Almacenamiento = reader.IsDBNull(reader.GetOrdinal("desc_almacenamiento")) ? string.Empty : reader.GetString("desc_almacenamiento"),
+                                Pantalla = reader.IsDBNull(reader.GetOrdinal("desc_pantalla")) ? string.Empty : reader.GetString("desc_pantalla"),
+                                TarjetaGrafica = reader.IsDBNull(reader.GetOrdinal("desc_tarjetaGrafica")) ? string.Empty : reader.GetString("desc_tarjetaGrafica"),
+                                Categorias = reader.IsDBNull(reader.GetOrdinal("categorias")) ? string.Empty : reader.GetString("categorias")
+                            };
+                            lista.Add(notebook);
+                        }
+                    }
+                }
+            }
+            return lista;
+        }
         public List<Notebook> ObtenerTodos()
         {
             var lista = new List<Notebook>();

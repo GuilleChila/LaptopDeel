@@ -15,11 +15,9 @@ namespace LaptopDeel
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
-        // 1. Variable para guardar el usuario en esta pantalla
-        private Usuario usuarioActual;
+        // Variable para almacenar los datos del usuario autenticado
+        private Usuario? usuarioActual;
 
-        // 3. EL CONSTRUCTOR NUEVO: La "puerta" para Program.cs
-        // El constructor original (el vacío) ya se encarga de dibujar la ventana
         public FormVendedorPrincipal()
         {
             InitializeComponent();
@@ -27,15 +25,16 @@ namespace LaptopDeel
             ConfigurarOptimizacionesRender();
             ConfigurarTimerTransicion();
             VincularEventosNavegacion();
+
+            // Cargar automáticamente el Punto de Venta (ControlVentas) al iniciar
+            CargarPuntoDeVenta();
         }
 
-        // Este constructor nuevo usa ": this()" para ejecutar primero el de arriba, 
-        // y después se ocupa exclusivamente de los datos del usuario.
+        // Constructor sobrecargado para recibir el objeto Usuario desde Program.cs
         public FormVendedorPrincipal(Usuario usuarioLogueado) : this()
         {
             usuarioActual = usuarioLogueado;
 
-            // Actualizamos el nombre visualmente
             if (usuarioLogueado != null && usuarioLogueado.RolUsuario != null)
             {
                 lblUsuarioSidebar.Values.Text = $"👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()})";
@@ -46,7 +45,6 @@ namespace LaptopDeel
         {
             this.Text = "LaptopDeel - Selección y Punto de Venta (POS)";
 
-            // Habilita controles estándar de ventana (Minimizar, Maximizar y Cerrar)
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.ControlBox = true;
             this.MaximizeBox = true;
@@ -83,55 +81,82 @@ namespace LaptopDeel
 
         private void VincularEventosNavegacion()
         {
-            // Vinculación del evento para la gestión de clientes
+            if (this.btnNavNuevaVenta != null)
+            {
+                this.btnNavNuevaVenta.Click += new System.EventHandler(this.btnNavNuevaVenta_Click);
+            }
+
             if (this.btnNavClientes != null)
             {
                 this.btnNavClientes.Click += new System.EventHandler(this.btnNavClientes_Click);
             }
 
-            // Vinculación del evento para procesar venta
-            if (this.btnProcesarVenta != null)
+            if (this.btnNavBuscarNotebooks != null)
             {
-                this.btnProcesarVenta.Click += new System.EventHandler(this.btnProcesarVenta_Click);
+                this.btnNavBuscarNotebooks.Click += new System.EventHandler(this.btnNavNuevaVenta_Click);
+            }
+
+            if (this.btnCerrarSesion != null)
+            {
+                this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             }
         }
 
         /// <summary>
-        /// Restablece el estado visual de los botones del menú lateral y resalta el seleccionado.
+        /// Restablece el estado visual de los botones del menú lateral y resalta el botón seleccionado con Azul Royal (#2563EB).
         /// </summary>
         private void ResetearEstadosSidebar(KryptonButton? botonActivo)
         {
-            if (btnNavClientes != null)
+            KryptonButton[] botones = { btnNavNuevaVenta, btnNavClientes, btnNavBuscarNotebooks };
+
+            foreach (var btn in botones)
             {
-                btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
-                btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
+                if (btn == null) continue;
+
+                btn.StateCommon.Back.Color1 = Color.Transparent;
+                btn.StateCommon.Back.Color2 = Color.Transparent;
+                btn.StateTracking.Back.Color1 = Color.FromArgb(47, 58, 76);
+                btn.StateTracking.Back.Color2 = Color.FromArgb(47, 58, 76);
+                btn.StatePressed.Back.Color1 = Color.FromArgb(30, 41, 59);
+                btn.StatePressed.Back.Color2 = Color.FromArgb(30, 41, 59);
+                btn.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
             }
 
-            // Resalta el botón seleccionado con Azul Royal sólido #2563EB
             if (botonActivo != null)
             {
-                botonActivo.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
-                botonActivo.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+                Color azulActivo = Color.FromArgb(37, 99, 235);
+
+                botonActivo.StateCommon.Back.Color1 = azulActivo;
+                botonActivo.StateCommon.Back.Color2 = azulActivo;
+                botonActivo.StateTracking.Back.Color1 = azulActivo;
+                botonActivo.StateTracking.Back.Color2 = azulActivo;
+                botonActivo.StatePressed.Back.Color1 = azulActivo;
+                botonActivo.StatePressed.Back.Color2 = azulActivo;
+
                 botonActivo.StateCommon.Content.ShortText.Color1 = Color.White;
+                botonActivo.StateTracking.Content.ShortText.Color1 = Color.White;
+                botonActivo.StatePressed.Content.ShortText.Color1 = Color.White;
             }
+
+            this.ActiveControl = panelCanvas;
         }
 
         /// <summary>
-        /// Inyecta una nueva vista (UserControl) en el lienzo central con congelamiento de layout y efecto Fade-In.
+        /// Inyecta una nueva vista (UserControl) en el lienzo central con efecto Fade-In.
+        /// Es pública para permitir que ControlVentas ordene la redirección fluida a ControlClientes.
         /// </summary>
-        private void CargarVistaConTransicion(UserControl nuevaVista)
+        public void CargarVistaConTransicion(UserControl nuevaVista)
         {
             panelCanvas.SuspendLayout();
 
             panelCanvas.Controls.Clear();
             nuevaVista.Dock = DockStyle.Fill;
-            nuevaVista.Visible = false; // Oculto temporalmente mientras se prepara el renderizado
+            nuevaVista.Visible = false;
             panelCanvas.Controls.Add(nuevaVista);
             nuevaVista.BringToFront();
 
             panelCanvas.ResumeLayout(true);
 
-            // Iniciar animación de entrada (Fade In)
             vistaCargando = nuevaVista;
             nivelOpacidad = 0.0;
             vistaCargando.Visible = true;
@@ -153,37 +178,33 @@ namespace LaptopDeel
 
         // --- MANEJADORES DE ACCIONES Y NAVEGACIÓN ---
 
+        private void btnNavNuevaVenta_Click(object? sender, EventArgs e)
+        {
+            CargarPuntoDeVenta();
+        }
+
+        private void CargarPuntoDeVenta()
+        {
+            ResetearEstadosSidebar(btnNavNuevaVenta);
+            ControlVentas vistaVentas = new ControlVentas();
+            CargarVistaConTransicion(vistaVentas);
+        }
+
         private void btnNavClientes_Click(object? sender, EventArgs e)
         {
             ResetearEstadosSidebar(btnNavClientes);
-
-            // Instancia y carga de manera fluida el control CRUD de clientes en el lienzo central
             ControlClientes vistaClientes = new ControlClientes();
             CargarVistaConTransicion(vistaClientes);
         }
-
         private void btnProcesarVenta_Click(object? sender, EventArgs e)
         {
-            // Redirección al Formulario de Facturación y Cobro con los equipos seleccionados
-            KryptonMessageBox.Show(
-                "Redirigiendo al Formulario de Facturación con la lista de notebooks seleccionadas por el cliente...",
-                "Paso a Facturación",
-                KryptonMessageBoxButtons.OK,
-                KryptonMessageBoxIcon.Information
-            );
-
-            // Código para abrir la vista de facturación:
-            // FormFacturacion formFacturacion = new FormFacturacion(clienteActual, listaNotebooksSeleccionadas);
-            // formFacturacion.ShowDialog();
+            CargarPuntoDeVenta();
         }
 
         private void btnCerrarSesion_Click(object? sender, EventArgs e)
         {
-            // Notifica a Program.cs que se cerró sesión para retornar al Login
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
-
-     
     }
 }

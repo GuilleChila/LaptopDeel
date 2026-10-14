@@ -8,6 +8,37 @@ namespace LaptopDeel.Datos
 {
     public class ClientesDAO
     {
+        public Cliente? ObtenerPorDNI(string dni)
+        {
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("sp_ObtenerClientePorDNI", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_dni", dni);
+
+                    conexion.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Cliente
+                            {
+                                IdCliente = reader.GetInt32("id_cliente"),
+                                Dni = reader.IsDBNull(reader.GetOrdinal("dni")) ? string.Empty : reader.GetString("dni"),
+                                NombreCompleto = reader.IsDBNull(reader.GetOrdinal("nombre_completo")) ? string.Empty : reader.GetString("nombre_completo"),
+                                Correo = reader.IsDBNull(reader.GetOrdinal("correo")) ? string.Empty : reader.GetString("correo"),
+                                Telefono = reader.IsDBNull(reader.GetOrdinal("telefono")) ? string.Empty : reader.GetString("telefono"),
+                                Direccion = reader.IsDBNull(reader.GetOrdinal("direccion")) ? string.Empty : reader.GetString("direccion"),
+                                Iva = reader.IsDBNull(reader.GetOrdinal("iva")) ? "Consumidor Final" : reader.GetString("iva"),
+                                Eliminado = reader.GetBoolean("eliminado")
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public List<Cliente> ObtenerTodos()
         {
             var lista = new List<Cliente>();

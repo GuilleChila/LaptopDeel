@@ -1,8 +1,7 @@
-using Krypton.Toolkit;
-using LaptopDeel.Entidades;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Krypton.Toolkit;
 
 namespace LaptopDeel
 {
@@ -15,10 +14,8 @@ namespace LaptopDeel
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
-
         public FormAdminPrincipal()
         {
-
             InitializeComponent();
             ConfigurarEstiloVentana();
             ConfigurarOptimizacionesRender();
@@ -26,15 +23,12 @@ namespace LaptopDeel
             VincularEventosNavegacion();
         }
 
-        // Este es el que recibe los datos desde Program.cs
-        // El ": this()" hace que primero se ejecute el constructor de arriba para cargar el diseño
-        public FormAdminPrincipal(Usuario usuarioLogueado) : this()
+        // Este constructor recibe el objeto Usuario desde Program.cs
+        public FormAdminPrincipal(Entidades.Usuario usuarioLogueado) : this()
         {
-            // Verificamos por seguridad que los datos no vengan nulos
             if (usuarioLogueado != null && usuarioLogueado.RolUsuario != null)
             {
-                // Actualizamos la etiqueta del menú lateral
-                lblUsuario.Values.Text = $"  👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()}) ) ";
+                lblUsuario.Values.Text = $"  👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()}) ";
             }
         }
 
@@ -83,26 +77,49 @@ namespace LaptopDeel
             this.btnAccionUsuarios.Click += new System.EventHandler(this.btnNavUsuarios_Click);
         }
 
-        private void ResetearEstadosSidebar(KryptonButton botonActivo)
+        /// <summary>
+        /// Restablece el estado visual de los botones del menú lateral y aplica el color azul deseado al botón activo.
+        /// Iguala StateTracking, StatePressed y limpia el foco visual.
+        /// </summary>
+        private void ResetearEstadosSidebar(KryptonButton? botonActivo)
         {
-            btnNavInicio.StateCommon.Back.Color1 = Color.Transparent;
-            btnNavInicio.StateCommon.Back.Color2 = Color.Transparent;
+            KryptonButton[] botones = { btnNavInicio, btnNavInventario, btnNavUsuarios, btnNavClientes };
 
-            btnNavInventario.StateCommon.Back.Color1 = Color.Transparent;
-            btnNavInventario.StateCommon.Back.Color2 = Color.Transparent;
+            foreach (var btn in botones)
+            {
+                if (btn == null) continue;
 
-            btnNavUsuarios.StateCommon.Back.Color1 = Color.Transparent;
-            btnNavUsuarios.StateCommon.Back.Color2 = Color.Transparent;
+                // Estilo por defecto (Inactivo / Transparente)
+                btn.StateCommon.Back.Color1 = Color.Transparent;
+                btn.StateCommon.Back.Color2 = Color.Transparent;
+                btn.StateTracking.Back.Color1 = Color.FromArgb(47, 58, 76); // Hover suave
+                btn.StateTracking.Back.Color2 = Color.FromArgb(47, 58, 76);
+                btn.StatePressed.Back.Color1 = Color.FromArgb(30, 41, 59);
+                btn.StatePressed.Back.Color2 = Color.FromArgb(30, 41, 59);
+                btn.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184); // Texto gris claro
+            }
 
-            btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
-            btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
-
+            // Aplicar estilo de botón SELECCIONADO (Azul)
             if (botonActivo != null)
             {
-                botonActivo.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
-                botonActivo.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+                Color azulActivo = Color.FromArgb(37, 99, 235); // Azul #2563EB
+
+                // Asignar el mismo azul a todos los estados para evitar que vuelva al gris
+                botonActivo.StateCommon.Back.Color1 = azulActivo;
+                botonActivo.StateCommon.Back.Color2 = azulActivo;
+                botonActivo.StateTracking.Back.Color1 = azulActivo;
+                botonActivo.StateTracking.Back.Color2 = azulActivo;
+                botonActivo.StatePressed.Back.Color1 = azulActivo;
+                botonActivo.StatePressed.Back.Color2 = azulActivo;
+
+                // Texto e ícono en blanco puro
                 botonActivo.StateCommon.Content.ShortText.Color1 = Color.White;
+                botonActivo.StateTracking.Content.ShortText.Color1 = Color.White;
+                botonActivo.StatePressed.Content.ShortText.Color1 = Color.White;
             }
+
+            // Mueve el foco al canvas para quitar el recuadro gris de foco de Windows
+            this.ActiveControl = panelCanvas;
         }
 
         private void CargarVistaConTransicion(UserControl nuevaVista)
@@ -136,7 +153,7 @@ namespace LaptopDeel
             }
         }
 
-        // --- RUTAS Y MANEJADORES DE EVENTOS CON FIRMA NULABLE (CS8622) ---
+        // --- RUTAS Y MANEJADORES DE EVENTOS ---
 
         private void btnNavInicio_Click(object? sender, EventArgs e)
         {
@@ -152,7 +169,6 @@ namespace LaptopDeel
 
         private void btnNavInventario_Click(object? sender, EventArgs e)
         {
-
             ResetearEstadosSidebar(btnNavInventario);
             CargarVistaConTransicion(new ControlInventario());
         }
@@ -162,7 +178,6 @@ namespace LaptopDeel
             ResetearEstadosSidebar(btnNavUsuarios);
             CargarVistaConTransicion(new ControlUsuarios());
         }
-
 
         private void btnNavClientes_Click(object? sender, EventArgs e)
         {
@@ -175,7 +190,5 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
-
-       
     }
 }

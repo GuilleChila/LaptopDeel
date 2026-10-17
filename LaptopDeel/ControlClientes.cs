@@ -30,6 +30,13 @@ namespace LaptopDeel
             _clienteSeleccionado = null;
             _modoEdicion = false;
         }
+        public ControlClientes(string dniInicial) : this()
+        {
+            if (!string.IsNullOrEmpty(dniInicial))
+            {
+                txtDniCuit.Text = dniInicial;
+            }
+        }
 
         private void ControlClientes_Load(object? sender, EventArgs e)
         {

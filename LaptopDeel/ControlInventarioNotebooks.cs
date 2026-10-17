@@ -14,29 +14,38 @@ namespace LaptopDeel
         // Guardamos la lista en memoria para que el buscador y los filtros sean instantáneos
         private List<Notebook> listaNotebooksCompleta = new List<Notebook>();
 
+        // 1. EL CONSTRUCTOR (Acá conectamos todo y hacemos la primera carga)
         public ControlInventarioNotebooks()
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
 
-            // Al ponerlo acá, se ejecuta sí o sí apenas se crea el control
+            // Conexiones de eventos que hicimos recién
+            dgvInventario.SelectionChanged += dgvInventario_SelectionChanged;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
+            cmbFiltroCategoria.SelectedIndexChanged += cmbFiltroCategoria_SelectedIndexChanged;
+            cmbFiltroEstado.SelectedIndexChanged += cmbFiltroEstado_SelectedIndexChanged;
+
+            // Carga inicial (Solo se ejecuta una vez al arrancar)
             ConfigurarColumnasGrilla();
             CargarCombosHardware();
             CargarDatosDesdeBD();
             LimpiarFormulario();
         }
 
+        // 2. EL EVENTO LOAD (Dejalo vacío para que no haga el trabajo dos veces)
         private void ControlInventarioNotebooks_Load(object sender, EventArgs e)
         {
-            ConfigurarColumnasGrilla();
-            CargarCombosHardware();
-            CargarDatosDesdeBD();
-            LimpiarFormulario();
+            // Vacío intencionalmente (la carga ya se hizo en el constructor)
         }
 
+        // 3. EL REFRESCO (¡Está perfecto como lo armaste!)
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+
+            // Cada vez que el usuario vuelve a esta pestaña desde otra, 
+            // actualizamos los combos por si agregó una nueva RAM o Procesador.
             if (this.Visible && !this.DesignMode)
             {
                 CargarCombosHardware();
@@ -110,13 +119,15 @@ namespace LaptopDeel
             dgvInventario.Columns.Add("IdNotebook", "ID");
             dgvInventario.Columns.Add("Marca", "Marca");
             dgvInventario.Columns.Add("Modelo", "Modelo");
+            dgvInventario.Columns.Add("Categorias", "Categorías"); // <-- NUEVA COLUMNA ACÁ
             dgvInventario.Columns.Add("Especificaciones", "Especificaciones de Hardware");
             dgvInventario.Columns.Add("Precio", "Precio ($)");
             dgvInventario.Columns.Add("Stock", "Stock (Uds)");
             dgvInventario.Columns.Add("Estado", "Estado");
 
             dgvInventario.Columns["IdNotebook"].Width = 50;
-            dgvInventario.Columns["Especificaciones"].FillWeight = 220; // Más ancha para que entre todo el hardware
+            dgvInventario.Columns["Categorias"].Width = 120; // Le damos un buen ancho
+            dgvInventario.Columns["Especificaciones"].FillWeight = 200;
             dgvInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
@@ -169,13 +180,19 @@ namespace LaptopDeel
             // Llenamos la grilla con los resultados filtrados
             foreach (var n in filtradas)
             {
-                string specs = $"[{n.Categorias}] {n.Procesador} | RAM: {n.Ram} | Disco: {n.Almacenamiento} | GPU: {n.TarjetaGrafica}";
+                // Texto limpio de specs sin la categoría mezclada
+                string specs = $"{n.Procesador} | RAM: {n.Ram} | Disco: {n.Almacenamiento} | GPU: {n.TarjetaGrafica} | Pant: {n.Pantalla}";
                 string estadoTexto = n.Eliminado ? "Inactiva" : "Activa";
 
+                // Si no tiene categoría, mostramos un texto por defecto
+                string categoriasTexto = string.IsNullOrEmpty(n.Categorias) ? "Sin categoría" : n.Categorias;
+
+                // ACORDATE DE RESPETAR EL ORDEN DE LAS COLUMNAS AL AGREGAR
                 int rowIndex = dgvInventario.Rows.Add(
                     n.IdNotebook,
                     n.Marca,
                     n.Modelo,
+                    categoriasTexto, // <-- MANDAMOS EL DATO A LA NUEVA COLUMNA
                     specs,
                     n.Precio.ToString("N2"),
                     n.Stock,
@@ -197,7 +214,7 @@ namespace LaptopDeel
 
             chkGaming.Checked = false;
             chkDiseno.Checked = false;
-            chkOfimatica.Checked = false;
+            chkOficina.Checked = false;
             chkEstudio.Checked = false;
 
             cmbMarca.SelectedIndex = -1;
@@ -260,7 +277,7 @@ namespace LaptopDeel
             var lista = new List<string>();
             if (chkGaming.Checked) lista.Add("Gaming");
             if (chkDiseno.Checked) lista.Add("Diseño");
-            if (chkOfimatica.Checked) lista.Add("Ofimática");
+            if (chkOficina.Checked) lista.Add("Oficina");
             if (chkEstudio.Checked) lista.Add("Estudio");
             return lista;
         }
@@ -270,10 +287,14 @@ namespace LaptopDeel
             if (!ConstruirNotebookDesdeFormulario(out Notebook nuevaNotebook)) return;
 
             var dao = new NotebookDAO();
-            dao.GuardarCategoriasDeNotebook(nuevaNotebook.IdNotebook, ObtenerCategoriasTildadas());
 
+            // 1. PRIMERO insertamos la Notebook en la BD
             if (dao.Insertar(nuevaNotebook, out string mensajeError))
             {
+                // 2. UNA VEZ GUARDADA, ahora sí le asignamos las categorías tildadas
+                // (Asegurate de que tu método Insertar actualice nuevaNotebook.IdNotebook con el LAST_INSERT_ID)
+                dao.GuardarCategoriasDeNotebook(nuevaNotebook.IdNotebook, ObtenerCategoriasTildadas());
+
                 KryptonMessageBox.Show("Notebook registrada exitosamente en el catálogo.", "Éxito", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
 
                 CargarDatosDesdeBD();
@@ -364,7 +385,7 @@ namespace LaptopDeel
                 string cats = nb.Categorias.ToLower();
                 chkGaming.Checked = cats.Contains("gaming");
                 chkDiseno.Checked = cats.Contains("diseño") || cats.Contains("diseno");
-                chkOfimatica.Checked = cats.Contains("ofimática") || cats.Contains("ofimatica");
+                chkOficina.Checked = cats.Contains("ofimática") || cats.Contains("ofimatica");
                 chkEstudio.Checked = cats.Contains("estudio");
 
                 txtId.Text = nb.IdNotebook.ToString();
@@ -404,6 +425,7 @@ namespace LaptopDeel
         {
             AplicarFiltrosGrilla();
         }
+
        
     }
 }

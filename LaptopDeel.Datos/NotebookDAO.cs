@@ -79,7 +79,12 @@ namespace LaptopDeel.Datos
                         cmd.Parameters.AddWithValue("@p_id_tarjetaGrafica", notebook.IdTarjetaGrafica);
 
                         conexion.Open();
-                        return cmd.ExecuteNonQuery() > 0;
+
+                        // CAMBIO CLAVE: Ejecutamos, atrapamos el ID y se lo asignamos al objeto
+                        int nuevoId = Convert.ToInt32(cmd.ExecuteScalar());
+                        notebook.IdNotebook = nuevoId;
+
+                        return true;
                     }
                 }
                 catch (MySqlException ex)

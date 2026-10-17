@@ -42,7 +42,7 @@
             lblCategorias = new Krypton.Toolkit.KryptonLabel();
             chkGaming = new Krypton.Toolkit.KryptonCheckBox();
             chkDiseno = new Krypton.Toolkit.KryptonCheckBox();
-            chkOfimatica = new Krypton.Toolkit.KryptonCheckBox();
+            chkOficina = new Krypton.Toolkit.KryptonCheckBox();
             chkEstudio = new Krypton.Toolkit.KryptonCheckBox();
             btnLimpiar = new Krypton.Toolkit.KryptonButton();
             btnGuardarNuevo = new Krypton.Toolkit.KryptonButton();
@@ -108,7 +108,7 @@
             panelFormulario.Controls.Add(lblCategorias);
             panelFormulario.Controls.Add(chkGaming);
             panelFormulario.Controls.Add(chkDiseno);
-            panelFormulario.Controls.Add(chkOfimatica);
+            panelFormulario.Controls.Add(chkOficina);
             panelFormulario.Controls.Add(chkEstudio);
             panelFormulario.Controls.Add(btnLimpiar);
             panelFormulario.Controls.Add(btnGuardarNuevo);
@@ -184,7 +184,7 @@
             // lblPrecio
             // 
             lblPrecio.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblPrecio.Location = new Point(103, 10);
+            lblPrecio.Location = new Point(695, 4);
             lblPrecio.Name = "lblPrecio";
             lblPrecio.Size = new Size(85, 24);
             lblPrecio.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -203,7 +203,7 @@
             // lblStock
             // 
             lblStock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblStock.Location = new Point(74, 10);
+            lblStock.Location = new Point(890, 4);
             lblStock.Name = "lblStock";
             lblStock.Size = new Size(99, 24);
             lblStock.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -278,7 +278,7 @@
             // lblPantalla
             // 
             lblPantalla.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblPantalla.Location = new Point(369, 72);
+            lblPantalla.Location = new Point(291, 72);
             lblPantalla.Name = "lblPantalla";
             lblPantalla.Size = new Size(74, 24);
             lblPantalla.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -330,13 +330,13 @@
             chkDiseno.TabIndex = 22;
             chkDiseno.Values.Text = "Diseño/Edición";
             // 
-            // chkOfimatica
+            // chkOficina
             // 
-            chkOfimatica.Location = new Point(460, 158);
-            chkOfimatica.Name = "chkOfimatica";
-            chkOfimatica.Size = new Size(93, 24);
-            chkOfimatica.TabIndex = 23;
-            chkOfimatica.Values.Text = "Ofimática";
+            chkOficina.Location = new Point(460, 158);
+            chkOficina.Name = "chkOficina";
+            chkOficina.Size = new Size(75, 24);
+            chkOficina.TabIndex = 23;
+            chkOficina.Values.Text = "Oficina";
             // 
             // chkEstudio
             // 
@@ -434,7 +434,7 @@
             // lblFiltroCategoria
             // 
             lblFiltroCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblFiltroCategoria.Location = new Point(550, 3);
+            lblFiltroCategoria.Location = new Point(436, 3);
             lblFiltroCategoria.Name = "lblFiltroCategoria";
             lblFiltroCategoria.Size = new Size(86, 24);
             lblFiltroCategoria.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -454,7 +454,7 @@
             // lblFiltroEstado
             // 
             lblFiltroEstado.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblFiltroEstado.Location = new Point(795, 0);
+            lblFiltroEstado.Location = new Point(540, 0);
             lblFiltroEstado.Name = "lblFiltroEstado";
             lblFiltroEstado.Size = new Size(133, 24);
             lblFiltroEstado.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -578,7 +578,7 @@
         private Krypton.Toolkit.KryptonLabel lblCategorias;
         private Krypton.Toolkit.KryptonCheckBox chkGaming;
         private Krypton.Toolkit.KryptonCheckBox chkDiseno;
-        private Krypton.Toolkit.KryptonCheckBox chkOfimatica;
+        private Krypton.Toolkit.KryptonCheckBox chkOficina;
         private Krypton.Toolkit.KryptonCheckBox chkEstudio;
 
         private Krypton.Toolkit.KryptonButton btnLimpiar;

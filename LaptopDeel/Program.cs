@@ -1,6 +1,7 @@
+using LaptopDeel.Entidades; // Necesario para que reconozca al "Usuario"
 using System;
 using System.Windows.Forms;
-using LaptopDeel.Entidades; // Necesario para que reconozca al "Usuario"
+using QuestPDF.Infrastructure;
 
 namespace LaptopDeel
 {
@@ -9,6 +10,8 @@ namespace LaptopDeel
         [STAThread]
         static void Main()
         {
+            QuestPDF.Settings.License = LicenseType.Community;
+            QuestPDF.Settings.UseSystemFonts = true;
             ApplicationConfiguration.Initialize();
            
             Application.EnableVisualStyles();

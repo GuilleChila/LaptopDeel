@@ -19,7 +19,7 @@ namespace LaptopDeel.Datos
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@p_filtro", filtro);
                     conexion.Open();
-                        
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -53,6 +53,7 @@ namespace LaptopDeel.Datos
             }
             return lista;
         }
+
         public List<Notebook> ObtenerTodos()
         {
             var lista = new List<Notebook>();
@@ -69,7 +70,6 @@ namespace LaptopDeel.Datos
                         while (reader.Read())
                         {
                             var notebook = new Notebook
-
                             {
                                 IdNotebook = reader.GetInt32("id_notebook"),
                                 Marca = reader.IsDBNull(reader.GetOrdinal("marca")) ? string.Empty : reader.GetString("marca"),
@@ -103,6 +103,33 @@ namespace LaptopDeel.Datos
             return lista;
         }
 
+        // ==========================================
+        // MÉTODO DE VERIFICACIÓN DE STOCK EN TIEMPO REAL
+        // ==========================================
+        public int ObtenerStockActual(int idNotebook)
+        {
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("sp_ValidarStockNotebook", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_id_notebook", idNotebook);
+
+                    conexion.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            bool eliminado = reader.GetBoolean("eliminado");
+                            if (eliminado) return 0;
+                            return reader.GetInt32("stock");
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
+
         public bool Insertar(Notebook notebook, out string mensajeError)
         {
             mensajeError = string.Empty;
@@ -125,7 +152,6 @@ namespace LaptopDeel.Datos
 
                         conexion.Open();
 
-                        // CAMBIO CLAVE: Ejecutamos, atrapamos el ID y se lo asignamos al objeto
                         int nuevoId = Convert.ToInt32(cmd.ExecuteScalar());
                         notebook.IdNotebook = nuevoId;
 

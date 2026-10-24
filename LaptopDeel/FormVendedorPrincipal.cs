@@ -8,14 +8,9 @@ namespace LaptopDeel
 {
     public partial class FormVendedorPrincipal : KryptonForm
     {
-        // Temporizador para la transición de entrada fluida (Fade-In)
-        private System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
-
-        // Referencia a la vista que se está cargando dinámicamente en el canvas
+        private readonly System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
-
-        // Variable para almacenar los datos del usuario autenticado
         private Usuario? usuarioActual;
 
         public FormVendedorPrincipal()
@@ -26,11 +21,9 @@ namespace LaptopDeel
             ConfigurarTimerTransicion();
             VincularEventosNavegacion();
 
-            // Cargar automáticamente el Punto de Venta (ControlVentas) al iniciar
             CargarPuntoDeVenta();
         }
 
-        // Constructor sobrecargado para recibir el objeto Usuario desde Program.cs
         public FormVendedorPrincipal(Usuario usuarioLogueado) : this()
         {
             usuarioActual = usuarioLogueado;
@@ -44,7 +37,6 @@ namespace LaptopDeel
         private void ConfigurarEstiloVentana()
         {
             this.Text = "LaptopDeel - Selección y Punto de Venta (POS)";
-
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.ControlBox = true;
             this.MaximizeBox = true;
@@ -55,9 +47,6 @@ namespace LaptopDeel
             this.MinimumSize = new Size(1360, 720);
         }
 
-        /// <summary>
-        /// Activa el Doble Búfer nativo a nivel de Formulario y Panel para eliminar el parpadeo de pantalla (Flicker-Free).
-        /// </summary>
         private void ConfigurarOptimizacionesRender()
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
@@ -65,7 +54,6 @@ namespace LaptopDeel
                            ControlStyles.UserPaint, true);
             this.UpdateStyles();
 
-            // Forzamos DoubleBuffer vía Reflection en el panelCanvas
             typeof(Panel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty |
                 System.Reflection.BindingFlags.Instance |
@@ -75,39 +63,28 @@ namespace LaptopDeel
 
         private void ConfigurarTimerTransicion()
         {
-            timerTransition.Interval = 15; // ~60 FPS para suavidad visual
+            timerTransition.Interval = 15;
             timerTransition.Tick += TimerTransition_Tick;
         }
 
         private void VincularEventosNavegacion()
         {
             if (this.btnNavNuevaVenta != null)
-            {
                 this.btnNavNuevaVenta.Click += new System.EventHandler(this.btnNavNuevaVenta_Click);
-            }
 
             if (this.btnNavClientes != null)
-            {
                 this.btnNavClientes.Click += new System.EventHandler(this.btnNavClientes_Click);
-            }
 
-            if (this.btnNavBuscarNotebooks != null)
-            {
-                this.btnNavBuscarNotebooks.Click += new System.EventHandler(this.btnNavNuevaVenta_Click);
-            }
+            if (this.btnNavHistorialVentas != null)
+                this.btnNavHistorialVentas.Click += new System.EventHandler(this.btnNavHistorialVentas_Click);
 
             if (this.btnCerrarSesion != null)
-            {
                 this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
-            }
         }
 
-        /// <summary>
-        /// Restablece el estado visual de los botones del menú lateral y resalta el botón seleccionado con Azul Royal (#2563EB).
-        /// </summary>
         private void ResetearEstadosSidebar(KryptonButton? botonActivo)
         {
-            KryptonButton[] botones = { btnNavNuevaVenta, btnNavClientes, btnNavBuscarNotebooks };
+            KryptonButton[] botones = { btnNavNuevaVenta, btnNavClientes, btnNavHistorialVentas };
 
             foreach (var btn in botones)
             {
@@ -141,10 +118,6 @@ namespace LaptopDeel
             this.ActiveControl = panelCanvas;
         }
 
-        /// <summary>
-        /// Inyecta una nueva vista (UserControl) en el lienzo central con efecto Fade-In.
-        /// Es pública para permitir que ControlVentas ordene la redirección fluida a ControlClientes.
-        /// </summary>
         public void CargarVistaConTransicion(UserControl nuevaVista)
         {
             panelCanvas.SuspendLayout();
@@ -169,14 +142,9 @@ namespace LaptopDeel
             if (nivelOpacidad >= 1.0)
             {
                 timerTransition.Stop();
-                if (vistaCargando != null)
-                {
-                    vistaCargando.Refresh();
-                }
+                if (vistaCargando != null) vistaCargando.Refresh();
             }
         }
-
-        // --- MANEJADORES DE ACCIONES Y NAVEGACIÓN ---
 
         private void btnNavNuevaVenta_Click(object? sender, EventArgs e)
         {
@@ -196,9 +164,12 @@ namespace LaptopDeel
             ControlClientes vistaClientes = new ControlClientes();
             CargarVistaConTransicion(vistaClientes);
         }
-        private void btnProcesarVenta_Click(object? sender, EventArgs e)
+
+        private void btnNavHistorialVentas_Click(object? sender, EventArgs e)
         {
-            CargarPuntoDeVenta();
+            ResetearEstadosSidebar(btnNavHistorialVentas);
+            ControlHistorialVentas vistaHistorial = new ControlHistorialVentas(usuarioActual ?? new Usuario());
+            CargarVistaConTransicion(vistaHistorial);
         }
 
         private void btnCerrarSesion_Click(object? sender, EventArgs e)

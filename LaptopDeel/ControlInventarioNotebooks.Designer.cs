@@ -184,7 +184,7 @@
             // lblPrecio
             // 
             lblPrecio.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblPrecio.Location = new Point(695, 4);
+            lblPrecio.Location = new Point(695, 10);
             lblPrecio.Name = "lblPrecio";
             lblPrecio.Size = new Size(85, 24);
             lblPrecio.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -278,7 +278,7 @@
             // lblPantalla
             // 
             lblPantalla.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblPantalla.Location = new Point(291, 72);
+            lblPantalla.Location = new Point(682, 72);
             lblPantalla.Name = "lblPantalla";
             lblPantalla.Size = new Size(74, 24);
             lblPantalla.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -434,7 +434,7 @@
             // lblFiltroCategoria
             // 
             lblFiltroCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblFiltroCategoria.Location = new Point(436, 3);
+            lblFiltroCategoria.Location = new Point(794, 6);
             lblFiltroCategoria.Name = "lblFiltroCategoria";
             lblFiltroCategoria.Size = new Size(86, 24);
             lblFiltroCategoria.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);
@@ -454,7 +454,7 @@
             // lblFiltroEstado
             // 
             lblFiltroEstado.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblFiltroEstado.Location = new Point(540, 0);
+            lblFiltroEstado.Location = new Point(550, 6);
             lblFiltroEstado.Name = "lblFiltroEstado";
             lblFiltroEstado.Size = new Size(133, 24);
             lblFiltroEstado.StateCommon.ShortText.Color1 = Color.FromArgb(30, 41, 59);

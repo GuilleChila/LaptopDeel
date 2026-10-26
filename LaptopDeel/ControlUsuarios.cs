@@ -142,7 +142,22 @@ namespace LaptopDeel
                 return;
             }
 
-            int idRolSeleccionado = 2;
+            // Capturamos el texto, le borramos los espacios fantasma y lo pasamos todo a mayúsculas
+            string rolElegido = cmbRol.Text.Trim().ToUpper();
+            int idRolSeleccionado = 3;
+
+            switch (rolElegido)
+            {
+                case "ADMINISTRADOR":
+                    idRolSeleccionado = 1;
+                    break;
+                case "GERENTE":
+                    idRolSeleccionado = 3; 
+                    break;
+                case "VENDEDOR":
+                    idRolSeleccionado = 2; 
+                    break;
+            }
 
             Usuario nuevo = new Usuario(
                 idUsuario: 0,
@@ -152,7 +167,7 @@ namespace LaptopDeel
                 correo: txtCorreo.Text.Trim(),
                 contrasena: txtContrasena.Text.Trim(),
                 fechaNacimiento: dtpFechaNacimiento.Value,
-                dni: txtDni.Text.Trim(),
+                dni: txtDni.Text.Trim(),    
                 eliminado: false
             );
 
@@ -331,7 +346,7 @@ namespace LaptopDeel
                 KryptonMessageBox.Show("El apellido debe ser uno solo, sin espacios ni números.", "Formato Inválido",
                     KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return false;
-            } 
+            }
 
             // Validar Apellido: Solo letras y espacios (Asumo que el apellido sí permite espacios, como "De la Cruz")
             if (!apellido.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))

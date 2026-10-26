@@ -17,241 +17,283 @@
 
         private void InitializeComponent()
         {
-            this.tableLayoutPanelPOS = new System.Windows.Forms.TableLayoutPanel();
-            this.panelCatalogo = new Krypton.Toolkit.KryptonPanel();
-            this.lblTituloCatalogo = new Krypton.Toolkit.KryptonLabel();
-            this.txtBuscarNotebook = new Krypton.Toolkit.KryptonTextBox();
-            this.dgvCatalogo = new Krypton.Toolkit.KryptonDataGridView();
-            this.panelCarrito = new Krypton.Toolkit.KryptonPanel();
-            this.lblTituloCliente = new Krypton.Toolkit.KryptonLabel();
-            this.txtDniCliente = new Krypton.Toolkit.KryptonTextBox();
-            this.btnBuscarCliente = new Krypton.Toolkit.KryptonButton();
-            this.flowClienteInfo = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblClienteNombre = new Krypton.Toolkit.KryptonLabel();
-            this.lblClienteDni = new Krypton.Toolkit.KryptonLabel();
-            this.btnRedirigirCrudCliente = new Krypton.Toolkit.KryptonButton();
-            this.lblResumenCompra = new Krypton.Toolkit.KryptonLabel();
-            this.dgvCarrito = new Krypton.Toolkit.KryptonDataGridView();
-            this.tblSubtotal = new System.Windows.Forms.TableLayoutPanel();
-            this.lblTotalPagar = new Krypton.Toolkit.KryptonLabel();
-            this.lblSubtotalEstimado = new Krypton.Toolkit.KryptonLabel();
-            this.btnPasarAFacturacion = new Krypton.Toolkit.KryptonButton();
-
-            this.tableLayoutPanelPOS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCatalogo)).BeginInit();
-            this.panelCatalogo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCatalogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCarrito)).BeginInit();
-            this.panelCarrito.SuspendLayout();
-            this.flowClienteInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCarrito)).BeginInit();
-            this.tblSubtotal.SuspendLayout();
-            this.SuspendLayout();
-
+            tableLayoutPanelPOS = new TableLayoutPanel();
+            panelCatalogo = new Krypton.Toolkit.KryptonPanel();
+            lblTituloCatalogo = new Krypton.Toolkit.KryptonLabel();
+            txtBuscarNotebook = new Krypton.Toolkit.KryptonTextBox();
+            dgvCatalogo = new Krypton.Toolkit.KryptonDataGridView();
+            panelCarrito = new Krypton.Toolkit.KryptonPanel();
+            lblTituloCliente = new Krypton.Toolkit.KryptonLabel();
+            txtDniCliente = new Krypton.Toolkit.KryptonTextBox();
+            btnBuscarCliente = new Krypton.Toolkit.KryptonButton();
+            flowClienteInfo = new FlowLayoutPanel();
+            lblClienteNombre = new Krypton.Toolkit.KryptonLabel();
+            lblClienteDni = new Krypton.Toolkit.KryptonLabel();
+            btnRedirigirCrudCliente = new Krypton.Toolkit.KryptonButton();
+            lblResumenCompra = new Krypton.Toolkit.KryptonLabel();
+            dgvCarrito = new Krypton.Toolkit.KryptonDataGridView();
+            tblSubtotal = new TableLayoutPanel();
+            lblTotalPagar = new Krypton.Toolkit.KryptonLabel();
+            lblSubtotalEstimado = new Krypton.Toolkit.KryptonLabel();
+            btnPasarAFacturacion = new Krypton.Toolkit.KryptonButton();
+            tableLayoutPanelPOS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)panelCatalogo).BeginInit();
+            panelCatalogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCatalogo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelCarrito).BeginInit();
+            panelCarrito.SuspendLayout();
+            flowClienteInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCarrito).BeginInit();
+            tblSubtotal.SuspendLayout();
+            SuspendLayout();
             // 
             // tableLayoutPanelPOS
             // 
-            this.tableLayoutPanelPOS.ColumnCount = 2;
-            this.tableLayoutPanelPOS.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63F));
-            this.tableLayoutPanelPOS.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37F));
-            this.tableLayoutPanelPOS.Controls.Add(this.panelCatalogo, 0, 0);
-            this.tableLayoutPanelPOS.Controls.Add(this.panelCarrito, 1, 0);
-            this.tableLayoutPanelPOS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelPOS.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanelPOS.Name = "tableLayoutPanelPOS";
-            this.tableLayoutPanelPOS.RowCount = 1;
-            this.tableLayoutPanelPOS.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelPOS.Size = new System.Drawing.Size(1120, 660);
-            this.tableLayoutPanelPOS.TabIndex = 0;
-
+            tableLayoutPanelPOS.ColumnCount = 2;
+            tableLayoutPanelPOS.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 63F));
+            tableLayoutPanelPOS.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37F));
+            tableLayoutPanelPOS.Controls.Add(panelCatalogo, 0, 0);
+            tableLayoutPanelPOS.Controls.Add(panelCarrito, 1, 0);
+            tableLayoutPanelPOS.Dock = DockStyle.Fill;
+            tableLayoutPanelPOS.Location = new Point(0, 0);
+            tableLayoutPanelPOS.Name = "tableLayoutPanelPOS";
+            tableLayoutPanelPOS.RowCount = 1;
+            tableLayoutPanelPOS.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelPOS.Size = new Size(1120, 660);
+            tableLayoutPanelPOS.TabIndex = 0;
             // 
             // panelCatalogo
             // 
-            this.panelCatalogo.Controls.Add(this.lblTituloCatalogo);
-            this.panelCatalogo.Controls.Add(this.txtBuscarNotebook);
-            this.panelCatalogo.Controls.Add(this.dgvCatalogo);
-            this.panelCatalogo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCatalogo.Location = new System.Drawing.Point(5, 5);
-            this.panelCatalogo.Margin = new System.Windows.Forms.Padding(5);
-            this.panelCatalogo.Name = "panelCatalogo";
-            this.panelCatalogo.Size = new System.Drawing.Size(695, 650);
-            this.panelCatalogo.StateCommon.Color1 = System.Drawing.Color.White;
-
-            this.lblTituloCatalogo.Location = new System.Drawing.Point(20, 15);
-            this.lblTituloCatalogo.Name = "lblTituloCatalogo";
-            this.lblTituloCatalogo.Size = new System.Drawing.Size(240, 20);
-            this.lblTituloCatalogo.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblTituloCatalogo.Values.Text = "CATÁLOGO RÁPIDO DE NOTEBOOKS";
-
-            this.txtBuscarNotebook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBuscarNotebook.Location = new System.Drawing.Point(20, 42);
-            this.txtBuscarNotebook.Name = "txtBuscarNotebook";
-            this.txtBuscarNotebook.Size = new System.Drawing.Size(655, 35);
-            this.txtBuscarNotebook.Text = string.Empty;
-            this.txtBuscarNotebook.CueHint.CueHintText = "🔍 Buscar por marca, modelo o especificaciones...";
-            this.txtBuscarNotebook.TextChanged += new System.EventHandler(this.txtBuscarNotebook_TextChanged);
-
-            this.dgvCatalogo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCatalogo.Location = new System.Drawing.Point(20, 90);
-            this.dgvCatalogo.Name = "dgvCatalogo";
-            this.dgvCatalogo.Size = new System.Drawing.Size(655, 540);
-            this.dgvCatalogo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCatalogo_CellContentClick);
-
+            panelCatalogo.Controls.Add(lblTituloCatalogo);
+            panelCatalogo.Controls.Add(txtBuscarNotebook);
+            panelCatalogo.Controls.Add(dgvCatalogo);
+            panelCatalogo.Dock = DockStyle.Fill;
+            panelCatalogo.Location = new Point(5, 5);
+            panelCatalogo.Margin = new Padding(5);
+            panelCatalogo.Name = "panelCatalogo";
+            panelCatalogo.Size = new Size(695, 650);
+            panelCatalogo.StateCommon.Color1 = Color.White;
+            panelCatalogo.TabIndex = 0;
+            // 
+            // lblTituloCatalogo
+            // 
+            lblTituloCatalogo.Location = new Point(20, 15);
+            lblTituloCatalogo.Name = "lblTituloCatalogo";
+            lblTituloCatalogo.Size = new Size(278, 24);
+            lblTituloCatalogo.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTituloCatalogo.TabIndex = 0;
+            lblTituloCatalogo.Values.Text = "CATÁLOGO RÁPIDO DE NOTEBOOKS";
+            // 
+            // txtBuscarNotebook
+            // 
+            txtBuscarNotebook.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscarNotebook.CueHint.CueHintText = "🔍 Buscar por marca, modelo o especificaciones...";
+            txtBuscarNotebook.Location = new Point(20, 42);
+            txtBuscarNotebook.Name = "txtBuscarNotebook";
+            txtBuscarNotebook.Size = new Size(655, 27);
+            txtBuscarNotebook.TabIndex = 1;
+            txtBuscarNotebook.TextChanged += txtBuscarNotebook_TextChanged;
+            // 
+            // dgvCatalogo
+            // 
+            dgvCatalogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvCatalogo.BorderStyle = BorderStyle.None;
+            dgvCatalogo.ColumnHeadersHeight = 36;
+            dgvCatalogo.Location = new Point(20, 90);
+            dgvCatalogo.Name = "dgvCatalogo";
+            dgvCatalogo.RowHeadersWidth = 51;
+            dgvCatalogo.Size = new Size(655, 540);
+            dgvCatalogo.TabIndex = 2;
+            dgvCatalogo.CellContentClick += dgvCatalogo_CellContentClick;
             // 
             // panelCarrito
             // 
-            this.panelCarrito.Controls.Add(this.lblTituloCliente);
-            this.panelCarrito.Controls.Add(this.txtDniCliente);
-            this.panelCarrito.Controls.Add(this.btnBuscarCliente);
-            this.panelCarrito.Controls.Add(this.flowClienteInfo);
-            this.panelCarrito.Controls.Add(this.lblResumenCompra);
-            this.panelCarrito.Controls.Add(this.dgvCarrito);
-            this.panelCarrito.Controls.Add(this.tblSubtotal);
-            this.panelCarrito.Controls.Add(this.btnPasarAFacturacion);
-            this.panelCarrito.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCarrito.Location = new System.Drawing.Point(710, 5);
-            this.panelCarrito.Margin = new System.Windows.Forms.Padding(5);
-            this.panelCarrito.Name = "panelCarrito";
-            this.panelCarrito.Size = new System.Drawing.Size(405, 650);
-            this.panelCarrito.StateCommon.Color1 = System.Drawing.Color.White;
-
-            // Cliente
-            this.lblTituloCliente.Location = new System.Drawing.Point(20, 15);
-            this.lblTituloCliente.Name = "lblTituloCliente";
-            this.lblTituloCliente.Size = new System.Drawing.Size(150, 20);
-            this.lblTituloCliente.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblTituloCliente.Values.Text = "CLIENTE ASOCIADO";
-
-            this.txtDniCliente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDniCliente.Location = new System.Drawing.Point(20, 40);
-            this.txtDniCliente.Name = "txtDniCliente";
-            this.txtDniCliente.Size = new System.Drawing.Size(240, 30);
-
-            this.btnBuscarCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBuscarCliente.Location = new System.Drawing.Point(270, 40);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(115, 30);
-            this.btnBuscarCliente.Values.Text = "🔍 Buscar";
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
-
-            // FlowClienteInfo
-            this.flowClienteInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowClienteInfo.AutoSize = true;
-            this.flowClienteInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowClienteInfo.BackColor = System.Drawing.Color.FromArgb(241, 245, 249);
-            this.flowClienteInfo.Controls.Add(this.lblClienteNombre);
-            this.flowClienteInfo.Controls.Add(this.lblClienteDni);
-            this.flowClienteInfo.Controls.Add(this.btnRedirigirCrudCliente);
-            this.flowClienteInfo.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowClienteInfo.Location = new System.Drawing.Point(20, 78);
-            this.flowClienteInfo.Margin = new System.Windows.Forms.Padding(0);
-            this.flowClienteInfo.Name = "flowClienteInfo";
-            this.flowClienteInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.flowClienteInfo.Size = new System.Drawing.Size(365, 95);
-
-            this.lblClienteNombre.AutoSize = true;
-            this.lblClienteNombre.Name = "lblClienteNombre";
-            this.lblClienteNombre.Size = new System.Drawing.Size(140, 20);
-            this.lblClienteNombre.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblClienteNombre.Values.Text = "Seleccione un cliente";
-
-            this.lblClienteDni.AutoSize = true;
-            this.lblClienteDni.Name = "lblClienteDni";
-            this.lblClienteDni.Size = new System.Drawing.Size(60, 20);
-            this.lblClienteDni.Values.Text = "DNI: --";
-
-            this.btnRedirigirCrudCliente.Name = "btnRedirigirCrudCliente";
-            this.btnRedirigirCrudCliente.Size = new System.Drawing.Size(160, 32);
-            this.btnRedirigirCrudCliente.Values.Text = "➕ Registrar Cliente";
-            this.btnRedirigirCrudCliente.Visible = false;
-            this.btnRedirigirCrudCliente.Click += new System.EventHandler(this.btnRedirigirCrudCliente_Click);
-
-            // Resumen de Carrito
-            this.lblResumenCompra.Location = new System.Drawing.Point(20, 182);
-            this.lblResumenCompra.Name = "lblResumenCompra";
-            this.lblResumenCompra.Size = new System.Drawing.Size(250, 20);
-            this.lblResumenCompra.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblResumenCompra.Values.Text = "COMPUTADORAS SELECCIONADAS";
-
+            panelCarrito.Controls.Add(lblTituloCliente);
+            panelCarrito.Controls.Add(txtDniCliente);
+            panelCarrito.Controls.Add(btnBuscarCliente);
+            panelCarrito.Controls.Add(flowClienteInfo);
+            panelCarrito.Controls.Add(lblResumenCompra);
+            panelCarrito.Controls.Add(dgvCarrito);
+            panelCarrito.Controls.Add(tblSubtotal);
+            panelCarrito.Controls.Add(btnPasarAFacturacion);
+            panelCarrito.Dock = DockStyle.Fill;
+            panelCarrito.Location = new Point(710, 5);
+            panelCarrito.Margin = new Padding(5);
+            panelCarrito.Name = "panelCarrito";
+            panelCarrito.Size = new Size(405, 650);
+            panelCarrito.StateCommon.Color1 = Color.White;
+            panelCarrito.TabIndex = 1;
+            // 
+            // lblTituloCliente
+            // 
+            lblTituloCliente.Location = new Point(20, 15);
+            lblTituloCliente.Name = "lblTituloCliente";
+            lblTituloCliente.Size = new Size(156, 24);
+            lblTituloCliente.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTituloCliente.TabIndex = 0;
+            lblTituloCliente.Values.Text = "CLIENTE ASOCIADO";
+            // 
+            // txtDniCliente
+            // 
+            txtDniCliente.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtDniCliente.Location = new Point(20, 40);
+            txtDniCliente.Name = "txtDniCliente";
+            txtDniCliente.Size = new Size(240, 27);
+            txtDniCliente.TabIndex = 1;
+            
+            // 
+            // btnBuscarCliente
+            // 
+            btnBuscarCliente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscarCliente.Location = new Point(270, 40);
+            btnBuscarCliente.Name = "btnBuscarCliente";
+            btnBuscarCliente.Size = new Size(115, 30);
+            btnBuscarCliente.TabIndex = 2;
+            btnBuscarCliente.Values.DropDownArrowColor = Color.Empty;
+            btnBuscarCliente.Values.Text = "Ingresar";
+            btnBuscarCliente.Click += btnBuscarCliente_Click;
+            // 
+            // flowClienteInfo
+            // 
+            flowClienteInfo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowClienteInfo.AutoSize = true;
+            flowClienteInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowClienteInfo.BackColor = Color.FromArgb(241, 245, 249);
+            flowClienteInfo.Controls.Add(lblClienteNombre);
+            flowClienteInfo.Controls.Add(lblClienteDni);
+            flowClienteInfo.Controls.Add(btnRedirigirCrudCliente);
+            flowClienteInfo.FlowDirection = FlowDirection.TopDown;
+            flowClienteInfo.Location = new Point(20, 78);
+            flowClienteInfo.Margin = new Padding(0);
+            flowClienteInfo.Name = "flowClienteInfo";
+            flowClienteInfo.Padding = new Padding(10);
+            flowClienteInfo.Size = new Size(198, 120);
+            flowClienteInfo.TabIndex = 3;
+            // 
+            // lblClienteNombre
+            // 
+            lblClienteNombre.Location = new Point(13, 13);
+            lblClienteNombre.Name = "lblClienteNombre";
+            lblClienteNombre.Size = new Size(172, 26);
+            lblClienteNombre.StateCommon.ShortText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblClienteNombre.TabIndex = 0;
+            lblClienteNombre.Values.Text = "Seleccione un cliente";
+            // 
+            // lblClienteDni
+            // 
+            lblClienteDni.Location = new Point(13, 45);
+            lblClienteDni.Name = "lblClienteDni";
+            lblClienteDni.Size = new Size(58, 24);
+            lblClienteDni.TabIndex = 1;
+            lblClienteDni.Values.Text = "DNI: --";
+            // 
+            // btnRedirigirCrudCliente
+            // 
+            btnRedirigirCrudCliente.Location = new Point(13, 75);
+            btnRedirigirCrudCliente.Name = "btnRedirigirCrudCliente";
+            btnRedirigirCrudCliente.Size = new Size(160, 32);
+            btnRedirigirCrudCliente.TabIndex = 2;
+            btnRedirigirCrudCliente.Values.DropDownArrowColor = Color.Empty;
+            btnRedirigirCrudCliente.Values.Text = "➕ Registrar Cliente";
+            btnRedirigirCrudCliente.Visible = false;
+            btnRedirigirCrudCliente.Click += btnRedirigirCrudCliente_Click;
+            // 
+            // lblResumenCompra
+            // 
+            lblResumenCompra.Location = new Point(20, 182);
+            lblResumenCompra.Name = "lblResumenCompra";
+            lblResumenCompra.Size = new Size(268, 24);
+            lblResumenCompra.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblResumenCompra.TabIndex = 4;
+            lblResumenCompra.Values.Text = "COMPUTADORAS SELECCIONADAS";
+            // 
             // dgvCarrito
-            this.dgvCarrito.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCarrito.Location = new System.Drawing.Point(20, 208);
-            this.dgvCarrito.Name = "dgvCarrito";
-            this.dgvCarrito.Size = new System.Drawing.Size(365, 308);
-
-            // tblSubtotal (Cuadrícula Flexible de 1 fila x 2 columnas)
-            this.tblSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tblSubtotal.BackColor = System.Drawing.Color.White;
-            this.tblSubtotal.ColumnCount = 2;
-            this.tblSubtotal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
-            this.tblSubtotal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblSubtotal.Controls.Add(this.lblTotalPagar, 0, 0);
-            this.tblSubtotal.Controls.Add(this.lblSubtotalEstimado, 1, 0);
-            this.tblSubtotal.Location = new System.Drawing.Point(20, 528);
-            this.tblSubtotal.Name = "tblSubtotal";
-            this.tblSubtotal.RowCount = 1;
-            this.tblSubtotal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblSubtotal.Size = new System.Drawing.Size(365, 42);
-            this.tblSubtotal.TabIndex = 4;
-
-            this.lblTotalPagar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTotalPagar.Name = "lblTotalPagar";
-            this.lblTotalPagar.Size = new System.Drawing.Size(155, 36);
-            this.lblTotalPagar.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPagar.StateCommon.ShortText.TextV = Krypton.Toolkit.PaletteRelativeAlign.Center;
-            this.lblTotalPagar.Values.Text = "SUBTOTAL ESTIMADO:";
-
-            this.lblSubtotalEstimado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSubtotalEstimado.Name = "lblSubtotalEstimado";
-            this.lblSubtotalEstimado.Size = new System.Drawing.Size(204, 36);
-            this.lblSubtotalEstimado.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.lblSubtotalEstimado.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblSubtotalEstimado.StateCommon.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Far;
-            this.lblSubtotalEstimado.StateCommon.ShortText.TextV = Krypton.Toolkit.PaletteRelativeAlign.Center;
-            this.lblSubtotalEstimado.Values.Text = "$0";
-
-            // Botón Pasar a Facturación
-            this.btnPasarAFacturacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPasarAFacturacion.Location = new System.Drawing.Point(20, 582);
-            this.btnPasarAFacturacion.Name = "btnPasarAFacturacion";
-            this.btnPasarAFacturacion.Size = new System.Drawing.Size(365, 48);
-            this.btnPasarAFacturacion.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.btnPasarAFacturacion.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.btnPasarAFacturacion.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnPasarAFacturacion.StateCommon.Content.ShortText.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnPasarAFacturacion.Values.Text = "📄 Pasar a Facturación";
-            this.btnPasarAFacturacion.Click += new System.EventHandler(this.btnPasarAFacturacion_Click);
-
-            // ControlVentas Base Config
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanelPOS);
-            this.Name = "ControlVentas";
-            this.Size = new System.Drawing.Size(1120, 660);
-
-            this.tableLayoutPanelPOS.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.panelCatalogo)).EndInit();
-            this.panelCatalogo.ResumeLayout(false);
-            this.panelCatalogo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCatalogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelCarrito)).EndInit();
-            this.panelCarrito.ResumeLayout(false);
-            this.panelCarrito.PerformLayout();
-            this.flowClienteInfo.ResumeLayout(false);
-            this.flowClienteInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCarrito)).EndInit();
-            this.tblSubtotal.ResumeLayout(false);
-            this.tblSubtotal.PerformLayout();
-            this.ResumeLayout(false);
+            // 
+            dgvCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvCarrito.BorderStyle = BorderStyle.None;
+            dgvCarrito.ColumnHeadersHeight = 36;
+            dgvCarrito.Location = new Point(20, 208);
+            dgvCarrito.Name = "dgvCarrito";
+            dgvCarrito.RowHeadersWidth = 51;
+            dgvCarrito.Size = new Size(365, 308);
+            dgvCarrito.TabIndex = 5;
+            // 
+            // tblSubtotal
+            // 
+            tblSubtotal.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tblSubtotal.BackColor = Color.White;
+            tblSubtotal.ColumnCount = 2;
+            tblSubtotal.ColumnStyles.Add(new ColumnStyle());
+            tblSubtotal.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblSubtotal.Controls.Add(lblTotalPagar, 0, 0);
+            tblSubtotal.Controls.Add(lblSubtotalEstimado, 1, 0);
+            tblSubtotal.Location = new Point(20, 528);
+            tblSubtotal.Name = "tblSubtotal";
+            tblSubtotal.RowCount = 1;
+            tblSubtotal.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tblSubtotal.Size = new Size(365, 42);
+            tblSubtotal.TabIndex = 4;
+            // 
+            // lblTotalPagar
+            // 
+            lblTotalPagar.Dock = DockStyle.Fill;
+            lblTotalPagar.Location = new Point(3, 3);
+            lblTotalPagar.Name = "lblTotalPagar";
+            lblTotalPagar.Size = new Size(187, 36);
+            lblTotalPagar.StateCommon.ShortText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblTotalPagar.StateCommon.ShortText.TextV = Krypton.Toolkit.PaletteRelativeAlign.Center;
+            lblTotalPagar.TabIndex = 0;
+            lblTotalPagar.Values.Text = "SUBTOTAL ESTIMADO:";
+            // 
+            // lblSubtotalEstimado
+            // 
+            lblSubtotalEstimado.Dock = DockStyle.Fill;
+            lblSubtotalEstimado.Location = new Point(196, 3);
+            lblSubtotalEstimado.Name = "lblSubtotalEstimado";
+            lblSubtotalEstimado.Size = new Size(166, 36);
+            lblSubtotalEstimado.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);
+            lblSubtotalEstimado.StateCommon.ShortText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblSubtotalEstimado.StateCommon.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Far;
+            lblSubtotalEstimado.StateCommon.ShortText.TextV = Krypton.Toolkit.PaletteRelativeAlign.Center;
+            lblSubtotalEstimado.TabIndex = 1;
+            lblSubtotalEstimado.Values.Text = "$0";
+            // 
+            // btnPasarAFacturacion
+            // 
+            btnPasarAFacturacion.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnPasarAFacturacion.Location = new Point(20, 582);
+            btnPasarAFacturacion.Name = "btnPasarAFacturacion";
+            btnPasarAFacturacion.Size = new Size(365, 48);
+            btnPasarAFacturacion.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
+            btnPasarAFacturacion.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+            btnPasarAFacturacion.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnPasarAFacturacion.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnPasarAFacturacion.TabIndex = 6;
+            btnPasarAFacturacion.Values.DropDownArrowColor = Color.Empty;
+            btnPasarAFacturacion.Values.Text = "📄 Pasar a Facturación";
+            btnPasarAFacturacion.Click += btnPasarAFacturacion_Click;
+            // 
+            // ControlVentas
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(tableLayoutPanelPOS);
+            Name = "ControlVentas";
+            Size = new Size(1120, 660);
+            tableLayoutPanelPOS.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)panelCatalogo).EndInit();
+            panelCatalogo.ResumeLayout(false);
+            panelCatalogo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCatalogo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelCarrito).EndInit();
+            panelCarrito.ResumeLayout(false);
+            panelCarrito.PerformLayout();
+            flowClienteInfo.ResumeLayout(false);
+            flowClienteInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCarrito).EndInit();
+            tblSubtotal.ResumeLayout(false);
+            tblSubtotal.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

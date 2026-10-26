@@ -100,7 +100,7 @@
             // lblStockModal
             // 
             lblStockModal.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblStockModal.Location = new Point(-4152, 4);
+            lblStockModal.Location = new Point(-4518, 4);
             lblStockModal.Name = "lblStockModal";
             lblStockModal.Size = new Size(231, 28);
             lblStockModal.StateCommon.ShortText.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);

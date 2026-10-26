@@ -44,6 +44,12 @@ namespace LaptopDeel
                 return;
             }
 
+            if(!ValidarDniCliente(out string mensajeError))
+            {
+                KryptonMessageBox.Show(mensajeError, "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                return;
+            }
+
             Cliente clienteBD = _clientesDao.ObtenerPorDNI(dniIngresado);
 
             // Cláusula de guarda: Verificación de existencia y estado activo
@@ -72,6 +78,35 @@ namespace LaptopDeel
                 lblClienteDni.Text = $"No existe cliente activo con DNI {dniIngresado}";
                 btnRedirigirCrudCliente.Visible = true;
             }
+        }
+
+        private bool ValidarDniCliente(out string mensajeError)
+        {
+            // Limpiamos los espacios al principio o al final por si tipeó sin querer
+            string dni = txtDniCliente.Text.Trim();
+            mensajeError = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(dni))
+            {
+                mensajeError = "El campo DNI no puede estar vacío.";
+                return false;
+            }
+            if (dni.Length > 8)
+            {
+                mensajeError = "El DNI no puede tener más de 8 números.";
+                return false;
+            }
+            if (dni.Length < 8)
+            {
+                mensajeError = "El DNI no puede tener menos de 8 números.";
+                return false;
+            }
+            if (!dni.All(char.IsDigit))
+            {
+                mensajeError = "El DNI debe contener únicamente números, sin puntos, letras ni espacios.";
+                return false;
+            }
+            return true;
         }
 
         private void btnRedirigirCrudCliente_Click(object sender, EventArgs e)
@@ -297,5 +332,7 @@ namespace LaptopDeel
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCarrito.MultiSelect = false;
         }
+
+        
     }
 }

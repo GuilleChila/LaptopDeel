@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LaptopDeel.Entidades
 {
@@ -16,12 +14,15 @@ namespace LaptopDeel.Entidades
         public string DNI { get; set; } = string.Empty;
         public bool Eliminado { get; set; } = false;
 
-        // Propiedad de navegación orientada a objetos
+        public int IdSesionActiva { get; set; } = 0;
+
         public Rol? RolUsuario { get; set; }
 
         public Usuario() { }
 
-        public Usuario(int idUsuario, int idRol, string nombre, string apellido, string correo, string contrasena, DateTime fechaNacimiento, string dni, bool eliminado = false)
+        public Usuario(int idUsuario, int idRol, string nombre, string apellido, string correo,
+                       string contrasena, DateTime fechaNacimiento, string dni, bool eliminado = false,
+                       int idSesionActiva = 0)
         {
             IdUsuario = idUsuario;
             IdRol = idRol;
@@ -32,7 +33,9 @@ namespace LaptopDeel.Entidades
             FechaNacimiento = fechaNacimiento;
             DNI = dni;
             Eliminado = eliminado;
+            IdSesionActiva = idSesionActiva;
         }
+
         public string NombreCompleto => $"{Nombre} {Apellido}";
 
         public override string ToString()

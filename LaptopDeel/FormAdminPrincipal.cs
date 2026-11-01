@@ -2,17 +2,19 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Krypton.Toolkit;
+using LaptopDeel.Datos;
+using LaptopDeel.Entidades;
 
 namespace LaptopDeel
 {
     public partial class FormAdminPrincipal : KryptonForm
     {
-        // Se especifica 'System.Windows.Forms.Timer' explícitamente para resolver el error CS0104
         private System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
-
-        // Se declara como nulable (UserControl?) para corregir la advertencia CS8618
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
+
+        // Referencia a la sesión del usuario actualmente conectado
+        private readonly Usuario? _usuarioActual;
 
         public FormAdminPrincipal()
         {
@@ -23,24 +25,23 @@ namespace LaptopDeel
             VincularEventosNavegacion();
         }
 
-        // Este constructor recibe el objeto Usuario desde Program.cs
-        public FormAdminPrincipal(Entidades.Usuario usuarioLogueado) : this()
+        public FormAdminPrincipal(Usuario usuarioLogueado) : this()
         {
-            if (usuarioLogueado != null && usuarioLogueado.RolUsuario != null)
+            _usuarioActual = usuarioLogueado;
+
+            if (_usuarioActual != null && _usuarioActual.RolUsuario != null)
             {
-                lblUsuario.Values.Text = $"  👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()}) ";
+                lblUsuario.Values.Text = $"  👤 {_usuarioActual.Nombre.Trim()} ({_usuarioActual.RolUsuario.RolName.Trim()})";
             }
         }
 
         private void ConfigurarEstiloVentana()
         {
             this.Text = "LaptopDeel - Panel de Administración";
-
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.ControlBox = true;
             this.MaximizeBox = true;
             this.MinimizeBox = true;
-
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1360, 720);
             this.MinimumSize = new Size(1360, 720);
@@ -62,7 +63,7 @@ namespace LaptopDeel
 
         private void ConfigurarTimerTransicion()
         {
-            timerTransition.Interval = 15; // ~60 FPS para suavidad
+            timerTransition.Interval = 15; // ~60 FPS
             timerTransition.Tick += TimerTransition_Tick;
         }
 
@@ -72,39 +73,44 @@ namespace LaptopDeel
             this.btnNavInventario.Click += new System.EventHandler(this.btnNavInventario_Click);
             this.btnNavUsuarios.Click += new System.EventHandler(this.btnNavUsuarios_Click);
             this.btnNavClientes.Click += new System.EventHandler(this.btnNavClientes_Click);
+            this.btnNavLogs.Click += new System.EventHandler(this.btnNavLogs_Click);
 
             this.btnAccionNotebook.Click += new System.EventHandler(this.btnNavInventario_Click);
             this.btnAccionUsuarios.Click += new System.EventHandler(this.btnNavUsuarios_Click);
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
         }
 
         /// <summary>
-        /// Restablece el estado visual de los botones del menú lateral y aplica el color azul deseado al botón activo.
-        /// Iguala StateTracking, StatePressed y limpia el foco visual.
+        /// Restablece el estilo visual de la barra lateral de navegación.
+        /// Unifica los estados StateCommon, StateTracking y StatePressed para impedir parpadeos,
+        /// marcos grises residuales o botones que queden erróneamente resaltados.
         /// </summary>
         private void ResetearEstadosSidebar(KryptonButton? botonActivo)
         {
-            KryptonButton[] botones = { btnNavInicio, btnNavInventario, btnNavUsuarios, btnNavClientes };
+            KryptonButton[] botones = { btnNavInicio, btnNavInventario, btnNavUsuarios, btnNavClientes, btnNavLogs };
 
             foreach (var btn in botones)
             {
                 if (btn == null) continue;
 
-                // Estilo por defecto (Inactivo / Transparente)
+                // Estilo inactivo
                 btn.StateCommon.Back.Color1 = Color.Transparent;
                 btn.StateCommon.Back.Color2 = Color.Transparent;
-                btn.StateTracking.Back.Color1 = Color.FromArgb(47, 58, 76); // Hover suave
+                btn.StateTracking.Back.Color1 = Color.FromArgb(47, 58, 76);
                 btn.StateTracking.Back.Color2 = Color.FromArgb(47, 58, 76);
                 btn.StatePressed.Back.Color1 = Color.FromArgb(30, 41, 59);
                 btn.StatePressed.Back.Color2 = Color.FromArgb(30, 41, 59);
-                btn.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184); // Texto gris claro
+
+                btn.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
+                btn.StateTracking.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
+                btn.StatePressed.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
             }
 
-            // Aplicar estilo de botón SELECCIONADO (Azul)
+            // Estilo activo (Azul Royal #2563EB)
             if (botonActivo != null)
             {
-                Color azulActivo = Color.FromArgb(37, 99, 235); // Azul #2563EB
+                Color azulActivo = Color.FromArgb(37, 99, 235);
 
-                // Asignar el mismo azul a todos los estados para evitar que vuelva al gris
                 botonActivo.StateCommon.Back.Color1 = azulActivo;
                 botonActivo.StateCommon.Back.Color2 = azulActivo;
                 botonActivo.StateTracking.Back.Color1 = azulActivo;
@@ -112,13 +118,12 @@ namespace LaptopDeel
                 botonActivo.StatePressed.Back.Color1 = azulActivo;
                 botonActivo.StatePressed.Back.Color2 = azulActivo;
 
-                // Texto e ícono en blanco puro
                 botonActivo.StateCommon.Content.ShortText.Color1 = Color.White;
                 botonActivo.StateTracking.Content.ShortText.Color1 = Color.White;
                 botonActivo.StatePressed.Content.ShortText.Color1 = Color.White;
             }
 
-            // Mueve el foco al canvas para quitar el recuadro gris de foco de Windows
+            // Reorienta el foco activo fuera de los botones del menú lateral
             this.ActiveControl = panelCanvas;
         }
 
@@ -153,7 +158,30 @@ namespace LaptopDeel
             }
         }
 
-        // --- RUTAS Y MANEJADORES DE EVENTOS ---
+        private void FinalizarSesionActual()
+        {
+            if (_usuarioActual != null && _usuarioActual.IdSesionActiva > 0)
+            {
+                try
+                {
+                    var sesionDao = new SesionDAO();
+                    sesionDao.FinalizarSesionLog(_usuarioActual.IdSesionActiva);
+                    _usuarioActual.IdSesionActiva = 0;
+                }
+                catch
+                {
+                    // Fallback silencioso en el cierre
+                }
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            FinalizarSesionActual();
+            base.OnFormClosing(e);
+        }
+
+        // --- RUTAS DE NAVEGACIÓN ---
 
         private void btnNavInicio_Click(object? sender, EventArgs e)
         {
@@ -185,8 +213,15 @@ namespace LaptopDeel
             CargarVistaConTransicion(new ControlClientes());
         }
 
+        private void btnNavLogs_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavLogs);
+            CargarVistaConTransicion(new ControlLogs());
+        }
+
         private void btnCerrarSesion_Click(object? sender, EventArgs e)
         {
+            FinalizarSesionActual();
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }

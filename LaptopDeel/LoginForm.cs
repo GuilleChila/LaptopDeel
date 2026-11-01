@@ -10,16 +10,18 @@ namespace LaptopDeel
 {
     public partial class LoginForm : KryptonForm
     {
-        // Instancia del DAO para interactuar con la base de datos
+        // Instancias de DAOs para autenticación y auditoría de sesiones
         private readonly UsuarioDAO _usuarioDAO;
+        private readonly SesionDAO _sesionDAO;
 
-        // Propiedad pública para que Program.cs o los formularios principales tengan todos los datos del usuario logueado
+        // Propiedad pública para transferir el usuario autenticado a Program.cs o los formularios principales
         public Usuario? UsuarioAutenticado { get; private set; }
 
         public LoginForm()
         {
             InitializeComponent();
             _usuarioDAO = new UsuarioDAO();
+            _sesionDAO = new SesionDAO();
             ConfigurarEstiloVentana();
         }
 
@@ -52,7 +54,6 @@ namespace LaptopDeel
             }
         }
 
-        // Evento asociado al botón "btnIniciarSesion" conectado a MariaDB
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
@@ -71,17 +72,28 @@ namespace LaptopDeel
 
             try
             {
-                // Consulta real contra MariaDB pasando por UsuarioDAO
+                // 1. Validar credenciales del usuario con UsuarioDAO
                 Usuario? usuario = _usuarioDAO.IniciarSesion(email, password);
 
                 if (usuario != null)
                 {
-                    // Guardamos el usuario autenticado en la propiedad pública
+                    // 2. Registrar el inicio de sesión en la tabla sesiones_log vía SesionDAO
+                    try
+                    {
+                        int idSesionGenerado = _sesionDAO.IniciarSesionLog(usuario.IdUsuario);
+                        usuario.IdSesionActiva = idSesionGenerado;
+                    }
+                    catch (Exception exLog)
+                    {
+                        // Se previene que un fallo secundario de log impida el ingreso al sistema
+                        System.Diagnostics.Debug.WriteLine($"Error al registrar log de sesión: {exLog.Message}");
+                    }
+
+                    // 3. Asignar el objeto de usuario autenticado
                     this.UsuarioAutenticado = usuario;
 
-                    // Normalizamos el Tag según el nombre de rol obtenido de la BD (r.rol_nombre)
+                    // 4. Normalizar la etiqueta de Rol para navegación
                     string nombreRol = usuario.RolUsuario?.RolName ?? "";
-
 
                     if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase) ||
                         nombreRol.Equals("Admin", StringComparison.OrdinalIgnoreCase))

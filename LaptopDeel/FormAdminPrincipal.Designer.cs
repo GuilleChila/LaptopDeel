@@ -25,6 +25,7 @@
             btnNavInventario = new Krypton.Toolkit.KryptonButton();
             btnNavUsuarios = new Krypton.Toolkit.KryptonButton();
             btnNavClientes = new Krypton.Toolkit.KryptonButton();
+            btnNavLogs = new Krypton.Toolkit.KryptonButton();
             lblUsuario = new Krypton.Toolkit.KryptonLabel();
             btnCerrarSesion = new Krypton.Toolkit.KryptonButton();
             panelCanvas = new Krypton.Toolkit.KryptonPanel();
@@ -38,6 +39,7 @@
             btnAccionUsuarios = new Krypton.Toolkit.KryptonButton();
             lblTituloPOS = new Krypton.Toolkit.KryptonLabel();
             btnAccionPOS = new Krypton.Toolkit.KryptonButton();
+
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelSidebar).BeginInit();
@@ -50,6 +52,7 @@
             ((System.ComponentModel.ISupportInitialize)panelCardUsuarios).BeginInit();
             panelCardUsuarios.SuspendLayout();
             SuspendLayout();
+
             // 
             // panelHeader
             // 
@@ -62,6 +65,7 @@
             panelHeader.StateCommon.Color1 = Color.FromArgb(30, 41, 59);
             panelHeader.StateCommon.Color2 = Color.FromArgb(30, 41, 59);
             panelHeader.TabIndex = 0;
+
             // 
             // lblTituloApp
             // 
@@ -72,6 +76,7 @@
             lblTituloApp.StateCommon.ShortText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTituloApp.TabIndex = 0;
             lblTituloApp.Values.Text = "LaptopDeel Admin";
+
             // 
             // lblStatusDB
             // 
@@ -83,6 +88,7 @@
             lblStatusDB.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblStatusDB.TabIndex = 1;
             lblStatusDB.Values.Text = "● Conectado (DB)";
+
             // 
             // panelSidebar
             // 
@@ -90,6 +96,7 @@
             panelSidebar.Controls.Add(btnNavInventario);
             panelSidebar.Controls.Add(btnNavUsuarios);
             panelSidebar.Controls.Add(btnNavClientes);
+            panelSidebar.Controls.Add(btnNavLogs);
             panelSidebar.Controls.Add(lblUsuario);
             panelSidebar.Controls.Add(btnCerrarSesion);
             panelSidebar.Dock = DockStyle.Left;
@@ -99,6 +106,7 @@
             panelSidebar.StateCommon.Color1 = Color.FromArgb(30, 41, 59);
             panelSidebar.StateCommon.Color2 = Color.FromArgb(30, 41, 59);
             panelSidebar.TabIndex = 1;
+
             // 
             // btnNavInicio
             // 
@@ -110,10 +118,10 @@
             btnNavInicio.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
             btnNavInicio.StateCommon.Content.ShortText.Color1 = Color.White;
             btnNavInicio.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnNavInicio.StateTracking.Back.ColorAlign = Krypton.Toolkit.PaletteRectangleAlign.Local;
             btnNavInicio.TabIndex = 0;
             btnNavInicio.Values.DropDownArrowColor = Color.Empty;
             btnNavInicio.Values.Text = "🏠 Inicio / Dashboard";
+
             // 
             // btnNavInventario
             // 
@@ -124,10 +132,10 @@
             btnNavInventario.StateCommon.Back.Color1 = Color.Transparent;
             btnNavInventario.StateCommon.Back.Color2 = Color.Transparent;
             btnNavInventario.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavInventario.TabIndex = 2;
+            btnNavInventario.TabIndex = 1;
             btnNavInventario.Values.DropDownArrowColor = Color.Empty;
             btnNavInventario.Values.Text = "💻 Inventario";
-            btnNavInventario.Click += btnNavInventario_Click;
+
             // 
             // btnNavUsuarios
             // 
@@ -138,10 +146,10 @@
             btnNavUsuarios.StateCommon.Back.Color1 = Color.Transparent;
             btnNavUsuarios.StateCommon.Back.Color2 = Color.Transparent;
             btnNavUsuarios.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavUsuarios.TabIndex = 3;
+            btnNavUsuarios.TabIndex = 2;
             btnNavUsuarios.Values.DropDownArrowColor = Color.Empty;
             btnNavUsuarios.Values.Text = "👥 Usuarios";
-            btnNavUsuarios.Click += btnNavUsuarios_Click;
+
             // 
             // btnNavClientes
             // 
@@ -152,21 +160,36 @@
             btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
             btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
             btnNavClientes.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavClientes.TabIndex = 4;
+            btnNavClientes.TabIndex = 3;
             btnNavClientes.Values.DropDownArrowColor = Color.Empty;
             btnNavClientes.Values.Text = "📋 Clientes";
-            btnNavClientes.Click += btnNavClientes_Click;
+
+            // 
+            // btnNavLogs
+            // 
+            btnNavLogs.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnNavLogs.Location = new Point(15, 250);
+            btnNavLogs.Name = "btnNavLogs";
+            btnNavLogs.Size = new Size(210, 45);
+            btnNavLogs.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavLogs.StateCommon.Back.Color2 = Color.Transparent;
+            btnNavLogs.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
+            btnNavLogs.TabIndex = 4;
+            btnNavLogs.Values.DropDownArrowColor = Color.Empty;
+            btnNavLogs.Values.Text = "📊 Monitoreo Logs";
+
             // 
             // lblUsuario
             // 
             lblUsuario.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            lblUsuario.Location = new Point(0, 531);
+            lblUsuario.Location = new Point(15, 540);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(180, 27);
+            lblUsuario.Size = new Size(210, 27);
             lblUsuario.StateCommon.ShortText.Color1 = Color.White;
             lblUsuario.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblUsuario.TabIndex = 5;
-            lblUsuario.Values.Text = "👤 Guillermo(Admin))";
+            lblUsuario.Values.Text = "👤 Guillermo (Admin)";
+
             // 
             // btnCerrarSesion
             // 
@@ -181,7 +204,7 @@
             btnCerrarSesion.TabIndex = 6;
             btnCerrarSesion.Values.DropDownArrowColor = Color.Empty;
             btnCerrarSesion.Values.Text = "🔴 Cerrar Sesión";
-            btnCerrarSesion.Click += btnCerrarSesion_Click;
+
             // 
             // panelCanvas
             // 
@@ -194,6 +217,7 @@
             panelCanvas.StateCommon.Color1 = Color.FromArgb(248, 250, 252);
             panelCanvas.StateCommon.Color2 = Color.FromArgb(248, 250, 252);
             panelCanvas.TabIndex = 2;
+
             // 
             // lblBienvenida
             // 
@@ -204,6 +228,7 @@
             lblBienvenida.StateCommon.ShortText.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblBienvenida.TabIndex = 0;
             lblBienvenida.Values.Text = "Bienvenido, Administrador";
+
             // 
             // tableLayoutPanelCards
             // 
@@ -220,6 +245,7 @@
             tableLayoutPanelCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanelCards.Size = new Size(1065, 160);
             tableLayoutPanelCards.TabIndex = 1;
+
             // 
             // panelCardNotebook
             // 
@@ -233,6 +259,7 @@
             panelCardNotebook.StateCommon.Color1 = Color.White;
             panelCardNotebook.StateCommon.Color2 = Color.White;
             panelCardNotebook.TabIndex = 1;
+
             // 
             // lblTituloNotebook
             // 
@@ -242,6 +269,7 @@
             lblTituloNotebook.StateCommon.ShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblTituloNotebook.TabIndex = 0;
             lblTituloNotebook.Values.Text = "Cargar Notebook";
+
             // 
             // btnAccionNotebook
             // 
@@ -255,6 +283,7 @@
             btnAccionNotebook.TabIndex = 1;
             btnAccionNotebook.Values.DropDownArrowColor = Color.Empty;
             btnAccionNotebook.Values.Text = "Registrar nuevo equipo";
+
             // 
             // panelCardUsuarios
             // 
@@ -268,6 +297,7 @@
             panelCardUsuarios.StateCommon.Color1 = Color.White;
             panelCardUsuarios.StateCommon.Color2 = Color.White;
             panelCardUsuarios.TabIndex = 2;
+
             // 
             // lblTituloUsuarios
             // 
@@ -277,6 +307,7 @@
             lblTituloUsuarios.StateCommon.ShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblTituloUsuarios.TabIndex = 0;
             lblTituloUsuarios.Values.Text = "Crear Usuario";
+
             // 
             // btnAccionUsuarios
             // 
@@ -290,15 +321,17 @@
             btnAccionUsuarios.TabIndex = 1;
             btnAccionUsuarios.Values.DropDownArrowColor = Color.Empty;
             btnAccionUsuarios.Values.Text = "Agregar nuevo usuario";
+
             // 
             // lblTituloPOS
             // 
             lblTituloPOS.Location = new Point(20, 20);
             lblTituloPOS.Name = "lblTituloPOS";
-            lblTituloPOS.Size = new Size(48, 24);
+            lblTituloPOS.Size = new Size(128, 24);
             lblTituloPOS.StateCommon.ShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblTituloPOS.TabIndex = 0;
             lblTituloPOS.Values.Text = "Nueva Venta";
+
             // 
             // btnAccionPOS
             // 
@@ -312,6 +345,7 @@
             btnAccionPOS.TabIndex = 1;
             btnAccionPOS.Values.DropDownArrowColor = Color.Empty;
             btnAccionPOS.Values.Text = "Abrir Punto de Venta (POS)";
+
             // 
             // FormAdminPrincipal
             // 
@@ -324,6 +358,7 @@
             Name = "FormAdminPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LaptopDeel - Panel de Administración";
+
             ((System.ComponentModel.ISupportInitialize)panelHeader).EndInit();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
@@ -341,7 +376,6 @@
             panelCardUsuarios.ResumeLayout(false);
             panelCardUsuarios.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion
@@ -354,6 +388,7 @@
         private Krypton.Toolkit.KryptonButton btnNavInventario;
         private Krypton.Toolkit.KryptonButton btnNavUsuarios;
         private Krypton.Toolkit.KryptonButton btnNavClientes;
+        private Krypton.Toolkit.KryptonButton btnNavLogs;
         private Krypton.Toolkit.KryptonLabel lblUsuario;
         private Krypton.Toolkit.KryptonButton btnCerrarSesion;
         private Krypton.Toolkit.KryptonPanel panelCanvas;

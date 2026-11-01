@@ -25,6 +25,7 @@
             btnNavClientes = new Krypton.Toolkit.KryptonButton();
             btnNavReporteVentas = new Krypton.Toolkit.KryptonButton();
             btnNavReporteStock = new Krypton.Toolkit.KryptonButton();
+            btnNavHistorialVentas = new Krypton.Toolkit.KryptonButton();
             lblUsuarioSidebar = new Krypton.Toolkit.KryptonLabel();
             btnCerrarSesion = new Krypton.Toolkit.KryptonButton();
             panelCanvas = new Krypton.Toolkit.KryptonPanel();
@@ -94,6 +95,7 @@
             panelSidebar.Controls.Add(btnNavClientes);
             panelSidebar.Controls.Add(btnNavReporteVentas);
             panelSidebar.Controls.Add(btnNavReporteStock);
+            panelSidebar.Controls.Add(btnNavHistorialVentas);
             panelSidebar.Controls.Add(lblUsuarioSidebar);
             panelSidebar.Controls.Add(btnCerrarSesion);
             panelSidebar.Dock = DockStyle.Left;
@@ -130,7 +132,6 @@
             btnNavClientes.TabIndex = 1;
             btnNavClientes.Values.DropDownArrowColor = Color.Empty;
             btnNavClientes.Values.Text = "👥 CRUD Clientes";
-            btnNavClientes.Click += btnNavClientes_Click;
             // 
             // btnNavReporteVentas
             // 
@@ -158,6 +159,20 @@
             btnNavReporteStock.Values.DropDownArrowColor = Color.Empty;
             btnNavReporteStock.Values.Text = "💻 Reporte de Stock";
             // 
+            // btnNavHistorialVentas
+            // 
+            btnNavHistorialVentas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnNavHistorialVentas.Location = new Point(15, 250);
+            btnNavHistorialVentas.Name = "btnNavHistorialVentas";
+            btnNavHistorialVentas.Size = new Size(210, 45);
+            btnNavHistorialVentas.StateCommon.Back.Color1 = Color.Transparent;
+            btnNavHistorialVentas.StateCommon.Back.Color2 = Color.Transparent;
+            btnNavHistorialVentas.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
+            btnNavHistorialVentas.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+            btnNavHistorialVentas.TabIndex = 4;
+            btnNavHistorialVentas.Values.DropDownArrowColor = Color.Empty;
+            btnNavHistorialVentas.Values.Text = "📋 Historial Ventas";
+            // 
             // lblUsuarioSidebar
             // 
             lblUsuarioSidebar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -166,7 +181,7 @@
             lblUsuarioSidebar.Size = new Size(229, 27);
             lblUsuarioSidebar.StateCommon.ShortText.Color1 = Color.White;
             lblUsuarioSidebar.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblUsuarioSidebar.TabIndex = 4;
+            lblUsuarioSidebar.TabIndex = 5;
             lblUsuarioSidebar.Values.Text = "👤 Guillermo (CEO/Gerente)";
             // 
             // btnCerrarSesion
@@ -179,10 +194,9 @@
             btnCerrarSesion.StateCommon.Back.Color2 = Color.FromArgb(239, 68, 68);
             btnCerrarSesion.StateCommon.Content.ShortText.Color1 = Color.White;
             btnCerrarSesion.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCerrarSesion.TabIndex = 5;
+            btnCerrarSesion.TabIndex = 6;
             btnCerrarSesion.Values.DropDownArrowColor = Color.Empty;
             btnCerrarSesion.Values.Text = "🔴 Cerrar Sesión";
-            btnCerrarSesion.Click += btnCerrarSesion_Click;
             // 
             // panelCanvas
             // 
@@ -371,7 +385,6 @@
             panelCardStock.ResumeLayout(false);
             panelCardStock.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion
@@ -384,6 +397,7 @@
         private Krypton.Toolkit.KryptonButton btnNavClientes;
         private Krypton.Toolkit.KryptonButton btnNavReporteVentas;
         private Krypton.Toolkit.KryptonButton btnNavReporteStock;
+        private Krypton.Toolkit.KryptonButton btnNavHistorialVentas;
         private Krypton.Toolkit.KryptonLabel lblUsuarioSidebar;
         private Krypton.Toolkit.KryptonButton btnCerrarSesion;
         private Krypton.Toolkit.KryptonPanel panelCanvas;

@@ -2,23 +2,21 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Krypton.Toolkit;
-using LaptopDeel.Entidades; 
+using LaptopDeel.Entidades;
 
 namespace LaptopDeel
 {
     public partial class FormCeoPrincipal : KryptonForm
     {
         // Temporizador para la transición de entrada fluida (Fade-In)
-        private System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
+        private readonly System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
 
         // Referencia a la vista que se está cargando dinámicamente en el canvas
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
-        // 1. Variable para guardar el usuario en esta pantalla
+        // Variable para guardar la sesión activa del usuario
         private Usuario usuarioActual;
-
-        // 2. Tu constructor original
 
         public FormCeoPrincipal()
         {
@@ -29,10 +27,15 @@ namespace LaptopDeel
             VincularEventosNavegacion();
         }
 
-        // 3. EL CONSTRUCTOR NUEVO: Esta es la "puerta" que Program.cs está buscando
         public FormCeoPrincipal(Usuario usuarioLogueado) : this()
         {
-            usuarioActual = usuarioLogueado;
+            usuarioActual = usuarioLogueado ?? new Usuario();
+
+            if (usuarioLogueado != null && !string.IsNullOrEmpty(usuarioLogueado.Nombre))
+            {
+                string rol = usuarioLogueado.RolUsuario?.RolName ?? "CEO/Gerente";
+                lblUsuarioSidebar.Values.Text = $"👤 {usuarioLogueado.Nombre.Trim()} ({rol})";
+            }
         }
 
         private void ConfigurarEstiloVentana()
@@ -76,35 +79,74 @@ namespace LaptopDeel
 
         private void VincularEventosNavegacion()
         {
-            // Evento para el botón de CRUD de Clientes
+            if (this.btnNavDashboard != null)
+                this.btnNavDashboard.Click += new EventHandler(this.btnNavDashboard_Click);
+
             if (this.btnNavClientes != null)
-            {
-                this.btnNavClientes.Click += new System.EventHandler(this.btnNavClientes_Click);
-            }
+                this.btnNavClientes.Click += new EventHandler(this.btnNavClientes_Click);
+
+            if (this.btnAccionClientes != null)
+                this.btnAccionClientes.Click += new EventHandler(this.btnNavClientes_Click);
+
+            if (this.btnNavHistorialVentas != null)
+                this.btnNavHistorialVentas.Click += new EventHandler(this.btnNavHistorialVentas_Click);
+
+            if (this.btnCerrarSesion != null)
+                this.btnCerrarSesion.Click += new EventHandler(this.btnCerrarSesion_Click);
         }
 
         /// <summary>
-        /// Restablece el estado visual de los botones del menú lateral y resalta el seleccionado.
+        /// Restablece el estado visual de los botones del menú lateral y resalta el seleccionado en Azul.
+        /// Sincroniza StateTracking, StatePressed y remueve el foco directo para prevenir el color gris de selección.
         /// </summary>
         private void ResetearEstadosSidebar(KryptonButton? botonActivo)
         {
-            if (btnNavClientes != null)
+            KryptonButton[] botones =
             {
-                btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
-                btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
+                btnNavDashboard,
+                btnNavClientes,
+                btnNavReporteVentas,
+                btnNavReporteStock,
+                btnNavHistorialVentas
+            };
+
+            foreach (var btn in botones)
+            {
+                if (btn == null) continue;
+
+                // Estado inactivo / transparente
+                btn.StateCommon.Back.Color1 = Color.Transparent;
+                btn.StateCommon.Back.Color2 = Color.Transparent;
+                btn.StateTracking.Back.Color1 = Color.FromArgb(47, 58, 76); // Hover suave
+                btn.StateTracking.Back.Color2 = Color.FromArgb(47, 58, 76);
+                btn.StatePressed.Back.Color1 = Color.FromArgb(30, 41, 59);
+                btn.StatePressed.Back.Color2 = Color.FromArgb(30, 41, 59);
+                btn.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184); // Texto gris slate
             }
 
-            // Resalta el botón seleccionado con Azul Royal sólido #2563EB
+            // Estado activo / seleccionado (Azul Royal #2563EB)
             if (botonActivo != null)
             {
-                botonActivo.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
-                botonActivo.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
+                Color azulActivo = Color.FromArgb(37, 99, 235);
+
+                botonActivo.StateCommon.Back.Color1 = azulActivo;
+                botonActivo.StateCommon.Back.Color2 = azulActivo;
+                botonActivo.StateTracking.Back.Color1 = azulActivo;
+                botonActivo.StateTracking.Back.Color2 = azulActivo;
+                botonActivo.StatePressed.Back.Color1 = azulActivo;
+                botonActivo.StatePressed.Back.Color2 = azulActivo;
+
                 botonActivo.StateCommon.Content.ShortText.Color1 = Color.White;
+                botonActivo.StateTracking.Content.ShortText.Color1 = Color.White;
+                botonActivo.StatePressed.Content.ShortText.Color1 = Color.White;
             }
+
+            // Remueve el foco visual activo del botón para impedir que Windows Forms dibuje el borde o parche gris[cite: 8]
+            this.ActiveControl = panelCanvas;
         }
 
         /// <summary>
-        /// Inyecta una nueva vista (UserControl) en el lienzo central con congelamiento de layout y efecto Fade-In.
+        /// Inyecta una nueva vista (UserControl) en el lienzo central con congelamiento de layout y efecto Fade-In[cite: 5].
         /// </summary>
         private void CargarVistaConTransicion(UserControl nuevaVista)
         {
@@ -140,6 +182,20 @@ namespace LaptopDeel
 
         // --- MANEJADORES DE RUTAS Y NAVEGACIÓN ---
 
+        private void btnNavDashboard_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavDashboard);
+
+            panelCanvas.SuspendLayout();
+            panelCanvas.Controls.Clear();
+
+            // Restaura la vista inicial del Dashboard Ejecutivo
+            panelCanvas.Controls.Add(this.lblSubtituloModulo);
+            panelCanvas.Controls.Add(this.lblTituloModulo);
+            panelCanvas.Controls.Add(this.tableLayoutPanelCards);
+            panelCanvas.ResumeLayout(true);
+        }
+
         private void btnNavClientes_Click(object? sender, EventArgs e)
         {
             ResetearEstadosSidebar(btnNavClientes);
@@ -147,6 +203,15 @@ namespace LaptopDeel
             // Instancia y carga de manera fluida el control de clientes en el canvas
             ControlClientes vistaClientes = new ControlClientes();
             CargarVistaConTransicion(vistaClientes);
+        }
+
+        private void btnNavHistorialVentas_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavHistorialVentas);
+
+            // Carga el módulo pasando el usuario activo (Rol Gerente/CEO)
+            ControlHistorialVentas vistaHistorial = new ControlHistorialVentas(usuarioActual ?? new Usuario());
+            CargarVistaConTransicion(vistaHistorial);
         }
 
         private void btnCerrarSesion_Click(object? sender, EventArgs e)

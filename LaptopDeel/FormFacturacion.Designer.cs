@@ -159,6 +159,8 @@
             this.txtMontoAbonado.Name = "txtMontoAbonado";
             this.txtMontoAbonado.Size = new System.Drawing.Size(290, 28);
             this.txtMontoAbonado.TextChanged += new System.EventHandler(this.txtMontoAbonado_TextChanged);
+            this.txtMontoAbonado.Enter += new System.EventHandler(this.txtMontoAbonado_Enter);
+            this.txtMontoAbonado.Click += new System.EventHandler(this.txtMontoAbonado_Click);
 
             this.lblVuelto.Location = new System.Drawing.Point(10, 85);
             this.lblVuelto.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);

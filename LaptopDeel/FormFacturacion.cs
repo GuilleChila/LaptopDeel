@@ -34,6 +34,8 @@ namespace LaptopDeel
             CargarGrillaDetalle();
             CargarMediosDePago();
             CalcularImpresionTotales();
+            this.txtMontoAbonado.Enter += new System.EventHandler(this.txtMontoAbonado_Enter);
+            this.txtMontoAbonado.Click += new System.EventHandler(this.txtMontoAbonado_Click);
         }
 
         // Sobrecarga de compatibilidad en caso de ser invocado con entidad Cliente y Lista tradicional
@@ -60,6 +62,8 @@ namespace LaptopDeel
             CargarGrillaDetalle();
             CargarMediosDePago();
             CalcularImpresionTotales();
+            this.txtMontoAbonado.Enter += new System.EventHandler(this.txtMontoAbonado_Enter);
+            this.txtMontoAbonado.Click += new System.EventHandler(this.txtMontoAbonado_Click);
         }
 
         // ==========================================
@@ -332,6 +336,23 @@ namespace LaptopDeel
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+        private void txtMontoAbonado_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)(() =>
+            {
+                txtMontoAbonado.SelectionStart = txtMontoAbonado.Text.Length;
+                txtMontoAbonado.SelectionLength = 0;
+            }));
+        }
+
+        private void txtMontoAbonado_Click(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)(() =>
+            {
+                txtMontoAbonado.SelectionStart = txtMontoAbonado.Text.Length;
+                txtMontoAbonado.SelectionLength = 0;
+            }));
         }
     }
 }

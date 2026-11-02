@@ -80,11 +80,6 @@ namespace LaptopDeel
             this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
         }
 
-        /// <summary>
-        /// Restablece el estilo visual de la barra lateral de navegación.
-        /// Unifica los estados StateCommon, StateTracking y StatePressed para impedir parpadeos,
-        /// marcos grises residuales o botones que queden erróneamente resaltados.
-        /// </summary>
         private void ResetearEstadosSidebar(KryptonButton? botonActivo)
         {
             KryptonButton[] botones = { btnNavInicio, btnNavInventario, btnNavUsuarios, btnNavClientes, btnNavLogs };
@@ -93,7 +88,6 @@ namespace LaptopDeel
             {
                 if (btn == null) continue;
 
-                // Estilo inactivo
                 btn.StateCommon.Back.Color1 = Color.Transparent;
                 btn.StateCommon.Back.Color2 = Color.Transparent;
                 btn.StateTracking.Back.Color1 = Color.FromArgb(47, 58, 76);
@@ -106,7 +100,6 @@ namespace LaptopDeel
                 btn.StatePressed.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
             }
 
-            // Estilo activo (Azul Royal #2563EB)
             if (botonActivo != null)
             {
                 Color azulActivo = Color.FromArgb(37, 99, 235);
@@ -123,7 +116,6 @@ namespace LaptopDeel
                 botonActivo.StatePressed.Content.ShortText.Color1 = Color.White;
             }
 
-            // Reorienta el foco activo fuera de los botones del menú lateral
             this.ActiveControl = panelCanvas;
         }
 

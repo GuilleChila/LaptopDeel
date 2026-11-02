@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Krypton.Toolkit;
+using LaptopDeel.Datos;
 using LaptopDeel.Entidades;
 
 namespace LaptopDeel
@@ -11,7 +12,8 @@ namespace LaptopDeel
         private readonly System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
-        private Usuario? usuarioActual;
+
+        private readonly Usuario? _usuarioActual;
 
         public FormVendedorPrincipal()
         {
@@ -26,11 +28,11 @@ namespace LaptopDeel
 
         public FormVendedorPrincipal(Usuario usuarioLogueado) : this()
         {
-            usuarioActual = usuarioLogueado;
+            _usuarioActual = usuarioLogueado;
 
-            if (usuarioLogueado != null && usuarioLogueado.RolUsuario != null)
+            if (_usuarioActual != null && _usuarioActual.RolUsuario != null)
             {
-                lblUsuarioSidebar.Values.Text = $"👤 {usuarioLogueado.Nombre.Trim()} ({usuarioLogueado.RolUsuario.RolName.Trim()})";
+                lblUsuarioSidebar.Values.Text = $"👤 {_usuarioActual.Nombre.Trim()} ({_usuarioActual.RolUsuario.RolName.Trim()})";
             }
         }
 
@@ -146,6 +148,29 @@ namespace LaptopDeel
             }
         }
 
+        private void FinalizarSesionActual()
+        {
+            if (_usuarioActual != null && _usuarioActual.IdSesionActiva > 0)
+            {
+                try
+                {
+                    var sesionDao = new SesionDAO();
+                    sesionDao.FinalizarSesionLog(_usuarioActual.IdSesionActiva);
+                    _usuarioActual.IdSesionActiva = 0;
+                }
+                catch
+                {
+                    // Fallback silencioso en el cierre
+                }
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            FinalizarSesionActual();
+            base.OnFormClosing(e);
+        }
+
         private void btnNavNuevaVenta_Click(object? sender, EventArgs e)
         {
             CargarPuntoDeVenta();
@@ -168,12 +193,13 @@ namespace LaptopDeel
         private void btnNavHistorialVentas_Click(object? sender, EventArgs e)
         {
             ResetearEstadosSidebar(btnNavHistorialVentas);
-            ControlHistorialVentas vistaHistorial = new ControlHistorialVentas(usuarioActual ?? new Usuario());
+            ControlHistorialVentas vistaHistorial = new ControlHistorialVentas(_usuarioActual ?? new Usuario());
             CargarVistaConTransicion(vistaHistorial);
         }
 
         private void btnCerrarSesion_Click(object? sender, EventArgs e)
         {
+            FinalizarSesionActual();
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }

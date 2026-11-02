@@ -82,13 +82,17 @@ namespace LaptopDeel
 
         private bool ValidarDniCliente(out string mensajeError)
         {
-            // Limpiamos los espacios al principio o al final por si tipeó sin querer
             string dni = txtDniCliente.Text.Trim();
             mensajeError = string.Empty;
-
+           
             if (string.IsNullOrWhiteSpace(dni))
             {
                 mensajeError = "El campo DNI no puede estar vacío.";
+                return false;
+            }            
+            if (!dni.All(char.IsDigit))
+            {
+                mensajeError = "El DNI debe contener únicamente números, sin puntos, letras ni espacios.";
                 return false;
             }
             if (dni.Length > 8)
@@ -96,16 +100,13 @@ namespace LaptopDeel
                 mensajeError = "El DNI no puede tener más de 8 números.";
                 return false;
             }
+
             if (dni.Length < 8)
             {
                 mensajeError = "El DNI no puede tener menos de 8 números.";
                 return false;
             }
-            if (!dni.All(char.IsDigit))
-            {
-                mensajeError = "El DNI debe contener únicamente números, sin puntos, letras ni espacios.";
-                return false;
-            }
+
             return true;
         }
 

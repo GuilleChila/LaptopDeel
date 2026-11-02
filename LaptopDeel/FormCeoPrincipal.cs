@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Krypton.Toolkit;
+using LaptopDeel.Datos;
+using LaptopDeel.Entidades;
+using System;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using Krypton.Toolkit;
-using LaptopDeel.Entidades;
+using System.Reflection;
 
 namespace LaptopDeel
 {
@@ -220,5 +223,37 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
+
+
+
+        private void btnNavReporteVentas_Click(object sender, EventArgs e)
+        {
+            // 1. Limpiamos cualquier otra pantalla que esté abierta actualmente
+            panelCanvas.Controls.Clear();
+
+            // 2. Creamos el nuevo control del reporte que armaste recién
+            ControlReportVentas controlReporte = new ControlReportVentas();
+
+            // 3. Le decimos que se estire para ocupar todo el espacio del panel
+            controlReporte.Dock = DockStyle.Fill;
+
+            // 4. Lo agregamos visualmente al panel
+            panelCanvas.Controls.Add(controlReporte);
+        }
+
+      
+       private void btnNavReporteStock_Click(object sender, EventArgs e)
+        {
+            // 1. Limpiamos el panel
+            panelCanvas.Controls.Clear();
+
+            // 2. Usamos el NUEVO control
+            ControlStockNotebooks controlStock = new ControlStockNotebooks();
+            controlStock.Dock = DockStyle.Fill;
+
+            // 3. Lo agregamos al panel
+            panelCanvas.Controls.Add(controlStock);
+        }
     }
+    
 }

@@ -145,6 +145,7 @@
             btnNavReporteVentas.TabIndex = 2;
             btnNavReporteVentas.Values.DropDownArrowColor = Color.Empty;
             btnNavReporteVentas.Values.Text = "📈 Reporte de Ventas";
+            btnNavReporteVentas.Click += btnNavReporteVentas_Click;
             // 
             // btnNavReporteStock
             // 
@@ -158,6 +159,7 @@
             btnNavReporteStock.TabIndex = 3;
             btnNavReporteStock.Values.DropDownArrowColor = Color.Empty;
             btnNavReporteStock.Values.Text = "💻 Reporte de Stock";
+            btnNavReporteStock.Click += btnNavReporteStock_Click;
             // 
             // btnNavHistorialVentas
             // 
@@ -168,7 +170,7 @@
             btnNavHistorialVentas.StateCommon.Back.Color1 = Color.Transparent;
             btnNavHistorialVentas.StateCommon.Back.Color2 = Color.Transparent;
             btnNavHistorialVentas.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavHistorialVentas.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+            btnNavHistorialVentas.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F);
             btnNavHistorialVentas.TabIndex = 4;
             btnNavHistorialVentas.Values.DropDownArrowColor = Color.Empty;
             btnNavHistorialVentas.Values.Text = "📋 Historial Ventas";
@@ -176,7 +178,7 @@
             // lblUsuarioSidebar
             // 
             lblUsuarioSidebar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblUsuarioSidebar.Location = new Point(15, 544);
+            lblUsuarioSidebar.Location = new Point(15, 535);
             lblUsuarioSidebar.Name = "lblUsuarioSidebar";
             lblUsuarioSidebar.Size = new Size(229, 27);
             lblUsuarioSidebar.StateCommon.ShortText.Color1 = Color.White;

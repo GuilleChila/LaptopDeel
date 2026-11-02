@@ -294,5 +294,23 @@ namespace LaptopDeel.Datos
                 }
             }
         }
+
+        public DataTable ObtenerReporteStock()
+        {
+            DataTable tabla = new DataTable();
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("sp_ReporteStockNotebooks", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+
     }
 }

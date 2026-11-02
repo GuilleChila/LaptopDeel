@@ -4,6 +4,7 @@ using System.Data;
 using MySqlConnector;
 using LaptopDeel.Entidades;
 
+
 namespace LaptopDeel.Datos
 {
     public class VentasDAO
@@ -190,5 +191,52 @@ namespace LaptopDeel.Datos
 
             return dt;
         }
+
+ 
+public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
+    {
+        DataTable tablaResultados = new DataTable();
+
+        using (var conexion = ConexionBD.ObtenerConexion())
+        {            
+            using (var cmd = new MySqlCommand("sp_ReporteVentasPorCategoria", conexion))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Le pasamos las fechas que elija el usuario en la pantalla
+                cmd.Parameters.AddWithValue("@p_fecha_desde", desde.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@p_fecha_hasta", hasta.ToString("yyyy-MM-dd"));
+
+                // Usamos un DataAdapter, que es especialista en agarrar los datos y meterlos en el DataTable
+                using (var adapter = new MySqlDataAdapter(cmd))
+                {
+                    adapter.Fill(tablaResultados);
+                }
+            }
+        }
+        return tablaResultados;
+    }
+
+        public DataTable ObtenerDetalleFacturasPorCategoria(string categoria, DateTime desde, DateTime hasta)
+        {
+            DataTable tabla = new DataTable();
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("sp_DetalleFacturasPorCategoria", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_categoria", categoria);
+                    cmd.Parameters.AddWithValue("@p_fecha_desde", desde.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@p_fecha_hasta", hasta.ToString("yyyy-MM-dd"));
+
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+
     }
 }

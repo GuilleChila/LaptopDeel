@@ -73,6 +73,7 @@
             // 
             // tableLayoutPanelKPIs
             // 
+            tableLayoutPanelKPIs.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             tableLayoutPanelKPIs.ColumnCount = 3;
             tableLayoutPanelKPIs.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             tableLayoutPanelKPIs.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -99,7 +100,9 @@
             panelCardActivos.StateCommon.Color1 = System.Drawing.Color.White;
             panelCardActivos.StateCommon.Color2 = System.Drawing.Color.White;
 
+            // 
             // lblTituloActivos
+            // 
             lblTituloActivos.Location = new System.Drawing.Point(15, 12);
             lblTituloActivos.Name = "lblTituloActivos";
             lblTituloActivos.Size = new System.Drawing.Size(150, 20);
@@ -107,7 +110,9 @@
             lblTituloActivos.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             lblTituloActivos.Values.Text = "🟢 Usuarios Activos";
 
+            // 
             // lblValActivos
+            // 
             lblValActivos.Location = new System.Drawing.Point(15, 34);
             lblValActivos.Name = "lblValActivos";
             lblValActivos.Size = new System.Drawing.Size(50, 36);
@@ -127,7 +132,9 @@
             panelCardPromedio.StateCommon.Color1 = System.Drawing.Color.White;
             panelCardPromedio.StateCommon.Color2 = System.Drawing.Color.White;
 
+            // 
             // lblTituloPromedio
+            // 
             lblTituloPromedio.Location = new System.Drawing.Point(15, 12);
             lblTituloPromedio.Name = "lblTituloPromedio";
             lblTituloPromedio.Size = new System.Drawing.Size(160, 20);
@@ -135,7 +142,9 @@
             lblTituloPromedio.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             lblTituloPromedio.Values.Text = "⏱️ Tiempo Promedio";
 
+            // 
             // lblValPromedio
+            // 
             lblValPromedio.Location = new System.Drawing.Point(15, 34);
             lblValPromedio.Name = "lblValPromedio";
             lblValPromedio.Size = new System.Drawing.Size(120, 36);
@@ -155,7 +164,9 @@
             panelCardIniciosHoy.StateCommon.Color1 = System.Drawing.Color.White;
             panelCardIniciosHoy.StateCommon.Color2 = System.Drawing.Color.White;
 
+            // 
             // lblTituloIniciosHoy
+            // 
             lblTituloIniciosHoy.Location = new System.Drawing.Point(15, 12);
             lblTituloIniciosHoy.Name = "lblTituloIniciosHoy";
             lblTituloIniciosHoy.Size = new System.Drawing.Size(180, 20);
@@ -163,7 +174,9 @@
             lblTituloIniciosHoy.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             lblTituloIniciosHoy.Values.Text = "👥 Inicios de Sesión Hoy";
 
+            // 
             // lblValIniciosHoy
+            // 
             lblValIniciosHoy.Location = new System.Drawing.Point(15, 34);
             lblValIniciosHoy.Name = "lblValIniciosHoy";
             lblValIniciosHoy.Size = new System.Drawing.Size(50, 36);
@@ -174,6 +187,7 @@
             // 
             // panelTarjetaContenedora
             // 
+            panelTarjetaContenedora.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             panelTarjetaContenedora.Controls.Add(lblSubtituloGrilla);
             panelTarjetaContenedora.Controls.Add(txtBuscar);
             panelTarjetaContenedora.Controls.Add(btnRefrescar);
@@ -185,7 +199,9 @@
             panelTarjetaContenedora.StateCommon.Color2 = System.Drawing.Color.White;
             panelTarjetaContenedora.TabIndex = 3;
 
+            // 
             // lblSubtituloGrilla
+            // 
             lblSubtituloGrilla.Location = new System.Drawing.Point(20, 18);
             lblSubtituloGrilla.Name = "lblSubtituloGrilla";
             lblSubtituloGrilla.Size = new System.Drawing.Size(180, 24);
@@ -193,7 +209,10 @@
             lblSubtituloGrilla.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             lblSubtituloGrilla.Values.Text = "LISTADO DE SESIONES";
 
+            // 
             // txtBuscar
+            // 
+            txtBuscar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txtBuscar.Location = new System.Drawing.Point(20, 52);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Size = new System.Drawing.Size(810, 35);
@@ -206,7 +225,10 @@
             txtBuscar.TabIndex = 0;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
 
+            // 
             // btnRefrescar
+            // 
+            btnRefrescar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btnRefrescar.Location = new System.Drawing.Point(840, 52);
             btnRefrescar.Name = "btnRefrescar";
             btnRefrescar.Size = new System.Drawing.Size(170, 35);
@@ -220,9 +242,12 @@
             btnRefrescar.Values.Text = "🔄 Refrescar Listado";
             btnRefrescar.Click += btnRefrescar_Click;
 
+            // 
             // dgvSesiones
+            // 
             dgvSesiones.AllowUserToAddRows = false;
             dgvSesiones.AllowUserToDeleteRows = false;
+            dgvSesiones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             dgvSesiones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dgvSesiones.Location = new System.Drawing.Point(20, 100);
             dgvSesiones.Name = "dgvSesiones";
@@ -232,7 +257,9 @@
             dgvSesiones.Size = new System.Drawing.Size(990, 290);
             dgvSesiones.TabIndex = 2;
 
+            // 
             // ControlLogs
+            // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(248, 250, 252);

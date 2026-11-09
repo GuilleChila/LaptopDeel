@@ -58,9 +58,9 @@ namespace LaptopDeel
             this.UpdateStyles();
 
             typeof(Panel).InvokeMember("DoubleBuffered",
-                System.Reflection.BindingFlags.SetProperty |
-                System.Reflection.BindingFlags.Instance |
-                System.Reflection.BindingFlags.NonPublic,
+                BindingFlags.SetProperty |
+                BindingFlags.Instance |
+                BindingFlags.NonPublic,
                 null, panelCanvas, new object[] { true });
         }
 
@@ -84,6 +84,9 @@ namespace LaptopDeel
             if (this.btnNavHistorialVentas != null)
                 this.btnNavHistorialVentas.Click += new EventHandler(this.btnNavHistorialVentas_Click);
 
+            if (this.btnNavRespaldo != null)
+                this.btnNavRespaldo.Click += new EventHandler(this.btnNavRespaldo_Click);
+
             if (this.btnCerrarSesion != null)
                 this.btnCerrarSesion.Click += new EventHandler(this.btnCerrarSesion_Click);
         }
@@ -96,7 +99,8 @@ namespace LaptopDeel
                 btnNavClientes,
                 btnNavReporteVentas,
                 btnNavReporteStock,
-                btnNavHistorialVentas
+                btnNavHistorialVentas,
+                btnNavRespaldo
             };
 
             foreach (var btn in botones)
@@ -214,8 +218,16 @@ namespace LaptopDeel
             CargarVistaConTransicion(vistaHistorial);
         }
 
+        private void btnNavRespaldo_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavRespaldo);
+            ControlRespaldo vistaRespaldo = new ControlRespaldo();
+            CargarVistaConTransicion(vistaRespaldo);
+        }
+
         private void btnNavReporteVentas_Click(object sender, EventArgs e)
         {
+            ResetearEstadosSidebar(btnNavReporteVentas);
             panelCanvas.Controls.Clear();
             ControlReportVentas controlReporte = new ControlReportVentas();
             controlReporte.Dock = DockStyle.Fill;
@@ -224,6 +236,7 @@ namespace LaptopDeel
 
         private void btnNavReporteStock_Click(object sender, EventArgs e)
         {
+            ResetearEstadosSidebar(btnNavReporteStock);
             panelCanvas.Controls.Clear();
             ControlStockNotebooks controlStock = new ControlStockNotebooks();
             controlStock.Dock = DockStyle.Fill;

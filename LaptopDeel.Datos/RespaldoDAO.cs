@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -16,15 +17,64 @@ namespace LaptopDeel.Datos
 {
     public class RespaldoDAO
     {
-        private static readonly List<RespaldoDTO> _historialLocal = new List<RespaldoDTO>();
-
-        // Escopos requeridos para administrar archivos de Google Drive creados por la app
-        private static readonly string[] Scopes = { DriveService.Scope.DriveFile };
+        private static readonly string[] Scopes = {
+            DriveService.Scope.DriveFile,
+            "https://www.googleapis.com/auth/userinfo.email"
+        };
         private static readonly string ApplicationName = "LaptopDeel Database Backup";
+
+        private static readonly string RutaTokenFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "LaptopDeel_DriveTokens");
+
+        private static readonly string RutaHistorialJson = Path.Combine(RutaTokenFolder, "historial_respaldos.json");
+        private static readonly string RutaEmailCache = Path.Combine(RutaTokenFolder, "user_email.txt");
+
+        private List<RespaldoDTO> _historialMemoria = new List<RespaldoDTO>();
+
+        public RespaldoDAO()
+        {
+            CargarHistorialPersistente();
+        }
+
+        private void CargarHistorialPersistente()
+        {
+            try
+            {
+                if (File.Exists(RutaHistorialJson))
+                {
+                    string json = File.ReadAllText(RutaHistorialJson);
+                    _historialMemoria = JsonSerializer.Deserialize<List<RespaldoDTO>>(json) ?? new List<RespaldoDTO>();
+                }
+                else
+                {
+                    _historialMemoria = new List<RespaldoDTO>();
+                }
+            }
+            catch
+            {
+                _historialMemoria = new List<RespaldoDTO>();
+            }
+        }
+
+        private void GuardarHistorialPersistente()
+        {
+            try
+            {
+                if (!Directory.Exists(RutaTokenFolder))
+                {
+                    Directory.CreateDirectory(RutaTokenFolder);
+                }
+
+                string json = JsonSerializer.Serialize(_historialMemoria, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(RutaHistorialJson, json);
+            }
+            catch { }
+        }
 
         public List<RespaldoDTO> ObtenerHistorialRespaldos()
         {
-            return new List<RespaldoDTO>(_historialLocal);
+            return new List<RespaldoDTO>(_historialMemoria);
         }
 
         public bool GenerarBackupDirectoSql(string rutaCompletaDestino)
@@ -147,7 +197,7 @@ namespace LaptopDeel.Datos
                              rutaCompletaDestino.StartsWith("G:", StringComparison.OrdinalIgnoreCase) ||
                              rutaCompletaDestino.StartsWith("H:", StringComparison.OrdinalIgnoreCase);
 
-                _historialLocal.Insert(0, new RespaldoDTO
+                _historialMemoria.Insert(0, new RespaldoDTO
                 {
                     FechaHora = DateTime.Now,
                     NombreArchivo = fi.Name,
@@ -157,11 +207,12 @@ namespace LaptopDeel.Datos
                     EstadoExitoso = true
                 });
 
+                GuardarHistorialPersistente();
                 return true;
             }
             catch (Exception ex)
             {
-                _historialLocal.Insert(0, new RespaldoDTO
+                _historialMemoria.Insert(0, new RespaldoDTO
                 {
                     FechaHora = DateTime.Now,
                     NombreArchivo = Path.GetFileName(rutaCompletaDestino),
@@ -171,15 +222,57 @@ namespace LaptopDeel.Datos
                     EstadoExitoso = false
                 });
 
+                GuardarHistorialPersistente();
                 throw new Exception($"Error durante la generación directa del script SQL: {ex.Message}", ex);
             }
         }
 
         #region Integración con Google Drive API v3
 
-        /// <summary>
-        /// Obtiene el servicio autenticado de Google Drive realizando el flujo de OAuth 2.0.
-        /// </summary>
+        public bool ExisteCuentaGoogleVinculada()
+        {
+            return Directory.Exists(RutaTokenFolder) && Directory.GetFiles(RutaTokenFolder).Length > 0;
+        }
+
+        public void DesconectarCuentaGoogleDrive()
+        {
+            if (Directory.Exists(RutaTokenFolder))
+            {
+                Directory.Delete(RutaTokenFolder, true);
+            }
+        }
+
+        public async Task<string> ObtenerEmailCuentaVinculadaAsync()
+        {
+            try
+            {
+                if (!ExisteCuentaGoogleVinculada()) return string.Empty;
+
+                if (File.Exists(RutaEmailCache))
+                {
+                    string emailGuardado = File.ReadAllText(RutaEmailCache).Trim();
+                    if (!string.IsNullOrEmpty(emailGuardado)) return emailGuardado;
+                }
+
+                DriveService service = await ObtenerServicioDriveAsync();
+                var request = service.About.Get();
+                request.Fields = "user(emailAddress)";
+                var about = await request.ExecuteAsync();
+
+                string emailReal = about.User?.EmailAddress ?? string.Empty;
+                if (!string.IsNullOrEmpty(emailReal))
+                {
+                    if (!Directory.Exists(RutaTokenFolder)) Directory.CreateDirectory(RutaTokenFolder);
+                    File.WriteAllText(RutaEmailCache, emailReal);
+                }
+                return emailReal;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         private async Task<DriveService> ObtenerServicioDriveAsync()
         {
             string credPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secret.json");
@@ -192,14 +285,12 @@ namespace LaptopDeel.Datos
             UserCredential credential;
             using (var stream = new FileStream(credPath, FileMode.Open, FileAccess.Read))
             {
-                string tokenPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LaptopDeel_DriveTokens");
-
                 credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
                     "gerente_user",
                     CancellationToken.None,
-                    new FileDataStore(tokenPath, true));
+                    new FileDataStore(RutaTokenFolder, true));
             }
 
             return new DriveService(new BaseClientService.Initializer()
@@ -209,21 +300,24 @@ namespace LaptopDeel.Datos
             });
         }
 
-        /// <summary>
-        /// Inicia el flujo interactivo de OAuth 2.0 y devuelve el correo electrónico vinculado.
-        /// </summary>
         public async Task<string> AutenticarCuentaGoogleDrive()
         {
             try
             {
                 DriveService service = await ObtenerServicioDriveAsync();
 
-                // Consultar la información del usuario conectado
                 var request = service.About.Get();
-                request.Fields = "user";
+                request.Fields = "user(emailAddress)";
                 var about = await request.ExecuteAsync();
 
-                return about.User.EmailAddress ?? "gerencia@laptopdeel.com";
+                string emailReal = about.User?.EmailAddress ?? string.Empty;
+                if (!string.IsNullOrEmpty(emailReal))
+                {
+                    if (!Directory.Exists(RutaTokenFolder)) Directory.CreateDirectory(RutaTokenFolder);
+                    File.WriteAllText(RutaEmailCache, emailReal);
+                }
+
+                return emailReal;
             }
             catch (Exception ex)
             {
@@ -231,9 +325,6 @@ namespace LaptopDeel.Datos
             }
         }
 
-        /// <summary>
-        /// Sube el script .sql a Google Drive.
-        /// </summary>
         public async Task<bool> SubirArchivoAGoogleDrive(string rutaArchivoLocal, string nombreEnNube)
         {
             try
@@ -258,7 +349,7 @@ namespace LaptopDeel.Datos
 
                 FileInfo fi = new FileInfo(rutaArchivoLocal);
 
-                _historialLocal.Insert(0, new RespaldoDTO
+                _historialMemoria.Insert(0, new RespaldoDTO
                 {
                     FechaHora = DateTime.Now,
                     NombreArchivo = nombreEnNube,
@@ -268,11 +359,12 @@ namespace LaptopDeel.Datos
                     EstadoExitoso = true
                 });
 
+                GuardarHistorialPersistente();
                 return true;
             }
             catch (Exception ex)
             {
-                _historialLocal.Insert(0, new RespaldoDTO
+                _historialMemoria.Insert(0, new RespaldoDTO
                 {
                     FechaHora = DateTime.Now,
                     NombreArchivo = nombreEnNube,
@@ -282,6 +374,7 @@ namespace LaptopDeel.Datos
                     EstadoExitoso = false
                 });
 
+                GuardarHistorialPersistente();
                 throw new Exception($"Error al subir el archivo a Google Drive: {ex.Message}", ex);
             }
         }

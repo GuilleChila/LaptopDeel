@@ -1,51 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Krypton.Toolkit;
 using LaptopDeel.Datos;
-using LaptopDeel.Entidades;
 
 namespace LaptopDeel
 {
     public partial class ControlRespaldo : UserControl
     {
-        private readonly RespaldoDAO _respaldoDao;
+        private readonly RespaldoDAO _respaldoDAO;
         private string _rutaSeleccionada = string.Empty;
 
         public ControlRespaldo()
         {
             InitializeComponent();
-            this.Dock = DockStyle.Fill;
-            _respaldoDao = new RespaldoDAO();
+            _respaldoDAO = new RespaldoDAO();
 
-            ConfigurarGrillaHistorial();
             InicializarRutaPorDefecto();
-            CargarHistorialRespaldos();
+            CargarEstadoInicialGoogle();
+            CargarGrillaHistorial();
         }
 
-        /// <summary>
-        /// Establece una ruta por defecto en la carpeta de documentos del usuario y genera un nombre inicial estandarizado.
-        /// </summary>
         private void InicializarRutaPorDefecto()
         {
             string carpetaBackups;
-
             try
             {
                 string carpetaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-                // Verificar si la carpeta de Documentos existe y es accesible localmente
                 if (!string.IsNullOrEmpty(carpetaDocumentos) && Directory.Exists(carpetaDocumentos))
                 {
                     carpetaBackups = Path.Combine(carpetaDocumentos, "LaptopDeel_Backups");
                 }
                 else
                 {
-                    // Fallback a la carpeta de perfil de usuario si OneDrive/Documentos no está disponible
                     string perfilUsuario = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                     carpetaBackups = Path.Combine(perfilUsuario, "LaptopDeel_Backups");
                 }
@@ -55,9 +44,8 @@ namespace LaptopDeel
                     Directory.CreateDirectory(carpetaBackups);
                 }
             }
-            catch (Exception)
+            catch
             {
-                // Fallback defensivo final en el directorio ejecutable de la aplicación
                 carpetaBackups = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LaptopDeel_Backups");
                 if (!Directory.Exists(carpetaBackups))
                 {
@@ -65,230 +53,225 @@ namespace LaptopDeel
                 }
             }
 
-            _rutaSeleccionada = carpetaBackups;
-            ActualizarCampoRutaVisual();
+            _rutaSeleccionada = Path.Combine(carpetaBackups, $"Backup_LaptopDeel_{DateTime.Now:yyyyMMdd_HHmmss}.sql");
+            txtRutaLocal.Text = _rutaSeleccionada;
         }
 
-        private void ActualizarCampoRutaVisual()
+        private async void CargarEstadoInicialGoogle()
         {
-            string nombreSugerido = $"Backup_LaptopDeel_{DateTime.Now:yyyyMMdd_HHmmss}.sql";
-            txtRutaLocal.Text = Path.Combine(_rutaSeleccionada, nombreSugerido);
-        }
-
-        /// <summary>
-        /// Configura el diseño estandarizado (Slate Blue) para el DataGridView de historial.
-        /// </summary>
-        private void ConfigurarGrillaHistorial()
-        {
-            dgvHistorialRespaldos.Columns.Clear();
-            dgvHistorialRespaldos.Columns.Add("colFecha", "Fecha / Hora");
-            dgvHistorialRespaldos.Columns.Add("colArchivo", "Nombre del Archivo SQL");
-            dgvHistorialRespaldos.Columns.Add("colRuta", "Ruta / Destino");
-            dgvHistorialRespaldos.Columns.Add("colTamano", "Tamaño");
-            dgvHistorialRespaldos.Columns.Add("colTipo", "Tipo");
-            dgvHistorialRespaldos.Columns.Add("colEstado", "Estado");
-
-            dgvHistorialRespaldos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
-
-        /// <summary>
-        /// Carga los registros de copias de seguridad anteriores realizadas en la sesión o BD.
-        /// </summary>
-        private void CargarHistorialRespaldos()
-        {
-            try
+            bool conectado = _respaldoDAO.ExisteCuentaGoogleVinculada();
+            if (conectado)
             {
-                dgvHistorialRespaldos.Rows.Clear();
-                List<RespaldoDTO> historial = _respaldoDao.ObtenerHistorialRespaldos();
+                string email = await _respaldoDAO.ObtenerEmailCuentaVinculadaAsync();
+                ActualizarEstadoGoogleUI(true, email);
+            }
+            else
+            {
+                ActualizarEstadoGoogleUI(false, string.Empty);
+            }
+        }
 
-                foreach (var item in historial)
+        private void ActualizarEstadoGoogleUI(bool estaVinculado, string email)
+        {
+            if (estaVinculado)
+            {
+                lblEstadoGoogle.Text = string.IsNullOrEmpty(email)
+                    ? "🟢 Cuenta Google Vinculada "
+                    : $"🟢 Vinculado como {email} ";
+                lblEstadoGoogle.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129);
+
+                btnConectarGoogle.Enabled = false;
+                btnDesconectarGoogle.Enabled = true;
+                btnSubirGoogleDrive.Enabled = true;
+            }
+            else
+            {
+                lblEstadoGoogle.Text = "🔴 Cuenta No Vinculada ";
+                lblEstadoGoogle.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68);
+
+                btnConectarGoogle.Enabled = true;
+                btnDesconectarGoogle.Enabled = false;
+                btnSubirGoogleDrive.Enabled = false;
+            }
+        }
+
+        private void CargarGrillaHistorial()
+        {
+            dgvHistorialRespaldos.DataSource = null;
+            dgvHistorialRespaldos.DataSource = _respaldoDAO.ObtenerHistorialRespaldos();
+
+            if (dgvHistorialRespaldos.Columns.Count > 0)
+            {
+                if (dgvHistorialRespaldos.Columns["FechaHora"] != null)
+                    dgvHistorialRespaldos.Columns["FechaHora"].HeaderText = "Fecha / Hora";
+
+                if (dgvHistorialRespaldos.Columns["NombreArchivo"] != null)
+                    dgvHistorialRespaldos.Columns["NombreArchivo"].HeaderText = "Nombre del Archivo SQL";
+
+                if (dgvHistorialRespaldos.Columns["RutaDestino"] != null)
+                    dgvHistorialRespaldos.Columns["RutaDestino"].HeaderText = "Ruta / Destino";
+
+                if (dgvHistorialRespaldos.Columns["TamanoFormateado"] != null)
+                    dgvHistorialRespaldos.Columns["TamanoFormateado"].HeaderText = "Tamaño";
+
+                if (dgvHistorialRespaldos.Columns["TipoDestino"] != null)
+                    dgvHistorialRespaldos.Columns["TipoDestino"].HeaderText = "Tipo";
+
+                if (dgvHistorialRespaldos.Columns["EstadoExitoso"] != null)
+                    dgvHistorialRespaldos.Columns["EstadoExitoso"].HeaderText = "Estado";
+
+                if (dgvHistorialRespaldos.Columns["TamanoBytes"] != null)
+                    dgvHistorialRespaldos.Columns["TamanoBytes"].Visible = false;
+
+                if (dgvHistorialRespaldos.Columns["FechaFormateada"] != null)
+                    dgvHistorialRespaldos.Columns["FechaFormateada"].Visible = false;
+            }
+        }
+
+        private void btnExaminar_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Archivo SQL (*.sql)|*.sql";
+                saveFileDialog.FileName = $"Backup_LaptopDeel_{DateTime.Now:yyyyMMdd_HHmmss}.sql";
+                saveFileDialog.Title = "Seleccionar carpeta destino para el respaldo";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    int index = dgvHistorialRespaldos.Rows.Add(
-                        item.FechaFormateada,
-                        item.NombreArchivo,
-                        item.RutaDestino,
-                        item.TamanoFormateado,
-                        item.TipoDestino,
-                        item.EstadoExitoso ? "🟢 Exitoso" : "🔴 Fallido"
-                    );
-
-                    if (!item.EstadoExitoso)
-                    {
-                        dgvHistorialRespaldos.Rows[index].Cells["colEstado"].Style.ForeColor = Color.Red;
-                    }
+                    _rutaSeleccionada = saveFileDialog.FileName;
+                    txtRutaLocal.Text = _rutaSeleccionada;
                 }
             }
-            catch (Exception)
-            {
-                // Silencioso o log preventivo si es primera ejecución sin tabla de historial
-            }
         }
 
-        #region Eventos de Botones - Respaldo Local / USB
-
-        /// <summary>
-        /// Abre un explorador de carpetas que permite elegir discos locales o unidades de memoria flash USB.
-        /// </summary>
-        private void btnExaminar_Click(object? sender, EventArgs e)
+        private async void btnGenerarLocal_Click(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            if (string.IsNullOrWhiteSpace(_rutaSeleccionada))
             {
-                dialog.Description = "Seleccione la carpeta o unidad flash USB donde desea guardar la copia de seguridad:";
-                dialog.ShowNewFolderButton = true;
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    _rutaSeleccionada = dialog.SelectedPath;
-                    ActualizarCampoRutaVisual();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Genera el respaldo SQL de manera asíncrona para no congelar la interfaz de usuario.
-        /// </summary>
-        private async void btnGenerarLocal_Click(object? sender, EventArgs e)
-        {
-            string rutaCompletaArchivo = txtRutaLocal.Text.Trim();
-
-            if (string.IsNullOrEmpty(rutaCompletaArchivo))
-            {
-                KryptonMessageBox.Show("Por favor, seleccione una ruta de destino válida.",
-                    "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
+                KryptonMessageBox.Show("Por favor seleccione una ruta de destino válida.", "Atención",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return;
             }
 
-            string? directorio = Path.GetDirectoryName(rutaCompletaArchivo);
-            if (!Directory.Exists(directorio))
-            {
-                KryptonMessageBox.Show("La carpeta o unidad de destino seleccionada no existe o fue desconectada.",
-                    "Error de almacenamiento", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
-                return;
-            }
-
-            EstablecerEstadoProcesando(true);
-
+            ActivarModoCarga(true);
             try
             {
-                // Ejecución asíncrona del backup directo C# en la Capa de Datos
-                bool exito = await Task.Run(() => _respaldoDao.GenerarBackupDirectoSql(rutaCompletaArchivo));
-
-                if (exito)
+                bool resultado = await Task.Run(() => _respaldoDAO.GenerarBackupDirectoSql(_rutaSeleccionada));
+                if (resultado)
                 {
-                    KryptonMessageBox.Show($"¡Respaldo generado correctamente!\n\nUbicación: {rutaCompletaArchivo}",
-                        "Copia de Seguridad Exitosa", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
-
-                    ActualizarCampoRutaVisual(); // Genera nuevo nombre timestamp para el siguiente clic
-                    CargarHistorialRespaldos();
-                }
-                else
-                {
-                    KryptonMessageBox.Show("Ocurrió un error al intentar exportar la base de datos.",
-                        "Error de Respaldo", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+                    KryptonMessageBox.Show($"¡Respaldo local generado con éxito en:\n{_rutaSeleccionada}", "Éxito",
+                        KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+                    InicializarRutaPorDefecto();
                 }
             }
             catch (Exception ex)
             {
-                KryptonMessageBox.Show($"Error inesperado durante la copia local: {ex.Message}",
-                    "Error", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+                KryptonMessageBox.Show($"Ocurrió un error al generar el respaldo: {ex.Message}", "Error",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
             }
             finally
             {
-                EstablecerEstadoProcesando(false);
+                ActivarModoCarga(false);
+                CargarGrillaHistorial();
             }
         }
 
-        #endregion
-
-        #region Eventos de Botones - Google Drive (Nube)
-
-        private async void btnConectarGoogle_Click(object? sender, EventArgs e)
+        private async void btnConectarGoogle_Click(object sender, EventArgs e)
         {
-            EstablecerEstadoProcesando(true);
+            ActivarModoCarga(true);
             try
             {
-                // Proceso de vinculación OAuth 2.0
-                string? correoVinculado = await Task.Run(() => _respaldoDao.AutenticarCuentaGoogleDrive());
-
-                if (!string.IsNullOrEmpty(correoVinculado))
-                {
-                    lblEstadoGoogle.Text = $"🟢 Vinculado como {correoVinculado}";
-                    lblEstadoGoogle.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129);
-                    KryptonMessageBox.Show("Cuenta de Google vinculada correctamente para copias en la nube.",
-                        "Éxito", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
-                }
-                else
-                {
-                    KryptonMessageBox.Show("No se completó la autenticación con la cuenta de Google.",
-                        "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
-                }
+                string email = await _respaldoDAO.AutenticarCuentaGoogleDrive();
+                ActualizarEstadoGoogleUI(true, email);
+                KryptonMessageBox.Show($"Cuenta de Google vinculada correctamente:\n{email}", "Google Drive Vinculado",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                KryptonMessageBox.Show($"Error al conectar con Google Drive: {ex.Message}",
-                    "Error de Conexión", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+                ActualizarEstadoGoogleUI(false, string.Empty);
+                KryptonMessageBox.Show($"No se pudo vincular la cuenta de Google: {ex.Message}", "Error OAuth",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
             }
             finally
             {
-                EstablecerEstadoProcesando(false);
+                ActivarModoCarga(false);
             }
         }
 
-        private async void btnSubirGoogleDrive_Click(object? sender, EventArgs e)
+        private void btnDesconectarGoogle_Click(object sender, EventArgs e)
         {
-            EstablecerEstadoProcesando(true);
+            DialogResult confirmacion = KryptonMessageBox.Show(
+                "¿Está seguro de que desea desvincular la cuenta de Google Drive para los respaldos?",
+                "Desconectar Cuenta",
+                KryptonMessageBoxButtons.YesNo,
+                KryptonMessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
+            {
+                _respaldoDAO.DesconectarCuentaGoogleDrive();
+                ActualizarEstadoGoogleUI(false, string.Empty);
+                KryptonMessageBox.Show("La cuenta de Google ha sido desvinculada correctamente.", "Cuenta Desconectada",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
+            }
+        }
+
+        private async void btnSubirGoogleDrive_Click(object sender, EventArgs e)
+        {
+            ActivarModoCarga(true);
             try
             {
-                // Genera un archivo temporal para volcar la BD y enviarlo a la nube
-                string nombreArchivo = $"Backup_LaptopDeel_{DateTime.Now:yyyyMMdd_HHmmss}.sql";
-                string tempPath = Path.Combine(Path.GetTempPath(), nombreArchivo);
+                string nombreArchivoNube = $"Backup_LaptopDeel_{DateTime.Now:yyyyMMdd_HHmmss}.sql";
+                string rutaTemporal = Path.Combine(Path.GetTempPath(), nombreArchivoNube);
 
-                bool generado = await Task.Run(() => _respaldoDao.GenerarBackupDirectoSql(tempPath));
+                bool generado = await Task.Run(() => _respaldoDAO.GenerarBackupDirectoSql(rutaTemporal));
 
                 if (generado)
                 {
-                    bool subido = await Task.Run(() => _respaldoDao.SubirArchivoAGoogleDrive(tempPath, nombreArchivo));
-
-                    if (File.Exists(tempPath)) File.Delete(tempPath); // Limpieza de archivo temporal
-
+                    bool subido = await _respaldoDAO.SubirArchivoAGoogleDrive(rutaTemporal, nombreArchivoNube);
                     if (subido)
                     {
-                        KryptonMessageBox.Show("Copia de seguridad generada y subida exitosamente a Google Drive.",
-                            "Respaldo en la Nube Completado", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
-
-                        CargarHistorialRespaldos();
-                    }
-                    else
-                    {
-                        KryptonMessageBox.Show("No se pudo subir el archivo a Google Drive. Asegúrese de haber vinculado su cuenta.",
-                            "Error de Subida", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+                        KryptonMessageBox.Show($"¡El respaldo fue subido exitosamente a Google Drive!\nNombre: {nombreArchivoNube}",
+                            "Respaldo en la Nube Completo", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
                     }
                 }
             }
             catch (Exception ex)
             {
-                KryptonMessageBox.Show($"Error durante la operación en la nube: {ex.Message}",
-                    "Error", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
+                KryptonMessageBox.Show($"Ocurrió un error durante el respaldo en la nube: {ex.Message}", "Error de Respaldo",
+                    KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
             }
             finally
             {
-                EstablecerEstadoProcesando(false);
+                ActivarModoCarga(false);
+                CargarGrillaHistorial();
             }
         }
 
-        #endregion
-
-        /// <summary>
-        /// Habilita o deshabilita los botones de la UI y muestra la barra de progreso mientras corre una operación asíncrona.
-        /// </summary>
-        private void EstablecerEstadoProcesando(bool procesando)
+        private async void ActivarModoCarga(bool cargando)
         {
-            progressBarRespaldo.Visible = procesando;
-            btnGenerarLocal.Enabled = !procesando;
-            btnExaminar.Enabled = !procesando;
-            btnConectarGoogle.Enabled = !procesando;
-            btnSubirGoogleDrive.Enabled = !procesando;
-            this.Cursor = procesando ? Cursors.WaitCursor : Cursors.Default;
+            progressBarRespaldo.Visible = cargando;
+            btnGenerarLocal.Enabled = !cargando;
+            btnExaminar.Enabled = !cargando;
+
+            if (cargando)
+            {
+                btnConectarGoogle.Enabled = false;
+                btnDesconectarGoogle.Enabled = false;
+                btnSubirGoogleDrive.Enabled = false;
+            }
+            else
+            {
+                bool conectado = _respaldoDAO.ExisteCuentaGoogleVinculada();
+                if (conectado)
+                {
+                    string email = await _respaldoDAO.ObtenerEmailCuentaVinculadaAsync();
+                    ActualizarEstadoGoogleUI(true, email);
+                }
+                else
+                {
+                    ActualizarEstadoGoogleUI(false, string.Empty);
+                }
+            }
         }
     }
 }

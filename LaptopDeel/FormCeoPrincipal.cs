@@ -81,6 +81,20 @@ namespace LaptopDeel
             if (this.btnAccionClientes != null)
                 this.btnAccionClientes.Click += new EventHandler(this.btnNavClientes_Click);
 
+            // 🟢 VINCULACIÓN CORREGIDA: Reporte de Ventas
+            if (this.btnNavReporteVentas != null)
+                this.btnNavReporteVentas.Click += new EventHandler(this.btnNavReporteVentas_Click);
+
+            if (this.btnAccionVentas != null)
+                this.btnAccionVentas.Click += new EventHandler(this.btnNavReporteVentas_Click);
+
+            // 🟢 VINCULACIÓN CORREGIDA: Reporte de Stock
+            if (this.btnNavReporteStock != null)
+                this.btnNavReporteStock.Click += new EventHandler(this.btnNavReporteStock_Click);
+
+            if (this.btnAccionStock != null)
+                this.btnAccionStock.Click += new EventHandler(this.btnNavReporteStock_Click);
+
             if (this.btnNavHistorialVentas != null)
                 this.btnNavHistorialVentas.Click += new EventHandler(this.btnNavHistorialVentas_Click);
 
@@ -225,22 +239,18 @@ namespace LaptopDeel
             CargarVistaConTransicion(vistaRespaldo);
         }
 
-        private void btnNavReporteVentas_Click(object sender, EventArgs e)
+        private void btnNavReporteVentas_Click(object? sender, EventArgs e)
         {
             ResetearEstadosSidebar(btnNavReporteVentas);
-            panelCanvas.Controls.Clear();
             ControlReportVentas controlReporte = new ControlReportVentas();
-            controlReporte.Dock = DockStyle.Fill;
-            panelCanvas.Controls.Add(controlReporte);
+            CargarVistaConTransicion(controlReporte);
         }
 
-        private void btnNavReporteStock_Click(object sender, EventArgs e)
+        private void btnNavReporteStock_Click(object? sender, EventArgs e)
         {
             ResetearEstadosSidebar(btnNavReporteStock);
-            panelCanvas.Controls.Clear();
             ControlStockNotebooks controlStock = new ControlStockNotebooks();
-            controlStock.Dock = DockStyle.Fill;
-            panelCanvas.Controls.Add(controlStock);
+            CargarVistaConTransicion(controlStock);
         }
 
         private void btnCerrarSesion_Click(object? sender, EventArgs e)

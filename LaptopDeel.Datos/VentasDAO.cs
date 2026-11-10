@@ -4,7 +4,6 @@ using System.Data;
 using MySqlConnector;
 using LaptopDeel.Entidades;
 
-
 namespace LaptopDeel.Datos
 {
     public class VentasDAO
@@ -192,30 +191,26 @@ namespace LaptopDeel.Datos
             return dt;
         }
 
- 
-public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
-    {
-        DataTable tablaResultados = new DataTable();
+        public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
+        {
+            DataTable tablaResultados = new DataTable();
 
-        using (var conexion = ConexionBD.ObtenerConexion())
-        {            
-            using (var cmd = new MySqlCommand("sp_ReporteVentasPorCategoria", conexion))
+            using (var conexion = ConexionBD.ObtenerConexion())
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                // Le pasamos las fechas que elija el usuario en la pantalla
-                cmd.Parameters.AddWithValue("@p_fecha_desde", desde.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@p_fecha_hasta", hasta.ToString("yyyy-MM-dd"));
-
-                // Usamos un DataAdapter, que es especialista en agarrar los datos y meterlos en el DataTable
-                using (var adapter = new MySqlDataAdapter(cmd))
+                using (var cmd = new MySqlCommand("sp_ReporteVentasPorCategoria", conexion))
                 {
-                    adapter.Fill(tablaResultados);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_fecha_desde", desde.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@p_fecha_hasta", hasta.ToString("yyyy-MM-dd"));
+
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tablaResultados);
+                    }
                 }
             }
+            return tablaResultados;
         }
-        return tablaResultados;
-    }
 
         public DataTable ObtenerDetalleFacturasPorCategoria(string categoria, DateTime desde, DateTime hasta)
         {
@@ -238,8 +233,6 @@ public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
             return tabla;
         }
 
-
-
         public DataTable ObtenerTop3MasVendidas(DateTime desde, DateTime hasta)
         {
             DataTable tabla = new DataTable();
@@ -248,8 +241,6 @@ public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
                 using (var cmd = new MySqlCommand("sp_Top3NotebooksPorFecha", conexion))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Pasamos las variables de fecha al SP de MariaDB
                     cmd.Parameters.AddWithValue("@p_fecha_desde", desde.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@p_fecha_hasta", hasta.ToString("yyyy-MM-dd"));
 
@@ -279,6 +270,5 @@ public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
             }
             return tabla;
         }
-
     }
 }

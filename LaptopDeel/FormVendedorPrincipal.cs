@@ -15,6 +15,9 @@ namespace LaptopDeel
 
         private readonly Usuario? _usuarioActual;
 
+        // 🟢 PROPIEDAD PÚBLICA: Expone el usuario activo en sesión (Resuelve CS1061)
+        public Usuario? UsuarioActual => _usuarioActual;
+
         public FormVendedorPrincipal()
         {
             InitializeComponent();

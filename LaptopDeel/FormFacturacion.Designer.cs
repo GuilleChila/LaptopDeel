@@ -17,209 +17,306 @@
 
         private void InitializeComponent()
         {
-            this.lblTituloEncabezado = new Krypton.Toolkit.KryptonLabel();
-            this.gbDatosCliente = new Krypton.Toolkit.KryptonGroupBox();
-            this.lblClienteNombre = new Krypton.Toolkit.KryptonLabel();
-            this.lblClienteDni = new Krypton.Toolkit.KryptonLabel();
-            this.lblClienteIva = new Krypton.Toolkit.KryptonLabel();
-            this.gbComprobante = new Krypton.Toolkit.KryptonGroupBox();
-            this.lblTipoComprobante = new Krypton.Toolkit.KryptonLabel();
-            this.cmbTipoFactura = new Krypton.Toolkit.KryptonComboBox();
-            this.lblFechaEmision = new Krypton.Toolkit.KryptonLabel();
-            this.dgvDetalleFactura = new Krypton.Toolkit.KryptonDataGridView();
-            this.gbDesgloseTotales = new Krypton.Toolkit.KryptonGroupBox();
-            this.lblSubtotalNeto = new Krypton.Toolkit.KryptonLabel();
-            this.lblIva21 = new Krypton.Toolkit.KryptonLabel();
-            this.lblExento = new Krypton.Toolkit.KryptonLabel();
-            this.lblTotalPagar = new Krypton.Toolkit.KryptonLabel();
-            this.gbPago = new Krypton.Toolkit.KryptonGroupBox();
-            this.lblMetodoPago = new Krypton.Toolkit.KryptonLabel();
-            this.cmbMetodoPago = new Krypton.Toolkit.KryptonComboBox();
-            this.lblMontoAbonado = new Krypton.Toolkit.KryptonLabel();
-            this.txtMontoAbonado = new Krypton.Toolkit.KryptonTextBox();
-            this.lblVuelto = new Krypton.Toolkit.KryptonLabel();
-            this.btnConfirmarFactura = new Krypton.Toolkit.KryptonButton();
-            this.btnCancelar = new Krypton.Toolkit.KryptonButton();
-
-            ((System.ComponentModel.ISupportInitialize)(this.gbDatosCliente)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbDatosCliente.Panel)).BeginInit();
-            this.gbDatosCliente.Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gbComprobante)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbComprobante.Panel)).BeginInit();
-            this.gbComprobante.Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbTipoFactura)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleFactura)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbDesgloseTotales)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbDesgloseTotales.Panel)).BeginInit();
-            this.gbDesgloseTotales.Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gbPago)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbPago.Panel)).BeginInit();
-            this.gbPago.Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbMetodoPago)).BeginInit();
-            this.SuspendLayout();
-
-            // Encabezado
-            this.lblTituloEncabezado.Location = new System.Drawing.Point(20, 15);
-            this.lblTituloEncabezado.Name = "lblTituloEncabezado";
-            this.lblTituloEncabezado.Size = new System.Drawing.Size(350, 30);
-            this.lblTituloEncabezado.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTituloEncabezado.Values.Text = "🧾 EMISIÓN DE FACTURA Y COBRO";
-
-            // GroupBox Datos Cliente
-            this.gbDatosCliente.Location = new System.Drawing.Point(20, 55);
-            this.gbDatosCliente.Name = "gbDatosCliente";
-            this.gbDatosCliente.Size = new System.Drawing.Size(430, 110);
-            this.gbDatosCliente.Values.Heading = "Información del Cliente";
-            this.gbDatosCliente.Panel.Controls.Add(this.lblClienteNombre);
-            this.gbDatosCliente.Panel.Controls.Add(this.lblClienteDni);
-            this.gbDatosCliente.Panel.Controls.Add(this.lblClienteIva);
-
-            this.lblClienteNombre.Location = new System.Drawing.Point(10, 5);
-            this.lblClienteNombre.Values.Text = "Cliente: --";
-            this.lblClienteNombre.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-
-            this.lblClienteDni.Location = new System.Drawing.Point(10, 30);
-            this.lblClienteDni.Values.Text = "DNI / CUIT: --";
-
-            this.lblClienteIva.Location = new System.Drawing.Point(10, 55);
-            this.lblClienteIva.Values.Text = "Condición IVA: --";
-
-            // GroupBox Comprobante
-            this.gbComprobante.Location = new System.Drawing.Point(460, 55);
-            this.gbComprobante.Name = "gbComprobante";
-            this.gbComprobante.Size = new System.Drawing.Size(320, 110);
-            this.gbComprobante.Values.Heading = "Detalles Fiscales";
-            this.gbComprobante.Panel.Controls.Add(this.lblTipoComprobante);
-            this.gbComprobante.Panel.Controls.Add(this.cmbTipoFactura);
-            this.gbComprobante.Panel.Controls.Add(this.lblFechaEmision);
-
-            this.lblTipoComprobante.Location = new System.Drawing.Point(10, 8);
-            this.lblTipoComprobante.Values.Text = "Tipo:";
-
-            this.cmbTipoFactura.Location = new System.Drawing.Point(55, 5);
-            this.cmbTipoFactura.Name = "cmbTipoFactura";
-            this.cmbTipoFactura.Size = new System.Drawing.Size(240, 28);
-            this.cmbTipoFactura.SelectedIndexChanged += new System.EventHandler(this.cmbTipoFactura_SelectedIndexChanged);
-
-            this.lblFechaEmision.Location = new System.Drawing.Point(10, 45);
-            this.lblFechaEmision.Values.Text = "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-
-            // DataGridView Detalle
-            this.dgvDetalleFactura.Location = new System.Drawing.Point(20, 175);
-            this.dgvDetalleFactura.Name = "dgvDetalleFactura";
-            this.dgvDetalleFactura.Size = new System.Drawing.Size(760, 180);
-
-            // GroupBox Desglose Totales
-            this.gbDesgloseTotales.Location = new System.Drawing.Point(460, 365);
-            this.gbDesgloseTotales.Name = "gbDesgloseTotales";
-            this.gbDesgloseTotales.Size = new System.Drawing.Size(320, 150);
-            this.gbDesgloseTotales.Values.Heading = "Resumen Impositivo";
-            this.gbDesgloseTotales.Panel.Controls.Add(this.lblSubtotalNeto);
-            this.gbDesgloseTotales.Panel.Controls.Add(this.lblIva21);
-            this.gbDesgloseTotales.Panel.Controls.Add(this.lblExento);
-            this.gbDesgloseTotales.Panel.Controls.Add(this.lblTotalPagar);
-
-            this.lblSubtotalNeto.Location = new System.Drawing.Point(10, 5);
-            this.lblSubtotalNeto.Values.Text = "Subtotal Neto: $0.00";
-
-            this.lblIva21.Location = new System.Drawing.Point(10, 28);
-            this.lblIva21.Values.Text = "IVA (21%): $0.00";
-
-            this.lblExento.Location = new System.Drawing.Point(10, 51);
-            this.lblExento.Values.Text = "Libre Impuesto: $0.00";
-
-            this.lblTotalPagar.Location = new System.Drawing.Point(10, 80);
-            this.lblTotalPagar.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTotalPagar.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(37, 99, 235);
-            this.lblTotalPagar.Values.Text = "TOTAL: $0.00";
-
-            // GroupBox Medios de Pago
-            this.gbPago.Location = new System.Drawing.Point(20, 365);
-            this.gbPago.Name = "gbPago";
-            this.gbPago.Size = new System.Drawing.Size(430, 150);
-            this.gbPago.Values.Heading = "Procesamiento de Pago";
-            this.gbPago.Panel.Controls.Add(this.lblMetodoPago);
-            this.gbPago.Panel.Controls.Add(this.cmbMetodoPago);
-            this.gbPago.Panel.Controls.Add(this.lblMontoAbonado);
-            this.gbPago.Panel.Controls.Add(this.txtMontoAbonado);
-            this.gbPago.Panel.Controls.Add(this.lblVuelto);
-
-            this.lblMetodoPago.Location = new System.Drawing.Point(10, 10);
-            this.lblMetodoPago.Values.Text = "Medio Pago:";
-
-            this.cmbMetodoPago.Location = new System.Drawing.Point(110, 8);
-            this.cmbMetodoPago.Name = "cmbMetodoPago";
-            this.cmbMetodoPago.Size = new System.Drawing.Size(290, 28);
-            this.cmbMetodoPago.SelectedIndexChanged += new System.EventHandler(this.cmbMetodoPago_SelectedIndexChanged);
-
-            this.lblMontoAbonado.Location = new System.Drawing.Point(10, 48);
-            this.lblMontoAbonado.Values.Text = "Abona con ($):";
-
-            this.txtMontoAbonado.Location = new System.Drawing.Point(110, 45);
-            this.txtMontoAbonado.Name = "txtMontoAbonado";
-            this.txtMontoAbonado.Size = new System.Drawing.Size(290, 28);
-            this.txtMontoAbonado.TextChanged += new System.EventHandler(this.txtMontoAbonado_TextChanged);
-            this.txtMontoAbonado.Enter += new System.EventHandler(this.txtMontoAbonado_Enter);
-            this.txtMontoAbonado.Click += new System.EventHandler(this.txtMontoAbonado_Click);
-
-            this.lblVuelto.Location = new System.Drawing.Point(10, 85);
-            this.lblVuelto.StateCommon.ShortText.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblVuelto.Values.Text = "Vuelto: $0.00";
-
-            // Botones Finales
-            this.btnConfirmarFactura.Location = new System.Drawing.Point(460, 525);
-            this.btnConfirmarFactura.Name = "btnConfirmarFactura";
-            this.btnConfirmarFactura.Size = new System.Drawing.Size(320, 45);
-            this.btnConfirmarFactura.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.btnConfirmarFactura.StateCommon.Back.Color2 = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.btnConfirmarFactura.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.White;
-            this.btnConfirmarFactura.StateCommon.Content.ShortText.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnConfirmarFactura.Values.Text = "💳 Confirmar y Emitir Factura";
-            this.btnConfirmarFactura.Click += new System.EventHandler(this.btnConfirmarFactura_Click);
-
-            this.btnCancelar.Location = new System.Drawing.Point(20, 525);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(180, 45);
-            this.btnCancelar.Values.Text = "❌ Cancelar";
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-
+            lblTituloEncabezado = new Krypton.Toolkit.KryptonLabel();
+            gbDatosCliente = new Krypton.Toolkit.KryptonGroupBox();
+            lblClienteNombre = new Krypton.Toolkit.KryptonLabel();
+            lblClienteDni = new Krypton.Toolkit.KryptonLabel();
+            lblClienteIva = new Krypton.Toolkit.KryptonLabel();
+            gbComprobante = new Krypton.Toolkit.KryptonGroupBox();
+            lblTipoComprobante = new Krypton.Toolkit.KryptonLabel();
+            cmbTipoFactura = new Krypton.Toolkit.KryptonComboBox();
+            lblFechaEmision = new Krypton.Toolkit.KryptonLabel();
+            dgvDetalleFactura = new Krypton.Toolkit.KryptonDataGridView();
+            gbDesgloseTotales = new Krypton.Toolkit.KryptonGroupBox();
+            lblSubtotalNeto = new Krypton.Toolkit.KryptonLabel();
+            lblIva21 = new Krypton.Toolkit.KryptonLabel();
+            lblExento = new Krypton.Toolkit.KryptonLabel();
+            lblTotalPagar = new Krypton.Toolkit.KryptonLabel();
+            gbPago = new Krypton.Toolkit.KryptonGroupBox();
+            lblMetodoPago = new Krypton.Toolkit.KryptonLabel();
+            cmbMetodoPago = new Krypton.Toolkit.KryptonComboBox();
+            lblMontoAbonado = new Krypton.Toolkit.KryptonLabel();
+            txtMontoAbonado = new Krypton.Toolkit.KryptonTextBox();
+            lblVuelto = new Krypton.Toolkit.KryptonLabel();
+            btnConfirmarFactura = new Krypton.Toolkit.KryptonButton();
+            btnCancelar = new Krypton.Toolkit.KryptonButton();
+            ((System.ComponentModel.ISupportInitialize)gbDatosCliente).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gbDatosCliente.Panel).BeginInit();
+            gbDatosCliente.Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gbComprobante).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gbComprobante.Panel).BeginInit();
+            gbComprobante.Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)cmbTipoFactura).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvDetalleFactura).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gbDesgloseTotales).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gbDesgloseTotales.Panel).BeginInit();
+            gbDesgloseTotales.Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gbPago).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gbPago.Panel).BeginInit();
+            gbPago.Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)cmbMetodoPago).BeginInit();
+            SuspendLayout();
+            // 
+            // lblTituloEncabezado
+            // 
+            lblTituloEncabezado.Location = new Point(20, 15);
+            lblTituloEncabezado.Name = "lblTituloEncabezado";
+            lblTituloEncabezado.Size = new Size(399, 36);
+            lblTituloEncabezado.StateCommon.ShortText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTituloEncabezado.TabIndex = 0;
+            lblTituloEncabezado.Values.Text = "\U0001f9fe EMISIÓN DE FACTURA Y COBRO";
+            // 
+            // gbDatosCliente
+            // 
+            gbDatosCliente.Location = new Point(20, 55);
+            // 
+            // 
+            // 
+            gbDatosCliente.Panel.Controls.Add(lblClienteNombre);
+            gbDatosCliente.Panel.Controls.Add(lblClienteDni);
+            gbDatosCliente.Panel.Controls.Add(lblClienteIva);
+            gbDatosCliente.Size = new Size(430, 110);
+            gbDatosCliente.TabIndex = 1;
+            gbDatosCliente.Values.Heading = "Información del Cliente";
+            // 
+            // lblClienteNombre
+            // 
+            lblClienteNombre.Location = new Point(10, 5);
+            lblClienteNombre.Name = "lblClienteNombre";
+            lblClienteNombre.Size = new Size(87, 26);
+            lblClienteNombre.StateCommon.ShortText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblClienteNombre.TabIndex = 0;
+            lblClienteNombre.Values.Text = "Cliente: --";
+            // 
+            // lblClienteDni
+            // 
+            lblClienteDni.Location = new Point(10, 30);
+            lblClienteDni.Name = "lblClienteDni";
+            lblClienteDni.Size = new Size(105, 24);
+            lblClienteDni.TabIndex = 1;
+            lblClienteDni.Values.Text = "DNI / CUIT: --";
+            // 
+            // lblClienteIva
+            // 
+            lblClienteIva.Location = new Point(10, 55);
+            lblClienteIva.Name = "lblClienteIva";
+            lblClienteIva.Size = new Size(128, 24);
+            lblClienteIva.TabIndex = 2;
+            lblClienteIva.Values.Text = "Condición IVA: --";
+            // 
+            // gbComprobante
+            // 
+            gbComprobante.Location = new Point(460, 55);
+            // 
+            // 
+            // 
+            gbComprobante.Panel.Controls.Add(lblTipoComprobante);
+            gbComprobante.Panel.Controls.Add(cmbTipoFactura);
+            gbComprobante.Panel.Controls.Add(lblFechaEmision);
+            gbComprobante.Size = new Size(320, 110);
+            gbComprobante.TabIndex = 2;
+            gbComprobante.Values.Heading = "Detalles Fiscales";
+            // 
+            // lblTipoComprobante
+            // 
+            lblTipoComprobante.Location = new Point(10, 8);
+            lblTipoComprobante.Name = "lblTipoComprobante";
+            lblTipoComprobante.Size = new Size(45, 24);
+            lblTipoComprobante.TabIndex = 0;
+            lblTipoComprobante.Values.Text = "Tipo:";
+            // 
+            // cmbTipoFactura
+            // 
+            cmbTipoFactura.Location = new Point(55, 5);
+            cmbTipoFactura.Name = "cmbTipoFactura";
+            cmbTipoFactura.Size = new Size(240, 26);
+            cmbTipoFactura.TabIndex = 1;
+            cmbTipoFactura.SelectedIndexChanged += cmbTipoFactura_SelectedIndexChanged;
+            // 
+            // lblFechaEmision
+            // 
+            lblFechaEmision.Location = new Point(10, 45);
+            lblFechaEmision.Name = "lblFechaEmision";
+            lblFechaEmision.Size = new Size(178, 24);
+            lblFechaEmision.TabIndex = 2;
+            lblFechaEmision.Values.Text = "Fecha: 09/11/2026 21:07";
+            // 
+            // dgvDetalleFactura
+            // 
+            dgvDetalleFactura.BorderStyle = BorderStyle.None;
+            dgvDetalleFactura.ColumnHeadersHeight = 36;
+            dgvDetalleFactura.Location = new Point(20, 175);
+            dgvDetalleFactura.Name = "dgvDetalleFactura";
+            dgvDetalleFactura.RowHeadersWidth = 51;
+            dgvDetalleFactura.Size = new Size(760, 180);
+            dgvDetalleFactura.TabIndex = 3;
+            // 
+            // gbDesgloseTotales
+            // 
+            gbDesgloseTotales.Location = new Point(460, 365);
+            // 
+            // 
+            // 
+            gbDesgloseTotales.Panel.Controls.Add(lblSubtotalNeto);
+            gbDesgloseTotales.Panel.Controls.Add(lblIva21);
+            gbDesgloseTotales.Panel.Controls.Add(lblExento);
+            gbDesgloseTotales.Panel.Controls.Add(lblTotalPagar);
+            gbDesgloseTotales.Size = new Size(320, 150);
+            gbDesgloseTotales.TabIndex = 4;
+            gbDesgloseTotales.Values.Heading = "Resumen Impositivo";
+            // 
+            // lblSubtotalNeto
+            // 
+            lblSubtotalNeto.Location = new Point(10, 5);
+            lblSubtotalNeto.Name = "lblSubtotalNeto";
+            lblSubtotalNeto.Size = new Size(151, 24);
+            lblSubtotalNeto.TabIndex = 0;
+            lblSubtotalNeto.Values.Text = "Subtotal Neto: $0.00";
+            // 
+            // lblIva21
+            // 
+            lblIva21.Location = new Point(10, 28);
+            lblIva21.Name = "lblIva21";
+            lblIva21.Size = new Size(122, 24);
+            lblIva21.TabIndex = 1;
+            lblIva21.Values.Text = "IVA (21%): $0.00";
+            // 
+            // lblExento
+            // 
+            lblExento.Location = new Point(10, 51);
+            lblExento.Name = "lblExento";
+            lblExento.Size = new Size(158, 24);
+            lblExento.TabIndex = 2;
+            lblExento.Values.Text = "Libre Impuesto: $0.00";
+            // 
+            // lblTotalPagar
+            // 
+            lblTotalPagar.Location = new Point(10, 80);
+            lblTotalPagar.Name = "lblTotalPagar";
+            lblTotalPagar.Size = new Size(142, 32);
+            lblTotalPagar.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);
+            lblTotalPagar.StateCommon.ShortText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblTotalPagar.TabIndex = 3;
+            lblTotalPagar.Values.Text = "TOTAL: $0.00";
+            // 
+            // gbPago
+            // 
+            gbPago.Location = new Point(0, 365);
+            // 
+            // 
+            // 
+            gbPago.Panel.Controls.Add(lblMetodoPago);
+            gbPago.Panel.Controls.Add(cmbMetodoPago);
+            gbPago.Panel.Controls.Add(lblMontoAbonado);
+            gbPago.Panel.Controls.Add(txtMontoAbonado);
+            gbPago.Panel.Controls.Add(lblVuelto);
+            gbPago.Size = new Size(450, 150);
+            gbPago.TabIndex = 5;
+            gbPago.Values.Heading = "Procesamiento de Pago";
+            // 
+            // lblMetodoPago
+            // 
+            lblMetodoPago.Location = new Point(10, 10);
+            lblMetodoPago.Name = "lblMetodoPago";
+            lblMetodoPago.Size = new Size(98, 24);
+            lblMetodoPago.TabIndex = 0;
+            lblMetodoPago.Values.Text = "Medio Pago:";
+            // 
+            // cmbMetodoPago
+            // 
+            cmbMetodoPago.Location = new Point(127, 8);
+            cmbMetodoPago.Name = "cmbMetodoPago";
+            cmbMetodoPago.Size = new Size(273, 26);
+            cmbMetodoPago.TabIndex = 1;
+            cmbMetodoPago.SelectedIndexChanged += cmbMetodoPago_SelectedIndexChanged;
+            // 
+            // lblMontoAbonado
+            // 
+            lblMontoAbonado.Location = new Point(10, 48);
+            lblMontoAbonado.Name = "lblMontoAbonado";
+            lblMontoAbonado.Size = new Size(111, 24);
+            lblMontoAbonado.TabIndex = 2;
+            lblMontoAbonado.Values.Text = "Abona con ($):";
+            // 
+            // txtMontoAbonado
+            // 
+            txtMontoAbonado.Location = new Point(127, 45);
+            txtMontoAbonado.Name = "txtMontoAbonado";
+            txtMontoAbonado.Size = new Size(273, 27);
+            txtMontoAbonado.TabIndex = 3;
+            txtMontoAbonado.TextChanged += txtMontoAbonado_TextChanged;
+            txtMontoAbonado.Click += txtMontoAbonado_Click;
+            txtMontoAbonado.Enter += txtMontoAbonado_Enter;
+            // 
+            // lblVuelto
+            // 
+            lblVuelto.Location = new Point(10, 85);
+            lblVuelto.Name = "lblVuelto";
+            lblVuelto.Size = new Size(119, 27);
+            lblVuelto.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblVuelto.TabIndex = 4;
+            lblVuelto.Values.Text = "Vuelto: $0.00";
+            // 
+            // btnConfirmarFactura
+            // 
+            btnConfirmarFactura.Location = new Point(460, 525);
+            btnConfirmarFactura.Name = "btnConfirmarFactura";
+            btnConfirmarFactura.Size = new Size(320, 45);
+            btnConfirmarFactura.StateCommon.Back.Color1 = Color.FromArgb(16, 185, 129);
+            btnConfirmarFactura.StateCommon.Back.Color2 = Color.FromArgb(16, 185, 129);
+            btnConfirmarFactura.StateCommon.Content.ShortText.Color1 = Color.White;
+            btnConfirmarFactura.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnConfirmarFactura.TabIndex = 6;
+            btnConfirmarFactura.Values.DropDownArrowColor = Color.Empty;
+            btnConfirmarFactura.Values.Text = "💳 Confirmar y Emitir Factura";
+            btnConfirmarFactura.Click += btnConfirmarFactura_Click;
+            // 
+            // btnCancelar
+            // 
+            btnCancelar.Location = new Point(20, 525);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(180, 45);
+            btnCancelar.TabIndex = 7;
+            btnCancelar.Values.DropDownArrowColor = Color.Empty;
+            btnCancelar.Values.Text = "❌ Cancelar";
+            btnCancelar.Click += btnCancelar_Click;
+            // 
             // FormFacturacion
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 585);
-            this.Controls.Add(this.lblTituloEncabezado);
-            this.Controls.Add(this.gbDatosCliente);
-            this.Controls.Add(this.gbComprobante);
-            this.Controls.Add(this.dgvDetalleFactura);
-            this.Controls.Add(this.gbDesgloseTotales);
-            this.Controls.Add(this.gbPago);
-            this.Controls.Add(this.btnConfirmarFactura);
-            this.Controls.Add(this.btnCancelar);
-
-            this.Name = "FormFacturacion";
-            this.Text = "Módulo de Facturación y Cobro - LaptopDeel";
-
-            ((System.ComponentModel.ISupportInitialize)(this.gbDatosCliente.Panel)).EndInit();
-            this.gbDatosCliente.Panel.ResumeLayout(false);
-            this.gbDatosCliente.Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gbDatosCliente)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbComprobante.Panel)).EndInit();
-            this.gbComprobante.Panel.ResumeLayout(false);
-            this.gbComprobante.Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gbComprobante)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbTipoFactura)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleFactura)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbDesgloseTotales.Panel)).EndInit();
-            this.gbDesgloseTotales.Panel.ResumeLayout(false);
-            this.gbDesgloseTotales.Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gbDesgloseTotales)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gbPago.Panel)).EndInit();
-            this.gbPago.Panel.ResumeLayout(false);
-            this.gbPago.Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gbPago)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbMetodoPago)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 585);
+            Controls.Add(lblTituloEncabezado);
+            Controls.Add(gbDatosCliente);
+            Controls.Add(gbComprobante);
+            Controls.Add(dgvDetalleFactura);
+            Controls.Add(gbDesgloseTotales);
+            Controls.Add(gbPago);
+            Controls.Add(btnConfirmarFactura);
+            Controls.Add(btnCancelar);
+            Name = "FormFacturacion";
+            Text = "Módulo de Facturación y Cobro - LaptopDeel";
+            ((System.ComponentModel.ISupportInitialize)gbDatosCliente.Panel).EndInit();
+            gbDatosCliente.Panel.ResumeLayout(false);
+            gbDatosCliente.Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gbDatosCliente).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gbComprobante.Panel).EndInit();
+            gbComprobante.Panel.ResumeLayout(false);
+            gbComprobante.Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gbComprobante).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cmbTipoFactura).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvDetalleFactura).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gbDesgloseTotales.Panel).EndInit();
+            gbDesgloseTotales.Panel.ResumeLayout(false);
+            gbDesgloseTotales.Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gbDesgloseTotales).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gbPago.Panel).EndInit();
+            gbPago.Panel.ResumeLayout(false);
+            gbPago.Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gbPago).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cmbMetodoPago).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

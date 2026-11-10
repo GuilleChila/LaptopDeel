@@ -22,12 +22,13 @@ namespace LaptopDeel.Datos
                     {
                         int idVentaGenerada = 0;
 
-                        // 1. Registrar Venta en la tabla 'ventas'
+                        // 1. Registrar Venta en la tabla 'ventas' (enviando timestamp local de C#)
                         using (var cmd = new MySqlCommand("sp_RegistrarVentaCompleta", conexion, transaccion))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@p_id_cliente", pedido.ClienteAsociado.IdCliente);
                             cmd.Parameters.AddWithValue("@p_id_usuario", idUsuarioOperador);
+                            cmd.Parameters.AddWithValue("@p_fecha_hora", DateTime.Now); // 🟢 Hora local de la operación
                             cmd.Parameters.AddWithValue("@p_monto_total", pedido.TotalVenta);
                             cmd.Parameters.AddWithValue("@p_metodo_pago", metodoPago);
 

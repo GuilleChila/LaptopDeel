@@ -17,16 +17,17 @@ namespace LaptopDeel
         // Objeto borrador inmutable transmitido desde ControlVentas (POS)
         public PedidoVentaDTO PedidoDraft { get; private set; }
 
-        // ID del usuario operador/vendedor autenticado en el sistema (por defecto 1 o extraído de la sesión)
-        private readonly int _idUsuarioOperador = 1;
+        // 🟢 ID dinámico del vendedor autenticado
+        private readonly int _idUsuarioOperador;
 
         // ==========================================
         // CONSTRUCTORES
         // ==========================================
-        public FormFacturacion(PedidoVentaDTO pedidoDraft)
+        public FormFacturacion(PedidoVentaDTO pedidoDraft, int idUsuarioOperador = 1)
         {
             InitializeComponent();
             PedidoDraft = pedidoDraft;
+            _idUsuarioOperador = idUsuarioOperador;
 
             ConfigurarFormulario();
             CargarDatosCliente();
@@ -39,9 +40,10 @@ namespace LaptopDeel
         }
 
         // Sobrecarga de compatibilidad en caso de ser invocado con entidad Cliente y Lista tradicional
-        public FormFacturacion(Cliente cliente, List<Notebook> carrito)
+        public FormFacturacion(Cliente cliente, List<Notebook> carrito, int idUsuarioOperador = 1)
         {
             InitializeComponent();
+            _idUsuarioOperador = idUsuarioOperador;
 
             // Construcción directa del DTO interno
             List<ElementoCarrito> items = new List<ElementoCarrito>();
@@ -94,7 +96,6 @@ namespace LaptopDeel
             }
         }
 
-        // Determina el comprobante fiscal en base a las normativas comerciales de la AFIP
         private void DeterminarTipoComprobanteFiscal()
         {
             cmbTipoFactura.Items.Clear();
@@ -163,7 +164,6 @@ namespace LaptopDeel
         {
             decimal totalGeneral = PedidoDraft?.TotalVenta ?? 0;
 
-            // Uso estricto del tipo decimal y Math.Round a 2 decimales
             decimal subtotalNeto = Math.Round(totalGeneral / 1.21m, 2);
             decimal montoIva = Math.Round(totalGeneral - subtotalNeto, 2);
 
@@ -244,7 +244,6 @@ namespace LaptopDeel
                 string metodoPago = cmbMetodoPago.SelectedItem?.ToString() ?? "Efectivo";
                 string tipoComprobante = cmbTipoFactura.SelectedItem?.ToString() ?? "Factura B";
 
-                // Validar pago en efectivo
                 if (metodoPago == "Efectivo")
                 {
                     if (!decimal.TryParse(txtMontoAbonado.Text.Trim(), out decimal abonado) || abonado < PedidoDraft.TotalVenta)
@@ -256,7 +255,7 @@ namespace LaptopDeel
                     }
                 }
 
-                // 2. Persistencia atómica en MariaDB
+                // 🟢 Persistencia con el _idUsuarioOperador recuperado dinámicamente
                 bool exito = _facturacionDao.ProcesarFacturaYVenta(
                     PedidoDraft,
                     tipoComprobante,
@@ -270,7 +269,6 @@ namespace LaptopDeel
                 {
                     string rutaPdfGenerado = string.Empty;
 
-                    // 3. Generación automática de la Factura en PDF
                     try
                     {
                         rutaPdfGenerado = GeneradorFacturaPDF.GenerarFactura(PedidoDraft, numFacturaGenerada, tipoComprobante, metodoPago);
@@ -281,7 +279,6 @@ namespace LaptopDeel
                                                "Advertencia PDF", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                     }
 
-                    // 4. Notificación al usuario
                     string mensajeÉxito = $"¡Venta y Facturación procesadas con éxito!\n\n" +
                                          $"Comprobante Emitido: {tipoComprobante}\n" +
                                          $"Número de Factura: {numFacturaGenerada}\n" +
@@ -294,7 +291,6 @@ namespace LaptopDeel
 
                     KryptonMessageBox.Show(mensajeÉxito, "Operación Exitosa", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Information);
 
-                    // 5. Abrir automáticamente el PDF en el visor por defecto de Windows
                     if (!string.IsNullOrEmpty(rutaPdfGenerado) && System.IO.File.Exists(rutaPdfGenerado))
                     {
                         try
@@ -303,7 +299,6 @@ namespace LaptopDeel
                         }
                         catch (Exception)
                         {
-                            // Ignorar si no hay un visor predeterminado configurado
                         }
                     }
 
@@ -337,6 +332,7 @@ namespace LaptopDeel
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
         private void txtMontoAbonado_Enter(object sender, EventArgs e)
         {
             BeginInvoke((Action)(() =>

@@ -25,7 +25,7 @@ namespace LaptopDeel
             ConfigurarGrillaCarrito();
             CargarCatalogoNotebooks();
 
-            // 🟢 SOLUCIÓN CLAVE: Suscripción explícita al evento CellClick del carrito
+            // Suscripción explícita al evento CellClick del carrito
             this.dgvCarrito.CellClick -= dgvCarrito_CellClick;
             this.dgvCarrito.CellClick += dgvCarrito_CellClick;
         }
@@ -44,7 +44,7 @@ namespace LaptopDeel
                 return;
             }
 
-            if(!ValidarDniCliente(out string mensajeError))
+            if (!ValidarDniCliente(out string mensajeError))
             {
                 KryptonMessageBox.Show(mensajeError, "Atención", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Warning);
                 return;
@@ -84,12 +84,12 @@ namespace LaptopDeel
         {
             string dni = txtDniCliente.Text.Trim();
             mensajeError = string.Empty;
-           
+
             if (string.IsNullOrWhiteSpace(dni))
             {
                 mensajeError = "El campo DNI no puede estar vacío.";
                 return false;
-            }            
+            }
             if (!dni.All(char.IsDigit))
             {
                 mensajeError = "El DNI debe contener únicamente números, sin puntos, letras ni espacios.";
@@ -180,7 +180,6 @@ namespace LaptopDeel
         // ==========================================
         private void AgregarAlCarrito(Notebook notebook, int cantidad)
         {
-            // Consolidación por Clave Primaria (IdNotebook)
             var itemExistente = carritoVenta.FirstOrDefault(x => x.Laptop.IdNotebook == notebook.IdNotebook);
 
             if (itemExistente != null)
@@ -197,7 +196,6 @@ namespace LaptopDeel
             }
             else
             {
-                // Se instancian utilizando ElementoCarrito de LaptopDeel.Entidades (congela el precio)
                 carritoVenta.Add(new ElementoCarrito(notebook, cantidad));
             }
 
@@ -218,13 +216,10 @@ namespace LaptopDeel
             lblSubtotalEstimado.Text = $"${subtotalGeneral:N0}";
         }
 
-        // 🟢 EVENTO DE ELIMINACIÓN DE ÍTEMS CORREGIDO
         private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Evitar clics en los encabezados
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            // Validación por el nombre explícito de la columna
             if (dgvCarrito.Columns[e.ColumnIndex].Name == "colCarEliminar")
             {
                 if (e.RowIndex < carritoVenta.Count)
@@ -265,7 +260,7 @@ namespace LaptopDeel
                 {
                     KryptonMessageBox.Show($"El stock disponible para '{item.Laptop.Marca} {item.Laptop.Modelo}' ha cambiado. Stock actual en BD: {stockRealBD}.",
                                            "Conflicto de Stock", KryptonMessageBoxButtons.OK, KryptonMessageBoxIcon.Error);
-                    CargarCatalogoNotebooks(); // Refresca catálogo visual
+                    CargarCatalogoNotebooks();
                     return;
                 }
             }
@@ -274,8 +269,16 @@ namespace LaptopDeel
             decimal totalCalculado = carritoVenta.Sum(x => x.SubtotalItem);
             PedidoVentaDTO pedidoDraft = new PedidoVentaDTO(clienteSnapshot, carritoVenta, totalCalculado);
 
-            // Transmisión al módulo de Facturación
-            FormFacturacion formFacturacion = new FormFacturacion(pedidoDraft);
+            // 🟢 OBTENCIÓN DINÁMICA DEL ID DE USUARIO LOGUEADO
+            int idUsuarioLogueado = 1;
+            Form formPadre = this.FindForm();
+            if (formPadre is FormVendedorPrincipal formVendedor && formVendedor.UsuarioActual != null)
+            {
+                idUsuarioLogueado = formVendedor.UsuarioActual.IdUsuario;
+            }
+
+            // Transmisión al módulo de Facturación especificando el idUsuario dinámico
+            FormFacturacion formFacturacion = new FormFacturacion(pedidoDraft, idUsuarioLogueado);
             formFacturacion.ShowDialog();
         }
 
@@ -333,7 +336,5 @@ namespace LaptopDeel
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCarrito.MultiSelect = false;
         }
-
-        
     }
 }

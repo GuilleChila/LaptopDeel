@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 using Krypton.Toolkit;
@@ -12,6 +13,9 @@ namespace LaptopDeel
     public partial class FormCeoPrincipal : KryptonForm
     {
         private readonly System.Windows.Forms.Timer timerTransition = new System.Windows.Forms.Timer();
+        private readonly System.Windows.Forms.Timer timerReloj = new System.Windows.Forms.Timer();
+        private readonly DashboardDAO _dashboardDao = new DashboardDAO();
+
         private UserControl? vistaCargando;
         private double nivelOpacidad = 0.0;
 
@@ -22,7 +26,7 @@ namespace LaptopDeel
             InitializeComponent();
             ConfigurarEstiloVentana();
             ConfigurarOptimizacionesRender();
-            ConfigurarTimerTransicion();
+            ConfigurarTimers();
             VincularEventosNavegacion();
         }
 
@@ -33,7 +37,62 @@ namespace LaptopDeel
             if (_usuarioActual != null && !string.IsNullOrEmpty(_usuarioActual.Nombre))
             {
                 string rol = _usuarioActual.RolUsuario?.RolName ?? "CEO/Gerente";
-                lblUsuarioSidebar.Values.Text = $"👤 {_usuarioActual.Nombre.Trim()} ({rol})";
+                lblUsuarioSidebar.Values.Text = $"👤 {_usuarioActual.Nombre.Trim()} ({rol})  ";
+            }
+        }
+
+        private void FormCeoPrincipal_Load(object? sender, EventArgs e)
+        {
+            CargarKPIsDashboard();
+        }
+
+        public void CargarKPIsDashboard()
+        {
+            try
+            {
+                KpiDashboardDTO kpis = _dashboardDao.ObtenerKPIsGerencia();
+
+                // 1. KPI Clientes
+                lblKpiClientesValor.Values.Text = $"{kpis.ClientesActivos} Clientes Activos  ";
+                lblKpiClientesBadge.Values.Text = kpis.ClientesActivos > 0 ? "🟢 Estado: OK  " : "⚠️ Sin Registros  ";
+                lblKpiClientesBadge.StateCommon.ShortText.Color1 = kpis.ClientesActivos > 0
+                    ? Color.FromArgb(16, 185, 129)
+                    : Color.FromArgb(245, 158, 11);
+
+                // 2. KPI Ventas
+                string formatoMonto = string.Format(new CultureInfo("es-AR"), "$ {0:N0} Total del Mes  ", kpis.TotalVentasMesActual);
+                lblKpiVentasValor.Values.Text = formatoMonto;
+
+                if (kpis.PorcentajeVariacionVentas >= 0)
+                {
+                    lblKpiVentasBadge.Values.Text = $"↗️ +{kpis.PorcentajeVariacionVentas:F1}% vs mes anterior  ";
+                    lblKpiVentasBadge.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235); // Azul
+                }
+                else
+                {
+                    lblKpiVentasBadge.Values.Text = $"↘️ {kpis.PorcentajeVariacionVentas:F1}% vs mes anterior  ";
+                    lblKpiVentasBadge.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68); // Rojo
+                }
+
+                // 3. KPI Stock Crítico
+                lblKpiStockValor.Values.Text = $"{kpis.ModelosStockCritico} Modelos con <= 2 Unidades  ";
+                if (kpis.ModelosStockCritico > 0)
+                {
+                    lblKpiStockBadge.Values.Text = "🔴 Requiere Atención  ";
+                    lblKpiStockBadge.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68); // Rojo
+                }
+                else
+                {
+                    lblKpiStockBadge.Values.Text = "🟢 Stock Normal  ";
+                    lblKpiStockBadge.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129); // Verde
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo preventivo si la base de datos no está disponible al iniciar
+                lblKpiClientesValor.Values.Text = "0 Clientes Activos  ";
+                lblKpiVentasValor.Values.Text = "$ 0 Total del Mes  ";
+                lblKpiStockValor.Values.Text = "0 Modelos Críticos  ";
             }
         }
 
@@ -48,6 +107,8 @@ namespace LaptopDeel
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1360, 720);
             this.MinimumSize = new Size(1360, 720);
+
+            this.Load += FormCeoPrincipal_Load;
         }
 
         private void ConfigurarOptimizacionesRender()
@@ -64,10 +125,30 @@ namespace LaptopDeel
                 null, panelCanvas, new object[] { true });
         }
 
-        private void ConfigurarTimerTransicion()
+        private void ConfigurarTimers()
         {
             timerTransition.Interval = 15;
             timerTransition.Tick += TimerTransition_Tick;
+
+            timerReloj.Interval = 1000;
+            timerReloj.Tick += TimerReloj_Tick;
+            timerReloj.Start();
+            ActualizarRelojHeader();
+        }
+
+        private void TimerReloj_Tick(object? sender, EventArgs e)
+        {
+            ActualizarRelojHeader();
+        }
+
+        private void ActualizarRelojHeader()
+        {
+            DateTime ahora = DateTime.Now;
+            CultureInfo ci = new CultureInfo("es-ES");
+            string fechaFormateada = ahora.ToString("dddd, d 'de' MMMM, yyyy", ci);
+            fechaFormateada = char.ToUpper(fechaFormateada[0]) + fechaFormateada.Substring(1);
+
+            lblFechaHoraHeader.Values.Text = $"📅 {fechaFormateada} | 🕒 {ahora:HH:mm:ss} hs  ";
         }
 
         private void VincularEventosNavegacion()
@@ -78,22 +159,11 @@ namespace LaptopDeel
             if (this.btnNavClientes != null)
                 this.btnNavClientes.Click += new EventHandler(this.btnNavClientes_Click);
 
-            if (this.btnAccionClientes != null)
-                this.btnAccionClientes.Click += new EventHandler(this.btnNavClientes_Click);
-
-            // 🟢 VINCULACIÓN CORREGIDA: Reporte de Ventas
             if (this.btnNavReporteVentas != null)
                 this.btnNavReporteVentas.Click += new EventHandler(this.btnNavReporteVentas_Click);
 
-            if (this.btnAccionVentas != null)
-                this.btnAccionVentas.Click += new EventHandler(this.btnNavReporteVentas_Click);
-
-            // 🟢 VINCULACIÓN CORREGIDA: Reporte de Stock
             if (this.btnNavReporteStock != null)
                 this.btnNavReporteStock.Click += new EventHandler(this.btnNavReporteStock_Click);
-
-            if (this.btnAccionStock != null)
-                this.btnAccionStock.Click += new EventHandler(this.btnNavReporteStock_Click);
 
             if (this.btnNavHistorialVentas != null)
                 this.btnNavHistorialVentas.Click += new EventHandler(this.btnNavHistorialVentas_Click);
@@ -103,6 +173,21 @@ namespace LaptopDeel
 
             if (this.btnCerrarSesion != null)
                 this.btnCerrarSesion.Click += new EventHandler(this.btnCerrarSesion_Click);
+
+            if (this.btnAccionClientes != null)
+                this.btnAccionClientes.Click += new EventHandler(this.btnNavClientes_Click);
+
+            if (this.btnAccionVentas != null)
+                this.btnAccionVentas.Click += new EventHandler(this.btnNavReporteVentas_Click);
+
+            if (this.btnAccionStock != null)
+                this.btnAccionStock.Click += new EventHandler(this.btnNavReporteStock_Click);
+
+            if (this.btnAccionHistorial != null)
+                this.btnAccionHistorial.Click += new EventHandler(this.btnNavHistorialVentas_Click);
+
+            if (this.btnAccionRespaldo != null)
+                this.btnAccionRespaldo.Click += new EventHandler(this.btnNavRespaldo_Click);
         }
 
         private void ResetearEstadosSidebar(KryptonButton? botonActivo)
@@ -199,6 +284,7 @@ namespace LaptopDeel
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            timerReloj.Stop();
             FinalizarSesionActual();
             base.OnFormClosing(e);
         }
@@ -214,8 +300,13 @@ namespace LaptopDeel
 
             panelCanvas.Controls.Add(this.lblSubtituloModulo);
             panelCanvas.Controls.Add(this.lblTituloModulo);
+            panelCanvas.Controls.Add(this.tableLayoutPanelKPIs);
+            panelCanvas.Controls.Add(this.lblSeccionFuncionalidades);
             panelCanvas.Controls.Add(this.tableLayoutPanelCards);
             panelCanvas.ResumeLayout(true);
+
+            // Refrescar los KPIs con datos frescos al volver al dashboard
+            CargarKPIsDashboard();
         }
 
         private void btnNavClientes_Click(object? sender, EventArgs e)
@@ -223,20 +314,6 @@ namespace LaptopDeel
             ResetearEstadosSidebar(btnNavClientes);
             ControlClientes vistaClientes = new ControlClientes();
             CargarVistaConTransicion(vistaClientes);
-        }
-
-        private void btnNavHistorialVentas_Click(object? sender, EventArgs e)
-        {
-            ResetearEstadosSidebar(btnNavHistorialVentas);
-            ControlHistorialVentas vistaHistorial = new ControlHistorialVentas(_usuarioActual ?? new Usuario());
-            CargarVistaConTransicion(vistaHistorial);
-        }
-
-        private void btnNavRespaldo_Click(object? sender, EventArgs e)
-        {
-            ResetearEstadosSidebar(btnNavRespaldo);
-            ControlRespaldo vistaRespaldo = new ControlRespaldo();
-            CargarVistaConTransicion(vistaRespaldo);
         }
 
         private void btnNavReporteVentas_Click(object? sender, EventArgs e)
@@ -251,6 +328,20 @@ namespace LaptopDeel
             ResetearEstadosSidebar(btnNavReporteStock);
             ControlStockNotebooks controlStock = new ControlStockNotebooks();
             CargarVistaConTransicion(controlStock);
+        }
+
+        private void btnNavHistorialVentas_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavHistorialVentas);
+            ControlHistorialVentas vistaHistorial = new ControlHistorialVentas(_usuarioActual ?? new Usuario());
+            CargarVistaConTransicion(vistaHistorial);
+        }
+
+        private void btnNavRespaldo_Click(object? sender, EventArgs e)
+        {
+            ResetearEstadosSidebar(btnNavRespaldo);
+            ControlRespaldo vistaRespaldo = new ControlRespaldo();
+            CargarVistaConTransicion(vistaRespaldo);
         }
 
         private void btnCerrarSesion_Click(object? sender, EventArgs e)

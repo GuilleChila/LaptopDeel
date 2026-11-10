@@ -238,5 +238,47 @@ public DataTable ObtenerVentasPorCategoria(DateTime desde, DateTime hasta)
             return tabla;
         }
 
+
+
+        public DataTable ObtenerTop3MasVendidas(DateTime desde, DateTime hasta)
+        {
+            DataTable tabla = new DataTable();
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("sp_Top3NotebooksPorFecha", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pasamos las variables de fecha al SP de MariaDB
+                    cmd.Parameters.AddWithValue("@p_fecha_desde", desde.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@p_fecha_hasta", hasta.ToString("yyyy-MM-dd"));
+
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+
+        public DataTable ObtenerVentasAnuales()
+        {
+            DataTable tabla = new DataTable();
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                using (var cmd = new MySqlCommand("SP_ObtenerVentasAnuales", conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+            return tabla;
+        }
+
     }
 }

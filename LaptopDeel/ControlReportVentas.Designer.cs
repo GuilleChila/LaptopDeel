@@ -28,89 +28,106 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            kryptonLabel1 = new Krypton.Toolkit.KryptonLabel();
-            panel1 = new Panel();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            panelFiltro = new Panel();
+            exportarReporte = new Krypton.Toolkit.KryptonButton();
+            dtpHasta = new Krypton.Toolkit.KryptonDateTimePicker();
+            dtpDesde = new Krypton.Toolkit.KryptonDateTimePicker();
             kryptonLabel2 = new Krypton.Toolkit.KryptonLabel();
-            dtpDesde = new DateTimePicker();
             kryptonLabel3 = new Krypton.Toolkit.KryptonLabel();
-            dtpHasta = new DateTimePicker();
             btnGenerar = new Button();
             panelGrafico = new Panel();
-            dgvReporte = new DataGridView();
-            contextMenuStrip1 = new ContextMenuStrip(components);
+            dgvReporteGrilla = new DataGridView();
             kryptonLabel4 = new Krypton.Toolkit.KryptonLabel();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvReporte).BeginInit();
+            Top3Vendidas = new Panel();
+            panelGraficoAnual = new Panel();
+            btnAlternarAnual = new Krypton.Toolkit.KryptonButton();
+            panelFiltro.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReporteGrilla).BeginInit();
             SuspendLayout();
             // 
-            // kryptonLabel1
+            // panelFiltro
             // 
-            kryptonLabel1.Dock = DockStyle.Top;
-            kryptonLabel1.Location = new Point(0, 0);
-            kryptonLabel1.Name = "kryptonLabel1";
-            kryptonLabel1.Size = new Size(941, 41);
-            kryptonLabel1.StateCommon.ShortText.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            kryptonLabel1.TabIndex = 0;
-            kryptonLabel1.Values.Text = " Dashboard de Ingresos por Categorías";
+            panelFiltro.BackColor = Color.White;
+            panelFiltro.Controls.Add(exportarReporte);
+            panelFiltro.Controls.Add(dtpHasta);
+            panelFiltro.Controls.Add(dtpDesde);
+            panelFiltro.Controls.Add(kryptonLabel2);
+            panelFiltro.Controls.Add(kryptonLabel3);
+            panelFiltro.Controls.Add(btnGenerar);
+            panelFiltro.Dock = DockStyle.Top;
+            panelFiltro.Location = new Point(0, 0);
+            panelFiltro.Name = "panelFiltro";
+            panelFiltro.Size = new Size(789, 103);
+            panelFiltro.TabIndex = 1;
             // 
-            // panel1
+            // exportarReporte
             // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(kryptonLabel2);
-            panel1.Controls.Add(dtpDesde);
-            panel1.Controls.Add(kryptonLabel3);
-            panel1.Controls.Add(dtpHasta);
-            panel1.Controls.Add(btnGenerar);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 41);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(941, 70);
-            panel1.TabIndex = 1;
+            exportarReporte.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            exportarReporte.Location = new Point(321, 3);
+            exportarReporte.Name = "exportarReporte";
+            exportarReporte.Size = new Size(135, 24);
+            exportarReporte.TabIndex = 8;
+            exportarReporte.Values.DropDownArrowColor = Color.Empty;
+            exportarReporte.Values.Text = "Exportar reporte";
+            exportarReporte.Click += exportarReporte_Click;
+            // 
+            // dtpHasta
+            // 
+            dtpHasta.Anchor = AnchorStyles.Left;
+            dtpHasta.Format = DateTimePickerFormat.Short;
+            dtpHasta.Location = new Point(495, 43);
+            dtpHasta.Name = "dtpHasta";
+            dtpHasta.Size = new Size(152, 31);
+            dtpHasta.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            dtpHasta.StateCommon.Border.Rounding = 8F;
+            dtpHasta.TabIndex = 7;
+            // 
+            // dtpDesde
+            // 
+            dtpDesde.Anchor = AnchorStyles.Left;
+            dtpDesde.Format = DateTimePickerFormat.Short;
+            dtpDesde.Location = new Point(290, 42);
+            dtpDesde.Name = "dtpDesde";
+            dtpDesde.Size = new Size(121, 31);
+            dtpDesde.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            dtpDesde.StateCommon.Border.Rounding = 8F;
+            dtpDesde.TabIndex = 6;
             // 
             // kryptonLabel2
             // 
-            kryptonLabel2.Location = new Point(20, 22);
+            kryptonLabel2.Anchor = AnchorStyles.Left;
+            kryptonLabel2.Location = new Point(214, 50);
             kryptonLabel2.Name = "kryptonLabel2";
             kryptonLabel2.Size = new Size(57, 24);
             kryptonLabel2.TabIndex = 0;
             kryptonLabel2.Values.Text = "Desde:";
             // 
-            // dtpDesde
-            // 
-            dtpDesde.Location = new Point(80, 21);
-            dtpDesde.Name = "dtpDesde";
-            dtpDesde.Size = new Size(230, 27);
-            dtpDesde.TabIndex = 1;
-            // 
             // kryptonLabel3
             // 
-            kryptonLabel3.Location = new Point(330, 22);
+            kryptonLabel3.Anchor = AnchorStyles.Left;
+            kryptonLabel3.Location = new Point(426, 49);
             kryptonLabel3.Name = "kryptonLabel3";
             kryptonLabel3.Size = new Size(53, 24);
             kryptonLabel3.TabIndex = 2;
             kryptonLabel3.Values.Text = "Hasta:";
             // 
-            // dtpHasta
-            // 
-            dtpHasta.Location = new Point(386, 21);
-            dtpHasta.Name = "dtpHasta";
-            dtpHasta.Size = new Size(230, 27);
-            dtpHasta.TabIndex = 3;
-            // 
             // btnGenerar
             // 
+            btnGenerar.Anchor = AnchorStyles.Left;
             btnGenerar.BackColor = Color.FromArgb(41, 128, 185);
             btnGenerar.Cursor = Cursors.Hand;
             btnGenerar.FlatAppearance.BorderSize = 0;
             btnGenerar.FlatStyle = FlatStyle.Flat;
             btnGenerar.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnGenerar.ForeColor = Color.White;
-            btnGenerar.Location = new Point(640, 19);
+            btnGenerar.Location = new Point(653, 43);
             btnGenerar.Name = "btnGenerar";
-            btnGenerar.Size = new Size(110, 31);
+            btnGenerar.Size = new Size(97, 30);
             btnGenerar.TabIndex = 4;
-            btnGenerar.Text = "Generar";
+            btnGenerar.Text = "Filtrar Fechas";
             btnGenerar.UseVisualStyleBackColor = false;
             btnGenerar.Click += btnGenerar_Click;
             // 
@@ -118,30 +135,51 @@
             // 
             panelGrafico.BackColor = Color.White;
             panelGrafico.Dock = DockStyle.Top;
-            panelGrafico.Location = new Point(0, 111);
+            panelGrafico.Location = new Point(0, 103);
             panelGrafico.Name = "panelGrafico";
-            panelGrafico.Size = new Size(941, 350);
+            panelGrafico.Size = new Size(789, 502);
             panelGrafico.TabIndex = 2;
             // 
-            // dgvReporte
+            // dgvReporteGrilla
             // 
-            dgvReporte.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvReporte.BackgroundColor = SystemColors.ButtonHighlight;
-            dgvReporte.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReporte.Dock = DockStyle.Top;
-            dgvReporte.Location = new Point(0, 461);
-            dgvReporte.Name = "dgvReporte";
-            dgvReporte.RowHeadersWidth = 51;
-            dgvReporte.Size = new Size(941, 250);
-            dgvReporte.TabIndex = 3;
-            dgvReporte.CellContentClick += dgvReporte_CellContentClick;
-            // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.Font = new Font("Segoe UI", 9F);
-            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(61, 4);
+            dgvReporteGrilla.AllowDrop = true;
+            dgvReporteGrilla.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(249, 249, 249);
+            dgvReporteGrilla.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvReporteGrilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvReporteGrilla.BackgroundColor = Color.White;
+            dgvReporteGrilla.BorderStyle = BorderStyle.None;
+            dgvReporteGrilla.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvReporteGrilla.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(41, 128, 185);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvReporteGrilla.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvReporteGrilla.ColumnHeadersHeight = 40;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new Padding(5, 0, 5, 0);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(235, 245, 255);
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvReporteGrilla.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvReporteGrilla.Dock = DockStyle.Top;
+            dgvReporteGrilla.Enabled = false;
+            dgvReporteGrilla.EnableHeadersVisualStyles = false;
+            dgvReporteGrilla.GridColor = Color.FromArgb(224, 224, 224);
+            dgvReporteGrilla.Location = new Point(0, 605);
+            dgvReporteGrilla.Name = "dgvReporteGrilla";
+            dgvReporteGrilla.RowHeadersWidth = 51;
+            dgvReporteGrilla.RowTemplate.Height = 35;
+            dgvReporteGrilla.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvReporteGrilla.Size = new Size(789, 268);
+            dgvReporteGrilla.TabIndex = 6;
             // 
             // kryptonLabel4
             // 
@@ -150,38 +188,69 @@
             kryptonLabel4.Size = new Size(48, 24);
             kryptonLabel4.TabIndex = 4;
             // 
+            // Top3Vendidas
+            // 
+            Top3Vendidas.Dock = DockStyle.Top;
+            Top3Vendidas.Location = new Point(0, 873);
+            Top3Vendidas.Name = "Top3Vendidas";
+            Top3Vendidas.Size = new Size(789, 507);
+            Top3Vendidas.TabIndex = 4;
+            // 
+            // panelGraficoAnual
+            // 
+            panelGraficoAnual.Dock = DockStyle.Top;
+            panelGraficoAnual.Location = new Point(0, 1428);
+            panelGraficoAnual.Name = "panelGraficoAnual";
+            panelGraficoAnual.Size = new Size(789, 489);
+            panelGraficoAnual.TabIndex = 5;
+            // 
+            // btnAlternarAnual
+            // 
+            btnAlternarAnual.Dock = DockStyle.Top;
+            btnAlternarAnual.Location = new Point(0, 1380);
+            btnAlternarAnual.Name = "btnAlternarAnual";
+            btnAlternarAnual.Size = new Size(789, 48);
+            btnAlternarAnual.TabIndex = 0;
+            btnAlternarAnual.Values.DropDownArrowColor = Color.Empty;
+            btnAlternarAnual.Values.Text = "kryptonButton1";
+            btnAlternarAnual.Click += btnAlternarAnual_Click;
+            // 
             // ControlReportVentas
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = Color.White;
-            Controls.Add(dgvReporte);
+            Controls.Add(panelGraficoAnual);
+            Controls.Add(btnAlternarAnual);
+            Controls.Add(Top3Vendidas);
+            Controls.Add(dgvReporteGrilla);
             Controls.Add(panelGrafico);
-            Controls.Add(panel1);
-            Controls.Add(kryptonLabel1);
+            Controls.Add(panelFiltro);
             Name = "ControlReportVentas";
-            Size = new Size(941, 800);
+            Size = new Size(789, 907);
             Load += ControlReporteVentas_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvReporte).EndInit();
+            panelFiltro.ResumeLayout(false);
+            panelFiltro.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReporteGrilla).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Krypton.Toolkit.KryptonLabel kryptonLabel1;
-        private Panel panel1;
+        private Panel panelFiltro;
         private Krypton.Toolkit.KryptonLabel kryptonLabel2;
-        private DateTimePicker dtpDesde;
         private Krypton.Toolkit.KryptonLabel kryptonLabel3;
-        private DateTimePicker dtpHasta;
         private Button btnGenerar;
         private Panel panelGrafico;
-        private DataGridView dgvReporte;
-        private ContextMenuStrip contextMenuStrip1;
+        private DataGridView dgvReporteGrilla;
         private Krypton.Toolkit.KryptonLabel kryptonLabel4;
+        private Krypton.Toolkit.KryptonLabel kryptonLabel5;
+        private Panel Top3Vendidas;
+        private Krypton.Toolkit.KryptonDateTimePicker dtpHasta;
+        private Krypton.Toolkit.KryptonDateTimePicker dtpDesde;
+        private Krypton.Toolkit.KryptonLabel kryptonLabel1;
+        private Krypton.Toolkit.KryptonButton exportarReporte;
+        private Panel panelGraficoAnual;
+        private Krypton.Toolkit.KryptonButton btnAlternarAnual;
     }
 }

@@ -31,24 +31,31 @@
             cmbVendedor = new Krypton.Toolkit.KryptonComboBox();
             btnFiltrar = new Krypton.Toolkit.KryptonButton();
             dgvHistorial = new Krypton.Toolkit.KryptonDataGridView();
-
             ((System.ComponentModel.ISupportInitialize)panelTarjetaContenedora).BeginInit();
             panelTarjetaContenedora.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cmbVendedor).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvHistorial).BeginInit();
             SuspendLayout();
-
             // 
             // lblTituloModulo
             // 
             lblTituloModulo.Location = new Point(25, 18);
             lblTituloModulo.Name = "lblTituloModulo";
-            lblTituloModulo.Size = new Size(330, 40);
+            lblTituloModulo.Size = new Size(351, 46);
             lblTituloModulo.StateCommon.ShortText.Color1 = Color.FromArgb(15, 23, 42);
             lblTituloModulo.StateCommon.ShortText.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblTituloModulo.TabIndex = 0;
             lblTituloModulo.Values.Text = "HISTORIAL DE VENTAS";
-
+            // 
+            // lblSubtituloGrilla
+            // 
+            lblSubtituloGrilla.Location = new Point(20, 15);
+            lblSubtituloGrilla.Name = "lblSubtituloGrilla";
+            lblSubtituloGrilla.Size = new Size(186, 27);
+            lblSubtituloGrilla.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);
+            lblSubtituloGrilla.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblSubtituloGrilla.TabIndex = 0;
+            lblSubtituloGrilla.Values.Text = "VENTAS REALIZADAS";
             // 
             // panelTarjetaContenedora
             // 
@@ -71,63 +78,47 @@
             panelTarjetaContenedora.StateCommon.Color1 = Color.White;
             panelTarjetaContenedora.StateCommon.Color2 = Color.White;
             panelTarjetaContenedora.TabIndex = 1;
-
-            // 
-            // lblSubtituloGrilla
-            // 
-            lblSubtituloGrilla.Location = new Point(20, 15);
-            lblSubtituloGrilla.Name = "lblSubtituloGrilla";
-            lblSubtituloGrilla.Size = new Size(170, 24);
-            lblSubtituloGrilla.StateCommon.ShortText.Color1 = Color.FromArgb(37, 99, 235);
-            lblSubtituloGrilla.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblSubtituloGrilla.TabIndex = 0;
-            lblSubtituloGrilla.Values.Text = "VENTAS REALIZADAS";
-
             // 
             // lblFiltroBuscar
             // 
             lblFiltroBuscar.Location = new Point(20, 48);
             lblFiltroBuscar.Name = "lblFiltroBuscar";
-            lblFiltroBuscar.Size = new Size(160, 20);
+            lblFiltroBuscar.Size = new Size(205, 23);
             lblFiltroBuscar.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
             lblFiltroBuscar.StateCommon.ShortText.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblFiltroBuscar.TabIndex = 1;
             lblFiltroBuscar.Values.Text = "Buscar por Cliente / Factura:";
-
             // 
             // txtBuscar
             // 
             txtBuscar.Location = new Point(20, 72);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(240, 32);
-            txtBuscar.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.All;
+            txtBuscar.Size = new Size(240, 33);
+            txtBuscar.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
             txtBuscar.StateCommon.Border.Rounding = 8F;
             txtBuscar.TabIndex = 2;
             txtBuscar.Text = "🔍 Buscar...";
             txtBuscar.TextChanged += txtBuscar_TextChanged;
-
             // 
             // chkUsarFiltroFecha
             // 
             chkUsarFiltroFecha.Location = new Point(280, 78);
             chkUsarFiltroFecha.Name = "chkUsarFiltroFecha";
-            chkUsarFiltroFecha.Size = new Size(115, 20);
+            chkUsarFiltroFecha.Size = new Size(123, 24);
             chkUsarFiltroFecha.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             chkUsarFiltroFecha.TabIndex = 3;
             chkUsarFiltroFecha.Values.Text = "Filtrar Fechas";
             chkUsarFiltroFecha.CheckedChanged += chkUsarFiltroFecha_CheckedChanged;
-
             // 
             // lblFechaInicio
             // 
             lblFechaInicio.Location = new Point(405, 48);
             lblFechaInicio.Name = "lblFechaInicio";
-            lblFechaInicio.Size = new Size(50, 20);
+            lblFechaInicio.Size = new Size(57, 23);
             lblFechaInicio.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
             lblFechaInicio.StateCommon.ShortText.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblFechaInicio.TabIndex = 4;
             lblFechaInicio.Values.Text = "Desde:";
-
             // 
             // dtpInicio
             // 
@@ -135,22 +126,21 @@
             dtpInicio.Format = DateTimePickerFormat.Short;
             dtpInicio.Location = new Point(405, 72);
             dtpInicio.Name = "dtpInicio";
-            dtpInicio.Size = new Size(130, 32);
-            dtpInicio.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.All;
+            dtpInicio.Size = new Size(130, 31);
+            dtpInicio.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
             dtpInicio.StateCommon.Border.Rounding = 8F;
             dtpInicio.TabIndex = 5;
-
+          
             // 
             // lblFechaFin
             // 
             lblFechaFin.Location = new Point(545, 48);
             lblFechaFin.Name = "lblFechaFin";
-            lblFechaFin.Size = new Size(48, 20);
+            lblFechaFin.Size = new Size(54, 23);
             lblFechaFin.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
             lblFechaFin.StateCommon.ShortText.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblFechaFin.TabIndex = 6;
             lblFechaFin.Values.Text = "Hasta:";
-
             // 
             // dtpFin
             // 
@@ -158,23 +148,21 @@
             dtpFin.Format = DateTimePickerFormat.Short;
             dtpFin.Location = new Point(545, 72);
             dtpFin.Name = "dtpFin";
-            dtpFin.Size = new Size(130, 32);
-            dtpFin.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.All;
+            dtpFin.Size = new Size(130, 31);
+            dtpFin.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
             dtpFin.StateCommon.Border.Rounding = 8F;
             dtpFin.TabIndex = 7;
-
             // 
             // lblVendedor
             // 
             lblVendedor.Location = new Point(685, 48);
             lblVendedor.Name = "lblVendedor";
-            lblVendedor.Size = new Size(72, 20);
+            lblVendedor.Size = new Size(82, 23);
             lblVendedor.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
             lblVendedor.StateCommon.ShortText.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblVendedor.TabIndex = 8;
             lblVendedor.Values.Text = "Vendedor:";
             lblVendedor.Visible = false;
-
             // 
             // cmbVendedor
             // 
@@ -182,11 +170,10 @@
             cmbVendedor.Location = new Point(685, 72);
             cmbVendedor.Name = "cmbVendedor";
             cmbVendedor.Size = new Size(180, 32);
-            cmbVendedor.StateCommon.ComboBox.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.All;
+            cmbVendedor.StateCommon.ComboBox.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
             cmbVendedor.StateCommon.ComboBox.Border.Rounding = 8F;
             cmbVendedor.TabIndex = 9;
             cmbVendedor.Visible = false;
-
             // 
             // btnFiltrar
             // 
@@ -196,14 +183,14 @@
             btnFiltrar.Size = new Size(130, 36);
             btnFiltrar.StateCommon.Back.Color1 = Color.FromArgb(37, 99, 235);
             btnFiltrar.StateCommon.Back.Color2 = Color.FromArgb(37, 99, 235);
-            btnFiltrar.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.All;
+            btnFiltrar.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
             btnFiltrar.StateCommon.Border.Rounding = 8F;
             btnFiltrar.StateCommon.Content.ShortText.Color1 = Color.White;
             btnFiltrar.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnFiltrar.TabIndex = 10;
+            btnFiltrar.Values.DropDownArrowColor = Color.Empty;
             btnFiltrar.Values.Text = "🔄 Filtrar";
             btnFiltrar.Click += btnFiltrar_Click;
-
             // 
             // dgvHistorial
             // 
@@ -227,7 +214,6 @@
             dgvHistorial.StateCommon.HeaderColumn.Content.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             dgvHistorial.TabIndex = 11;
             dgvHistorial.CellClick += dgvHistorial_CellClick;
-
             // 
             // ControlHistorialVentas
             // 
@@ -237,7 +223,6 @@
             Controls.Add(lblTituloModulo);
             Name = "ControlHistorialVentas";
             Size = new Size(1120, 660);
-
             ((System.ComponentModel.ISupportInitialize)panelTarjetaContenedora).EndInit();
             panelTarjetaContenedora.ResumeLayout(false);
             panelTarjetaContenedora.PerformLayout();

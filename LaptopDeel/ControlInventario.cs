@@ -5,7 +5,7 @@ namespace LaptopDeel
 {
     public partial class ControlInventario : UserControl
     {
-        // Declaramos a los hijos
+        // Declaramos las variables para las vistas de notebooks y componentes
         private ControlInventarioNotebooks vistaNotebooks;
         private ControlInventarioComponentes vistaComponentes;
 

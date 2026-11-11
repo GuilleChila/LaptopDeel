@@ -11,10 +11,10 @@ namespace LaptopDeel
 {
     public partial class ControlInventarioNotebooks : UserControl
     {
-        // Guardamos la lista en memoria para que el buscador y los filtros sean instantáneos
+        
         private List<Notebook> listaNotebooksCompleta = new List<Notebook>();
 
-        // 1. EL CONSTRUCTOR (Acá conectamos todo y hacemos la primera carga)
+        
         public ControlInventarioNotebooks()
         {
             InitializeComponent();
@@ -33,13 +33,8 @@ namespace LaptopDeel
             LimpiarFormulario();
         }
 
-        // 2. EL EVENTO LOAD (Dejalo vacío para que no haga el trabajo dos veces)
-        private void ControlInventarioNotebooks_Load(object sender, EventArgs e)
-        {
-            // Vacío intencionalmente (la carga ya se hizo en el constructor)
-        }
 
-        // 3. EL REFRESCO (¡Está perfecto como lo armaste!)
+        // EL REFRESCO (¡Está perfecto como lo armaste!)
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
@@ -119,14 +114,14 @@ namespace LaptopDeel
             dgvInventario.Columns.Add("IdNotebook", "ID");
             dgvInventario.Columns.Add("Marca", "Marca");
             dgvInventario.Columns.Add("Modelo", "Modelo");
-            dgvInventario.Columns.Add("Categorias", "Categorías"); // <-- NUEVA COLUMNA ACÁ
+            dgvInventario.Columns.Add("Categorias", "Categorías"); 
             dgvInventario.Columns.Add("Especificaciones", "Especificaciones de Hardware");
             dgvInventario.Columns.Add("Precio", "Precio ($)");
             dgvInventario.Columns.Add("Stock", "Stock (Uds)");
             dgvInventario.Columns.Add("Estado", "Estado");
 
             dgvInventario.Columns["IdNotebook"].Width = 50;
-            dgvInventario.Columns["Categorias"].Width = 120; // Le damos un buen ancho
+            dgvInventario.Columns["Categorias"].Width = 120;
             dgvInventario.Columns["Especificaciones"].FillWeight = 200;
             dgvInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }

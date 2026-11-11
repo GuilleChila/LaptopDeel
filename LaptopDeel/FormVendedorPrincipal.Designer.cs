@@ -27,14 +27,12 @@
             lblUsuarioSidebar = new Krypton.Toolkit.KryptonLabel();
             btnCerrarSesion = new Krypton.Toolkit.KryptonButton();
             panelCanvas = new Krypton.Toolkit.KryptonPanel();
-
             ((System.ComponentModel.ISupportInitialize)panelHeader).BeginInit();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelSidebar).BeginInit();
             panelSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panelCanvas).BeginInit();
             SuspendLayout();
-
             // 
             // panelHeader
             // 
@@ -47,7 +45,6 @@
             panelHeader.StateCommon.Color1 = Color.FromArgb(30, 41, 59);
             panelHeader.StateCommon.Color2 = Color.FromArgb(30, 41, 59);
             panelHeader.TabIndex = 0;
-
             // 
             // lblTituloApp
             // 
@@ -58,19 +55,17 @@
             lblTituloApp.StateCommon.ShortText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTituloApp.TabIndex = 0;
             lblTituloApp.Values.Text = "LaptopDeel POS";
-
             // 
             // lblStatusDB
             // 
             lblStatusDB.Dock = DockStyle.Right;
-            lblStatusDB.Location = new Point(1220, 0);
+            lblStatusDB.Location = new Point(1228, 0);
             lblStatusDB.Name = "lblStatusDB";
-            lblStatusDB.Size = new Size(140, 60);
+            lblStatusDB.Size = new Size(132, 60);
             lblStatusDB.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129);
             lblStatusDB.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblStatusDB.TabIndex = 2;
             lblStatusDB.Values.Text = "● DB: Conectado";
-
             // 
             // panelSidebar
             // 
@@ -86,7 +81,6 @@
             panelSidebar.StateCommon.Color1 = Color.FromArgb(30, 41, 59);
             panelSidebar.StateCommon.Color2 = Color.FromArgb(30, 41, 59);
             panelSidebar.TabIndex = 1;
-
             // 
             // btnNavNuevaVenta
             // 
@@ -99,8 +93,8 @@
             btnNavNuevaVenta.StateCommon.Content.ShortText.Color1 = Color.White;
             btnNavNuevaVenta.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnNavNuevaVenta.TabIndex = 0;
-            btnNavNuevaVenta.Values.Text = "🛒 Nueva Venta";
-
+            btnNavNuevaVenta.Values.DropDownArrowColor = Color.Empty;
+            btnNavNuevaVenta.Values.Text = "\U0001f6d2 Nueva Venta";
             // 
             // btnNavClientes
             // 
@@ -111,10 +105,10 @@
             btnNavClientes.StateCommon.Back.Color1 = Color.Transparent;
             btnNavClientes.StateCommon.Back.Color2 = Color.Transparent;
             btnNavClientes.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavClientes.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+            btnNavClientes.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F);
             btnNavClientes.TabIndex = 1;
+            btnNavClientes.Values.DropDownArrowColor = Color.Empty;
             btnNavClientes.Values.Text = "👥 Clientes";
-
             // 
             // btnNavHistorialVentas
             // 
@@ -125,22 +119,22 @@
             btnNavHistorialVentas.StateCommon.Back.Color1 = Color.Transparent;
             btnNavHistorialVentas.StateCommon.Back.Color2 = Color.Transparent;
             btnNavHistorialVentas.StateCommon.Content.ShortText.Color1 = Color.FromArgb(148, 163, 184);
-            btnNavHistorialVentas.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+            btnNavHistorialVentas.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F);
             btnNavHistorialVentas.TabIndex = 2;
+            btnNavHistorialVentas.Values.DropDownArrowColor = Color.Empty;
             btnNavHistorialVentas.Values.Text = "📋 Historial Ventas";
-
             // 
             // lblUsuarioSidebar
             // 
             lblUsuarioSidebar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblUsuarioSidebar.Location = new Point(15, 544);
+            lblUsuarioSidebar.AutoSize = false;
+            lblUsuarioSidebar.Location = new Point(3, 552);
             lblUsuarioSidebar.Name = "lblUsuarioSidebar";
-            lblUsuarioSidebar.Size = new Size(210, 27);
+            lblUsuarioSidebar.Size = new Size(234, 27);
             lblUsuarioSidebar.StateCommon.ShortText.Color1 = Color.White;
             lblUsuarioSidebar.StateCommon.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblUsuarioSidebar.TabIndex = 3;
             lblUsuarioSidebar.Values.Text = "👤 Vendedor (POS)";
-
             // 
             // btnCerrarSesion
             // 
@@ -153,8 +147,8 @@
             btnCerrarSesion.StateCommon.Content.ShortText.Color1 = Color.White;
             btnCerrarSesion.StateCommon.Content.ShortText.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnCerrarSesion.TabIndex = 4;
+            btnCerrarSesion.Values.DropDownArrowColor = Color.Empty;
             btnCerrarSesion.Values.Text = "🔴 Cerrar Sesión";
-
             // 
             // panelCanvas
             // 
@@ -165,7 +159,6 @@
             panelCanvas.StateCommon.Color1 = Color.FromArgb(241, 245, 249);
             panelCanvas.StateCommon.Color2 = Color.FromArgb(241, 245, 249);
             panelCanvas.TabIndex = 2;
-
             // 
             // FormVendedorPrincipal
             // 
@@ -178,13 +171,11 @@
             Name = "FormVendedorPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LaptopDeel - Selección y Punto de Venta (POS)";
-
             ((System.ComponentModel.ISupportInitialize)panelHeader).EndInit();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)panelSidebar).EndInit();
             panelSidebar.ResumeLayout(false);
-            panelSidebar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)panelCanvas).EndInit();
             ResumeLayout(false);
         }

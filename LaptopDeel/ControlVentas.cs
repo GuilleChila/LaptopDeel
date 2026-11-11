@@ -25,17 +25,62 @@ namespace LaptopDeel
             ConfigurarGrillaCarrito();
             CargarCatalogoNotebooks();
 
+            // Carga inicial del ComboBox
+            CargarClientesEnCombo();
+
             // Suscripción explícita al evento CellClick del carrito
             this.dgvCarrito.CellClick -= dgvCarrito_CellClick;
             this.dgvCarrito.CellClick += dgvCarrito_CellClick;
         }
 
         // ==========================================
-        // 1. SELECCIÓN Y BÚSQUEDA DE CLIENTE (SNAPSHOT)
+        // 1. SELECCIÓN Y BÚSQUEDA DE CLIENTE (COMBOBOX)
         // ==========================================
+        private void CargarClientesEnCombo()
+        {
+            try
+            {
+                // 1. DESCONECTAMOS el evento temporalmente para que no dispare validaciones falsas
+                cmbDniCliente.SelectedIndexChanged -= cmbDniCliente_SelectedIndexChanged;
+
+                var listaClientes = _clientesDao.ObtenerTodos();
+
+                // 2. Es mejor configurar qué columnas mostrar ANTES de pasarle los datos
+                cmbDniCliente.DisplayMember = "Dni";
+                cmbDniCliente.ValueMember = "IdCliente";
+                cmbDniCliente.DataSource = listaClientes;
+
+                cmbDniCliente.SelectedIndex = -1;          // Lo dejamos en blanco
+
+                // 3. VOLVEMOS A CONECTAR el evento ahora que ya está todo cargado correctamente
+                cmbDniCliente.SelectedIndexChanged += cmbDniCliente_SelectedIndexChanged;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al cargar combo de clientes: " + ex.Message);
+            }
+        }
+
+        // EVENTO NUEVO: Se dispara apenas el vendedor elige un DNI de la lista
+        private void cmbDniCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Si realmente seleccionó a alguien de la lista (y no está vacío)
+            if (cmbDniCliente.SelectedIndex != -1)
+            {
+                BuscarYCargarCliente();
+            }
+        }
+
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
-            string dniIngresado = txtDniCliente.Text.Trim();
+            // Mantenemos el botón por si el usuario tipeó el DNI a mano y quiere buscarlo
+            BuscarYCargarCliente();
+        }
+
+        // Lógica centralizada para cargar el Snapshot y los Labels
+        private void BuscarYCargarCliente()
+        {
+            string dniIngresado = cmbDniCliente.Text.Trim();
 
             if (string.IsNullOrEmpty(dniIngresado))
             {
@@ -67,6 +112,7 @@ namespace LaptopDeel
                     clienteBD.Eliminado
                 );
 
+                // MAGIA AUTOMÁTICA: Acá se rellenan los labels en la pantalla
                 lblClienteNombre.Text = clienteSnapshot.NombreCompleto;
                 lblClienteDni.Text = $"DNI: {clienteSnapshot.Dni} ({clienteSnapshot.Iva})";
                 btnRedirigirCrudCliente.Visible = false;
@@ -82,7 +128,7 @@ namespace LaptopDeel
 
         private bool ValidarDniCliente(out string mensajeError)
         {
-            string dni = txtDniCliente.Text.Trim();
+            string dni = cmbDniCliente.Text.Trim();
             mensajeError = string.Empty;
 
             if (string.IsNullOrWhiteSpace(dni))
@@ -100,7 +146,6 @@ namespace LaptopDeel
                 mensajeError = "El DNI no puede tener más de 8 números.";
                 return false;
             }
-
             if (dni.Length < 8)
             {
                 mensajeError = "El DNI no puede tener menos de 8 números.";
@@ -115,7 +160,7 @@ namespace LaptopDeel
             Form formPadre = this.FindForm();
             if (formPadre is FormVendedorPrincipal formVendedor)
             {
-                ControlClientes vistaClientes = new ControlClientes(txtDniCliente.Text.Trim());
+                ControlClientes vistaClientes = new ControlClientes(cmbDniCliente.Text.Trim());
                 formVendedor.CargarVistaConTransicion(vistaClientes);
             }
         }
@@ -269,7 +314,7 @@ namespace LaptopDeel
             decimal totalCalculado = carritoVenta.Sum(x => x.SubtotalItem);
             PedidoVentaDTO pedidoDraft = new PedidoVentaDTO(clienteSnapshot, carritoVenta, totalCalculado);
 
-            // 🟢 OBTENCIÓN DINÁMICA DEL ID DE USUARIO LOGUEADO
+            // OBTENCIÓN DINÁMICA DEL ID DE USUARIO LOGUEADO
             int idUsuarioLogueado = 1;
             Form formPadre = this.FindForm();
             if (formPadre is FormVendedorPrincipal formVendedor && formVendedor.UsuarioActual != null)

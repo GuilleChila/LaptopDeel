@@ -141,5 +141,7 @@ namespace LaptopDeel
         private void txtEmail_Paint(object sender, PaintEventArgs e) { }
         private void L_contraseñaLogin_Click(object sender, EventArgs e) { }
         private void LoginForm_Load(object sender, EventArgs e) { }
+
+        
     }
 }

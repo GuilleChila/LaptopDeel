@@ -23,8 +23,8 @@
             txtBuscarNotebook = new Krypton.Toolkit.KryptonTextBox();
             dgvCatalogo = new Krypton.Toolkit.KryptonDataGridView();
             panelCarrito = new Krypton.Toolkit.KryptonPanel();
+            cmbDniCliente = new Krypton.Toolkit.KryptonComboBox();
             lblTituloCliente = new Krypton.Toolkit.KryptonLabel();
-            txtDniCliente = new Krypton.Toolkit.KryptonTextBox();
             btnBuscarCliente = new Krypton.Toolkit.KryptonButton();
             flowClienteInfo = new FlowLayoutPanel();
             lblClienteNombre = new Krypton.Toolkit.KryptonLabel();
@@ -42,6 +42,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvCatalogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelCarrito).BeginInit();
             panelCarrito.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)cmbDniCliente).BeginInit();
             flowClienteInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).BeginInit();
             tblSubtotal.SuspendLayout();
@@ -108,8 +109,8 @@
             // 
             // panelCarrito
             // 
+            panelCarrito.Controls.Add(cmbDniCliente);
             panelCarrito.Controls.Add(lblTituloCliente);
-            panelCarrito.Controls.Add(txtDniCliente);
             panelCarrito.Controls.Add(btnBuscarCliente);
             panelCarrito.Controls.Add(flowClienteInfo);
             panelCarrito.Controls.Add(lblResumenCompra);
@@ -124,6 +125,18 @@
             panelCarrito.StateCommon.Color1 = Color.White;
             panelCarrito.TabIndex = 1;
             // 
+            // cmbDniCliente
+            // 
+            cmbDniCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbDniCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbDniCliente.Location = new Point(20, 40);
+            cmbDniCliente.Name = "cmbDniCliente";
+            cmbDniCliente.Size = new Size(227, 26);
+            cmbDniCliente.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            cmbDniCliente.TabIndex = 3;
+            cmbDniCliente.Text = "kryptonComboBox1";
+            cmbDniCliente.SelectedIndexChanged += cmbDniCliente_SelectedIndexChanged;
+            // 
             // lblTituloCliente
             // 
             lblTituloCliente.Location = new Point(20, 15);
@@ -132,15 +145,6 @@
             lblTituloCliente.StateCommon.ShortText.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblTituloCliente.TabIndex = 0;
             lblTituloCliente.Values.Text = "CLIENTE ASOCIADO";
-            // 
-            // txtDniCliente
-            // 
-            txtDniCliente.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtDniCliente.Location = new Point(20, 40);
-            txtDniCliente.Name = "txtDniCliente";
-            txtDniCliente.Size = new Size(240, 27);
-            txtDniCliente.TabIndex = 1;
-            
             // 
             // btnBuscarCliente
             // 
@@ -288,6 +292,7 @@
             ((System.ComponentModel.ISupportInitialize)panelCarrito).EndInit();
             panelCarrito.ResumeLayout(false);
             panelCarrito.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)cmbDniCliente).EndInit();
             flowClienteInfo.ResumeLayout(false);
             flowClienteInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).EndInit();
@@ -305,7 +310,6 @@
         private Krypton.Toolkit.KryptonDataGridView dgvCatalogo;
         private Krypton.Toolkit.KryptonPanel panelCarrito;
         private Krypton.Toolkit.KryptonLabel lblTituloCliente;
-        private Krypton.Toolkit.KryptonTextBox txtDniCliente;
         private Krypton.Toolkit.KryptonButton btnBuscarCliente;
         private System.Windows.Forms.FlowLayoutPanel flowClienteInfo;
         private Krypton.Toolkit.KryptonLabel lblClienteNombre;
@@ -317,5 +321,6 @@
         private Krypton.Toolkit.KryptonLabel lblTotalPagar;
         private Krypton.Toolkit.KryptonLabel lblSubtotalEstimado;
         private Krypton.Toolkit.KryptonButton btnPasarAFacturacion;
+        private Krypton.Toolkit.KryptonComboBox cmbDniCliente;
     }
 }

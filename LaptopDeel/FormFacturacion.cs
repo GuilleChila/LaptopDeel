@@ -203,32 +203,52 @@ namespace LaptopDeel
         }
 
         private void txtMontoAbonado_TextChanged(object sender, EventArgs e)
+{
+    // 1. Si no es efectivo, no calculamos vuelto
+    if (cmbMetodoPago.SelectedItem?.ToString() != "Efectivo") return;
+
+    string textoIngresado = txtMontoAbonado.Text.Trim();
+
+    // 2. Validación de campo vacío (si el cajero borra todo)
+    if (string.IsNullOrEmpty(textoIngresado))
+    {
+        lblVuelto.Text = "Vuelto: $0.00";
+        lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139); // Gris
+        return;
+    }
+
+    // 3. Validación de formato numérico
+    if (decimal.TryParse(textoIngresado, out decimal montoAbonado))
+    {
+        // 4. Validación para que no ingresen pagos negativos
+        if (montoAbonado < 0)
         {
-            if (cmbMetodoPago.SelectedItem?.ToString() != "Efectivo") return;
-
-            string textoIngresado = txtMontoAbonado.Text.Trim();
-
-            if (decimal.TryParse(textoIngresado, out decimal montoAbonado))
-            {
-                decimal vuelto = montoAbonado - PedidoDraft.TotalVenta;
-
-                if (vuelto >= 0)
-                {
-                    lblVuelto.Text = $"Vuelto: ${vuelto:N2}";
-                    lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129); // Verde
-                }
-                else
-                {
-                    lblVuelto.Text = $"Faltan: ${Math.Abs(vuelto):N2}";
-                    lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68); // Rojo
-                }
-            }
-            else
-            {
-                lblVuelto.Text = "Vuelto: $0.00";
-                lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(100, 116, 139);
-            }
+            lblVuelto.Text = "Error: Monto inválido";
+            lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68); // Rojo
+            return;
         }
+
+        // CÁLCULO CORREGIDO (Faltaba el signo de resta)
+        decimal vuelto = montoAbonado - PedidoDraft.TotalVenta;
+
+        if (vuelto >= 0)
+        {
+            lblVuelto.Text = $"Vuelto: ${vuelto:N2}";
+            lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(16, 185, 129); // Verde
+        }
+        else
+        {
+            lblVuelto.Text = $"Faltan: ${Math.Abs(vuelto):N2}";
+            lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68); // Rojo
+        }
+    }
+    else
+    {
+        // 5. Si TryParse falla (ej: tipea letras o símbolos)
+        lblVuelto.Text = "Error: Solo números";
+        lblVuelto.StateCommon.ShortText.Color1 = Color.FromArgb(239, 68, 68); // Rojo
+    }
+}
 
         // ==========================================
         // PROCESAMIENTO ATÓMICO (ACID + IDEMPOTENCIA)

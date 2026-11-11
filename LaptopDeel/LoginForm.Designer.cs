@@ -84,6 +84,8 @@
             // 
             // txtPassword
             // 
+            txtPassword.CueHint.Color1 = Color.Silver;
+            txtPassword.CueHint.CueHintText = "********";
             txtPassword.Location = new Point(41, 314);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
@@ -93,7 +95,6 @@
             txtPassword.StateCommon.Border.Rounding = 8F;
             txtPassword.StateCommon.Content.Color1 = Color.White;
             txtPassword.TabIndex = 5;
-            txtPassword.Text = "hola1234";
             txtPassword.TextAlign = HorizontalAlignment.Center;
             txtPassword.UseSystemPasswordChar = true;
             // 
@@ -109,6 +110,8 @@
             // 
             // txtEmail
             // 
+            txtEmail.CueHint.Color1 = Color.Silver;
+            txtEmail.CueHint.CueHintText = "ejemplo@laptopdeel.com";
             txtEmail.Location = new Point(41, 231);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(291, 33);
@@ -117,8 +120,7 @@
             txtEmail.StateCommon.Border.Rounding = 8F;
             txtEmail.StateCommon.Content.Color1 = Color.White;
             txtEmail.TabIndex = 3;
-            txtEmail.Text = "ejemplo@laptopdeel.com";
-            txtEmail.TextAlign = HorizontalAlignment.Center;
+            txtEmail.TextAlign = HorizontalAlignment.Center;           
             // 
             // L_mailLogin
             // 

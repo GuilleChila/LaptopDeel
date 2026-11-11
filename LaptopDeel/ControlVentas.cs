@@ -141,14 +141,14 @@ namespace LaptopDeel
                 mensajeError = "El DNI debe contener únicamente números, sin puntos, letras ni espacios.";
                 return false;
             }
-            if (dni.Length > 8)
+            if (dni.Length > 11)
             {
-                mensajeError = "El DNI no puede tener más de 8 números.";
+                mensajeError = "El DNI/CUIT no puede tener más de 11 números.";
                 return false;
             }
             if (dni.Length < 8)
             {
-                mensajeError = "El DNI no puede tener menos de 8 números.";
+                mensajeError = "El DNI/CUIT no puede tener menos de 8 números.";
                 return false;
             }
 

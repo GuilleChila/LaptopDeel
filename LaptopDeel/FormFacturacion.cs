@@ -151,8 +151,8 @@ namespace LaptopDeel
         {
             cmbMetodoPago.Items.Clear();
             cmbMetodoPago.Items.Add("Efectivo");
-            cmbMetodoPago.Items.Add("Tarjeta de Débito");
-            cmbMetodoPago.Items.Add("Tarjeta de Crédito");
+            cmbMetodoPago.Items.Add("Tarjeta de Debito");
+            cmbMetodoPago.Items.Add("Tarjeta de Credito");
             cmbMetodoPago.Items.Add("Transferencia Bancaria");
             cmbMetodoPago.SelectedIndex = 0;
         }

@@ -270,5 +270,47 @@ namespace LaptopDeel.Datos
             }
             return tabla;
         }
+
+        /// <summary>
+        /// Consulta los 5 clientes con mayor volumen de compra de laptops en el rango de fechas indicado.
+        /// </summary>
+        /// <param name="desde">Fecha inicial del rango</param>
+        /// <param name="hasta">Fecha final del rango</param>
+        /// <returns>DataTable con el ranking de clientes, laptops compradas y total invertido</returns>
+        public DataTable ObtenerTop5ClientesMasLaptops(DateTime desde, DateTime hasta)
+        {
+            DataTable tabla = new DataTable();
+
+            using (var conexion = ConexionBD.ObtenerConexion())
+            {
+                string query = @"
+                    SELECT 
+                        c.nombre_completo AS Cliente,
+                        SUM(dv.cantidad) AS Laptops_Compradas,
+                        SUM(dv.subtotal) AS Total_Gastado
+                    FROM ventas v
+                    INNER JOIN clientes c ON v.id_cliente = c.id_cliente
+                    INNER JOIN detalle_ventas dv ON v.id_venta = dv.id_venta
+                    WHERE v.eliminado = FALSE 
+                      AND DATE(v.fecha_hora) BETWEEN @fecha_desde AND @fecha_hasta
+                    GROUP BY c.id_cliente, c.nombre_completo
+                    ORDER BY Laptops_Compradas DESC, Total_Gastado DESC
+                    LIMIT 5;";
+
+                using (var cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@fecha_desde", desde.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@fecha_hasta", hasta.ToString("yyyy-MM-dd"));
+
+                    conexion.Open();
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+
+            return tabla;
+        }
     }
 }
